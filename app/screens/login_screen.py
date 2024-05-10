@@ -28,15 +28,25 @@ class LoginScreen(Screen):
         self.error_label = Label(text='', color=(1, 0, 0, 1))
         layout.add_widget(self.error_label)
 
+        home_button = Button(text='Home')
+        home_button.bind(on_press=self.go_to_home)
+        layout.add_widget(home_button)
+
         self.add_widget(layout)
 
     def login(self, instance):
-        # Placeholder: Check if username and password are valid
+        # Placeholder: Check if login credentials are valid
         username = self.username_input.text
         password = self.password_input.text
 
-        if username == 'admin' and password == 'password':
-            self.error_label.text = 'Login successful!'
-            # Add code to navigate to another screen (e.g., home screen)
+        if username in self.manager.get_screen('registration').registered_users:
+            if self.manager.get_screen('registration').registered_users[username]['password'] == password:
+                self.error_label.text = 'Login successful!'
+                # Add code to navigate to another screen (e.g., home screen)
+            else:
+                self.error_label.text = 'Invalid password'
         else:
-            self.error_label.text = 'Invalid username or password'
+            self.error_label.text = 'Invalid username'
+
+    def go_to_home(self, instance):
+        self.manager.current = 'home'

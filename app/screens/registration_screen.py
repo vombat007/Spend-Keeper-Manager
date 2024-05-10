@@ -8,6 +8,7 @@ from kivy.uix.button import Button
 class RegistrationScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        self.registered_users = {}  # Store registered users
 
         layout = BoxLayout(orientation='vertical')
 
@@ -46,9 +47,11 @@ class RegistrationScreen(Screen):
 
         # Placeholder: Check if username and email are not empty and if password is at least 6 characters long
         if username.strip() and email.strip() and len(password) >= 6:
+            # Store the registered user
+            self.registered_users[username] = {'email': email, 'password': password}
             self.error_label.text = 'Registration successful!'
-            # Add code to handle registration (e.g., save user data)
             # Add code to navigate to another screen (e.g., login screen)
+            self.manager.current = 'login'
         else:
             self.error_label.text = 'Invalid registration details'
 
