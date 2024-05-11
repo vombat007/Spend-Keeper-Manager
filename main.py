@@ -1,5 +1,6 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
+from app.databases import development as db_dev_config, production as db_prod_config
 from app.screens.home_screen import HomeScreen
 from app.screens.finance_screen import FinanceScreen
 from app.screens.login_screen import LoginScreen
@@ -9,6 +10,9 @@ from app.screens.registration_screen import RegistrationScreen
 class FinancialApp(App):
     def build(self):
         self.title = 'Financial App'
+
+        # Set type of using databases
+        db_dev_config.init_db()
 
         # Create the screen manager
         sm = ScreenManager()
