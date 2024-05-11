@@ -3,6 +3,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
+from app.databases.development import get_connection
 
 
 class LoginScreen(Screen):
@@ -35,18 +36,21 @@ class LoginScreen(Screen):
         self.add_widget(layout)
 
     def login(self, instance):
-        # Placeholder: Check if login credentials are valid
+        # Retrieve user input
         username = self.username_input.text
         password = self.password_input.text
 
-        if username in self.manager.get_screen('registration').registered_users:
-            if self.manager.get_screen('registration').registered_users[username]['password'] == password:
-                self.error_label.text = 'Login successful!'
-                # Add code to navigate to another screen (e.g., home screen)
-            else:
-                self.error_label.text = 'Invalid password'
+        # Check if username and password match the database records
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM users WHERE username = ?", (username,))
+        user = cursor.fetchone()
+        if user and user[3] == password:  # Index 3 corresponds to the password column
+            self.error_label.text = 'Login successful!'
+            self.manager.current = 'home'
         else:
-            self.error_label.text = 'Invalid username'
+            self.error_label.text = 'Invalid username or password'
+        conn.close()
 
     def go_to_home(self, instance):
         self.manager.current = 'home'
