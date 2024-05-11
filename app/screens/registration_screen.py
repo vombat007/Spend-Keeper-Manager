@@ -1,3 +1,5 @@
+import hashlib
+import sqlite3
 from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -50,18 +52,25 @@ class RegistrationScreen(Screen):
             self.error_label.text = 'Please fill in all fields'
             return
 
+        # Hash the password using SHA-256
+        hashed_password = hashlib.sha256(password.encode()).hexdigest()
+
         # Insert user data into the database
         conn = get_connection()
         cursor = conn.cursor()
         try:
             cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-                           (username, email, password))
+                           (username, email, hashed_password))
             conn.commit()
             self.error_label.text = 'Registration successful!'
-            # Add code to navigate to another screen (e.g., login screen)
+
             self.manager.current = 'login'
-        except sqlite3.IntegrityError:
-            self.error_label.text = 'Username or email already exists'
+
+        except sqlite3.IntegrityError as e:
+            if 'UNIQUE constraint failed' in str(e):
+                self.error_label.text = 'Username or email already exists'
+            else:
+                self.error_label.text = 'Registration failed'
         finally:
             conn.close()
 
