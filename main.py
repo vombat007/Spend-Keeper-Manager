@@ -1,10 +1,10 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager, Screen
-from app.databases import development as db_dev_config, production as db_prod_config
-from app.screens.home_screen import HomeScreen
-from app.screens.finance_screen import FinanceScreen
-from app.screens.login_screen import LoginScreen
-from app.screens.registration_screen import RegistrationScreen
+from kivy_app.databases import development as db_dev_config, production as db_prod_config
+from kivy_app.screens.home_screen import HomeScreen
+from kivy_app.screens.finance_screen import FinanceScreen
+from kivy_app.screens.login_screen import LoginScreen
+from kivy_app.screens.registration_screen import RegistrationScreen
 
 
 class FinancialApp(App):

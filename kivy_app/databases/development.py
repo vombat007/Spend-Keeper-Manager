@@ -1,5 +1,5 @@
 import sqlite3
-from app.databases.tables import tables_definition
+from kivy_app.databases.tables import tables_definition
 
 # Database configuration for development environment
 DB_FILE = 'development.db'
