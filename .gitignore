@@ -1,4 +1,3 @@
 /development.db
-/django_spend_keeper/db.sqlite3
-/django_spend_keeper/django_spend_keeper/db.sqlite3
 /.env
+/db.sqlite3
