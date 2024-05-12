@@ -61,4 +61,4 @@ class User(AbstractBaseUser, PermissionsMixin):
     REQUIRED_FIELDS = []
 
     class Meta:
-        app_label = 'django_spend_keeper'
+        app_label = 'django_app_api'
