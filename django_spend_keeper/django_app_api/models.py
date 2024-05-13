@@ -62,3 +62,45 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         app_label = 'django_app_api'
+
+
+class UserAccount(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    total_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0)
+
+    def __str__(self):
+        return self.name
+
+
+class Category(models.Model):
+    name = models.CharField(max_length=100)
+    picture = models.ImageField(upload_to='category_pics/', null=True, blank=True)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.name
+
+
+class Transaction(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transactions')
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    account = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    note = models.TextField(blank=True)
+    datetime = models.DateTimeField(auto_now_add=True)
+    is_income = models.BooleanField(default=False)  # True if income, False if expense
+
+    def __str__(self):
+        return f"{self.user.username}'s {'Income' if self.is_income else 'Expense'}: {self.amount} {self.currency}"
+
+
+class Saving(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='savings')
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    account = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    note = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.user.username}'s Savings: {self.amount} {self.account}"
+

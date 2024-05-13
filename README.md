@@ -11,3 +11,10 @@ With Spend Keeper Manager, users can effortlessly track their daily expenditures
 The app provides insightful analytics and customizable reports to visualize spending patterns and allocate resources wisely.
 
 From managing recurring expenses to planning for long-term financial objectives, Spend Keeper Manager serves as a reliable companion for individuals seeking to achieve greater fiscal responsibility and control over their finances.
+
+
+
+## Run the Django API app locally :
+~~~
+python manage.py runserver --settings=django_spend_keeper.settings.dev 
+~~~
