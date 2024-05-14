@@ -64,7 +64,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         app_label = 'django_app_api'
 
 
-class UserAccount(models.Model):
+class Account(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     total_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0)
@@ -85,7 +85,7 @@ class Category(models.Model):
 class Transaction(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transactions')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    account = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     note = models.TextField(blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
@@ -98,7 +98,7 @@ class Transaction(models.Model):
 class Saving(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='savings')
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    account = models.ForeignKey(UserAccount, on_delete=models.CASCADE)
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
     note = models.TextField(blank=True)
 
     def __str__(self):

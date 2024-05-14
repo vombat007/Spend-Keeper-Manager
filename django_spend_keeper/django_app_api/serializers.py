@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from drf_spectacular.utils import extend_schema_serializer
 from rest_framework import serializers
-from .models import User, UserAccount, Transaction, Category, Saving
+from .models import User, Account, Transaction, Category, Saving
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -16,10 +16,10 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 
-class UserAccountSerializer(serializers.ModelSerializer):
+class AccountSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserAccount
-        fields = ['name', 'total_balance']
+        model = Account
+        fields = '__all__'
 
 
 class CategorySerializer(serializers.ModelSerializer):

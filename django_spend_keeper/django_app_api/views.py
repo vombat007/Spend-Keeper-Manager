@@ -1,16 +1,17 @@
 from rest_framework import generics, status
+from rest_framework.generics import RetrieveUpdateAPIView
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from django.shortcuts import render
-from .serializers import UserSerializer, UserAccountSerializer
+from .serializers import UserSerializer, AccountSerializer
 from .serializers import TransactionSerializer, CategorySerializer, SavingSerializer
 from django.contrib.auth import get_user_model
 from django.http import QueryDict
 from .utils import generate_jwt_token
-from .models import User, UserAccount, Category, Transaction, Saving
+from .models import User, Account, Category, Transaction, Saving
 
 
 class RegisterView(APIView):
@@ -25,33 +26,37 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class UserAccountDetailView(generics.RetrieveUpdateAPIView):
+class AccountDetailView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
         # Retrieve the UserAccount associated with the authenticated user
-        user_account = UserAccount.objects.get(user=request.user)
-        serializer = UserAccountSerializer(user_account)
+        user_account = Account.objects.get(user=request.user)
+        serializer = AccountSerializer(user_account)
         return Response(serializer.data)
 
     def post(self, request):
         data = request.data.copy()
         data['user'] = request.user.id  # Set the user to the authenticated user
-        serializer = UserAccountSerializer(data=data)
+        serializer = AccountSerializer(data=data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def put(self, request):
-        # Retrieve the UserAccount associated with the authenticated user
-        user_account = UserAccount.objects.get(user=request.user)
-        serializer = UserAccountSerializer(user_account, data=request.data, partial=True)
+        user_account = Account.objects.get(user=request.user)
+        serializer = AccountSerializer(user_account, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request):
+        user_account = Account.objects.get(user=request.user)
+        user_account.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class CategoryListView(generics.ListAPIView):
