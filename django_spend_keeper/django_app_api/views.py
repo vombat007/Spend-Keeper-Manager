@@ -29,6 +29,12 @@ class UserAccountDetailView(generics.RetrieveUpdateAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
 
+    def get(self, request):
+        # Retrieve the UserAccount associated with the authenticated user
+        user_account = UserAccount.objects.get(user=request.user)
+        serializer = UserAccountSerializer(user_account)
+        return Response(serializer.data)
+
     def post(self, request):
         data = request.data.copy()
         data['user'] = request.user.id  # Set the user to the authenticated user
@@ -36,6 +42,15 @@ class UserAccountDetailView(generics.RetrieveUpdateAPIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def put(self, request):
+        # Retrieve the UserAccount associated with the authenticated user
+        user_account = UserAccount.objects.get(user=request.user)
+        serializer = UserAccountSerializer(user_account, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 

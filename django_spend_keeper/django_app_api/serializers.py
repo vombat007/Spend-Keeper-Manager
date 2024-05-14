@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
 class UserAccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserAccount
-        fields = '__all__'
+        fields = ['name', 'total_balance']
 
 
 class CategorySerializer(serializers.ModelSerializer):
