@@ -1,5 +1,3 @@
-from django.contrib.auth import get_user_model
-from drf_spectacular.utils import extend_schema_serializer
 from rest_framework import serializers
 from .models import User, Account, Transaction, Category, Saving
 
