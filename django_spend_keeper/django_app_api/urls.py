@@ -21,7 +21,7 @@ urlpatterns = [
     path('api/transaction/<int:pk>/', TransactionDetailView.as_view(), name='transaction-create'),
 
     path('api/categories/', views.CategoryListView.as_view(), name='category-list'),
-    path('api/savings/create/', views.SavingCreateView.as_view(), name='saving-create'),
+    path('api/categorie/<int:pk>/', views.CategoryDetailView.as_view(), name='category-detail'),
 
     # Swagger URLs
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),

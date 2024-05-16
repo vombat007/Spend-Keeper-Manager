@@ -58,7 +58,7 @@ class TransactionListView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         # Associate the authenticated user with the new Transaction object
         serializer.save(user=self.request.user)
-        update_account_balance(serializer)
+        update_account_balance(serializer.instance)
 
 
 class TransactionDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -73,34 +73,23 @@ class TransactionDetailView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         # Update the account's total balance when a transaction is updated
         previous_transaction = self.get_object()
-        previous_amount = previous_transaction.amount
-        previous_is_income = previous_transaction.is_income
         serializer.save()
-        current_transaction = serializer.instance
-        if previous_is_income:
-            account = current_transaction.account
-            account.total_balance -= previous_amount
-            account.total_balance += current_transaction.amount
-            account.save()
-        else:
-            account = current_transaction.account
-            account.total_balance += previous_amount
-            account.total_balance -= current_transaction.amount
-            account.save()
+        update_account_balance(previous_transaction)
 
     def perform_destroy(self, instance):
-        # Adjust the account's total balance when a transaction is deleted
-        account = instance.account
-        if instance.is_income:
-            account.total_balance -= instance.amount
-        else:
-            account.total_balance += instance.amount
-        account.save()
+        # Delete the transaction and update the account's total balance
+        update_account_balance(instance)
         instance.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class CategoryListView(generics.ListAPIView):
+class CategoryListView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [IsAuthenticated]
+
+
+class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
