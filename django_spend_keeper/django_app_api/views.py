@@ -21,37 +21,29 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-class AccountDetailView(generics.RetrieveUpdateAPIView):
+class AccountsListView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     authentication_classes = [JWTAuthentication]
+    serializer_class = AccountSerializer
 
-    def get(self, request):
+    def get_queryset(self):
         # Retrieve all Account instances associated with the authenticated user
-        accounts = Account.objects.filter(user=request.user)
-        serializer = AccountSerializer(accounts, many=True)
-        return Response(serializer.data)
+        return Account.objects.filter(user=self.request.user)
 
-    def post(self, request):
-        data = request.data.copy()
-        data['user'] = request.user.id  # Set the user to the authenticated user
-        serializer = AccountSerializer(data=data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def perform_create(self, serializer):
+        # Associate the authenticated user with the newly created Account instance
+        serializer.save(user=self.request.user)
 
-    def put(self, request):
-        user_account = Account.objects.get(user=request.user)
-        serializer = AccountSerializer(user_account, data=request.data, partial=True)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request):
-        user_account = Account.objects.get(user=request.user)
-        user_account.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+class AccountDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    queryset = Account.objects.all()
+    serializer_class = AccountSerializer
+
+    def get_queryset(self):
+        # Filter accounts based on the authenticated user and account ID
+        return self.queryset.filter(user=self.request.user, id=self.kwargs['pk'])
 
 
 class CategoryListView(generics.ListAPIView):

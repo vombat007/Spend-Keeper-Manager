@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
-from .views import RegisterView, AccountDetailView, CategoryListView, TransactionCreateView, SavingCreateView
+from .views import RegisterView, AccountsListView, CategoryListView, TransactionCreateView, SavingCreateView, \
+    AccountDetailView
 
 urlpatterns = [
 
@@ -13,7 +14,9 @@ urlpatterns = [
     path('api/login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/login/verify/', TokenVerifyView.as_view(), name='token_verify'),
 
-    path('api/account/', views.AccountDetailView.as_view(), name='user-account-detail'),
+    path('api/accounts/', AccountsListView.as_view(), name='user-account-detail'),
+    path('api/accounts/<int:pk>/', AccountDetailView.as_view(), name='account-detail'),
+
     path('api/categories/', views.CategoryListView.as_view(), name='category-list'),
     path('api/transactions/create/', views.TransactionCreateView.as_view(), name='transaction-create'),
     path('api/savings/create/', views.SavingCreateView.as_view(), name='saving-create'),
