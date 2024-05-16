@@ -26,9 +26,9 @@ class AccountDetailView(generics.RetrieveUpdateAPIView):
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
-        # Retrieve the UserAccount associated with the authenticated user
-        user_account = Account.objects.get(user=request.user)
-        serializer = AccountSerializer(user_account)
+        # Retrieve all Account instances associated with the authenticated user
+        accounts = Account.objects.filter(user=request.user)
+        serializer = AccountSerializer(accounts, many=True)
         return Response(serializer.data)
 
     def post(self, request):

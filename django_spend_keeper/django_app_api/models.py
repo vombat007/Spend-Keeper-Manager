@@ -65,7 +65,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
 
 class Account(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='account')
     name = models.CharField(max_length=100)
     total_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0)
 
