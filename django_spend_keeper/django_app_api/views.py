@@ -6,7 +6,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import UserSerializer, AccountSerializer
 from .serializers import TransactionSerializer, CategorySerializer, SavingSerializer
 from .utils import generate_jwt_token
-from .models import Account, Category
+from .models import Account, Category, Transaction
 
 
 class RegisterView(APIView):
@@ -46,14 +46,35 @@ class AccountDetailView(generics.RetrieveUpdateDestroyAPIView):
         return self.queryset.filter(user=self.request.user, id=self.kwargs['pk'])
 
 
+class TransactionListView(generics.ListCreateAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+
+    def get_queryset(self):
+        # Filter transactions based on the authenticated user
+        return self.queryset.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        # Associate the authenticated user with the new Transaction object
+        serializer.save(user=self.request.user)
+
+
+class TransactionDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    queryset = Transaction.objects.all()
+    serializer_class = TransactionSerializer
+
+    def get_queryset(self):
+        # Filter transactions based on the authenticated user and transaction ID
+        return self.queryset.filter(user=self.request.user, id=self.kwargs['pk'])
+
+
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
-    permission_classes = [IsAuthenticated]
-
-
-class TransactionCreateView(generics.CreateAPIView):
-    serializer_class = TransactionSerializer
     permission_classes = [IsAuthenticated]
 
 
