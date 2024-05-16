@@ -29,7 +29,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
-        fields = ["amount", "account", "category", "note", "datetime"]
+        fields = ["amount", "account", "category", "note", "datetime", "is_income"]
 
 
 class SavingSerializer(serializers.ModelSerializer):

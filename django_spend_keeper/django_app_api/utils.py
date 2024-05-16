@@ -9,3 +9,13 @@ def generate_jwt_token(user):
     }
 
     return token
+
+
+def update_account_balance(serializer):
+    transaction = serializer.instance
+    account = transaction.account
+    if transaction.is_income:
+        account.total_balance += transaction.amount
+    else:
+        account.total_balance -= transaction.amount
+    account.save()
