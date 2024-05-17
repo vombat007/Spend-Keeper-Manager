@@ -1,4 +1,5 @@
 from rest_framework import generics, status
+from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -53,7 +54,10 @@ class TransactionListCreateView(generics.ListCreateAPIView):
     authentication_classes = [JWTAuthentication]
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        user = self.request.user
+        if not Account.objects.filter(user=user).exists():
+            raise ValidationError("User must have at least one account to create a transaction.")
+        serializer.save(user=user)
 
 
 class TransactionDetailView(generics.RetrieveUpdateDestroyAPIView):
