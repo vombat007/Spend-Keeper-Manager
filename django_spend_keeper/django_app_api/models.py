@@ -1,6 +1,7 @@
 from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.db import models, IntegrityError
+from django.core.exceptions import ValidationError
 
 
 class MyUserManager(BaseUserManager):
@@ -74,12 +75,20 @@ class Account(models.Model):
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100)
+    INCOME = 'Income'
+    EXPENSE = 'Expense'
+    CATEGORY_TYPE_CHOICES = [
+        (INCOME, 'Income'),
+        (EXPENSE, 'Expense'),
+    ]
+
+    name = models.CharField(max_length=100, unique=True)
+    type = models.CharField(max_length=20, choices=CATEGORY_TYPE_CHOICES)
     picture = models.ImageField(upload_to='category_pics/', null=True, blank=True)
     description = models.TextField()
 
     def __str__(self):
-        return self.name
+        return f"{self.name} ({self.type})"
 
 
 class Transaction(models.Model):
@@ -89,10 +98,32 @@ class Transaction(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     note = models.TextField(blank=True)
     datetime = models.DateTimeField(auto_now_add=True)
-    is_income = models.BooleanField(default=False)  # True if income, False if expense
+
+    def save(self, *args, **kwargs):
+        if self.category.type == Category.EXPENSE and self.amount > 0:
+            self.amount = -self.amount  # Ensure the amount is negative for expenses
+        elif self.category.type == Category.INCOME and self.amount < 0:
+            raise ValidationError("Amount should be positive for Income category.")
+
+        super().save(*args, **kwargs)
+        self.update_account_balance()
+
+    def update_account_balance(self):
+        account = self.account
+        account.total_balance += self.amount
+        account.save()
+
+    def delete(self, *args, **kwargs):
+        account = self.account
+        if self.category.type == Category.INCOME:
+            account.total_balance -= self.amount
+        else:
+            account.total_balance += abs(self.amount)
+        super().delete(*args, **kwargs)
+        account.save()
 
     def __str__(self):
-        return f"{self.user.username}'s {'Income' if self.is_income else 'Expense'}: {self.amount} {self.currency}"
+        return f"{self.user.email}'s {'Income' if self.category.type == Category.INCOME else 'Expense'}: {self.amount}"
 
 
 class Saving(models.Model):
@@ -103,4 +134,3 @@ class Saving(models.Model):
 
     def __str__(self):
         return f"{self.user.username}'s Savings: {self.amount} {self.account}"
-

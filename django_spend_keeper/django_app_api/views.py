@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from .serializers import UserSerializer, AccountSerializer
 from .serializers import TransactionSerializer, CategorySerializer, SavingSerializer
-from .utils import generate_jwt_token, update_account_balance
+from .utils import generate_jwt_token
 from .models import Account, Category, Transaction
 
 
@@ -46,53 +46,49 @@ class AccountDetailView(generics.RetrieveUpdateDestroyAPIView):
         return self.queryset.filter(user=self.request.user, id=self.kwargs['pk'])
 
 
-class TransactionListView(generics.ListCreateAPIView):
+class TransactionListCreateView(generics.ListCreateAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
     permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        # Filter transactions based on the authenticated user
-        return self.queryset.filter(user=self.request.user)
+    authentication_classes = [JWTAuthentication]
 
     def perform_create(self, serializer):
-        # Associate the authenticated user with the new Transaction object
         serializer.save(user=self.request.user)
-        update_account_balance(serializer.instance)
 
 
 class TransactionDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
     permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        # Filter transactions based on the authenticated user and transaction ID
-        return self.queryset.filter(user=self.request.user, id=self.kwargs['pk'])
+    authentication_classes = [JWTAuthentication]
 
     def perform_update(self, serializer):
-        # Update the account's total balance when a transaction is updated
-        previous_transaction = self.get_object()
+        old_instance = self.get_object()
+        old_amount = old_instance.amount
         serializer.save()
-        update_account_balance(previous_transaction)
+        new_instance = serializer.instance
+        if old_instance.amount != new_instance.amount:
+            new_instance.account.total_balance -= old_amount
+            new_instance.account.total_balance += new_instance.amount
+            new_instance.account.save()
 
     def perform_destroy(self, instance):
-        # Delete the transaction and update the account's total balance
-        update_account_balance(instance)
         instance.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response({"detail": "Transaction deleted"}, status=status.HTTP_204_NO_CONTENT)
 
 
-class CategoryListView(generics.ListCreateAPIView):
+class CategoryListCreateView(generics.ListCreateAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
 
 class CategoryDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
 
 
 class SavingCreateView(generics.CreateAPIView):
