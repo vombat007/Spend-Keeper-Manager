@@ -31,6 +31,12 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = ["amount", "account", "category", "note", "datetime"]
 
+    def update(self, instance, validated_data):
+        new_amount = validated_data.get('amount', instance.amount)
+        if abs(instance.amount) == abs(new_amount):
+            raise serializers.ValidationError("The new amount is the same as the old amount.")
+        return super().update(instance, validated_data)
+
 
 class SavingSerializer(serializers.ModelSerializer):
     class Meta:

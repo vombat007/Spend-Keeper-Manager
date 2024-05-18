@@ -69,11 +69,15 @@ class TransactionDetailView(generics.RetrieveUpdateDestroyAPIView):
     def perform_update(self, serializer):
         old_instance = self.get_object()
         old_amount = old_instance.amount
-        serializer.save()
+
+        try:
+            serializer.save()
+        except ValidationError as e:
+            raise ValidationError({"detail": str(e)})
+
         new_instance = serializer.instance
         if old_instance.amount != new_instance.amount:
             new_instance.account.total_balance -= old_amount
-            new_instance.account.total_balance += new_instance.amount
             new_instance.account.save()
 
     def perform_destroy(self, instance):
