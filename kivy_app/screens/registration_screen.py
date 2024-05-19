@@ -5,7 +5,6 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
-from kivy_app.databases.development import get_connection
 
 
 class RegistrationScreen(Screen):
@@ -54,25 +53,6 @@ class RegistrationScreen(Screen):
 
         # Hash the password using SHA-256
         hashed_password = hashlib.sha256(password.encode()).hexdigest()
-
-        # Insert user data into the database
-        conn = get_connection()
-        cursor = conn.cursor()
-        try:
-            cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
-                           (username, email, hashed_password))
-            conn.commit()
-            self.error_label.text = 'Registration successful!'
-
-            self.manager.current = 'login'
-
-        except sqlite3.IntegrityError as e:
-            if 'UNIQUE constraint failed' in str(e):
-                self.error_label.text = 'Username or email already exists'
-            else:
-                self.error_label.text = 'Registration failed'
-        finally:
-            conn.close()
 
     def go_to_home(self, instance):
         self.manager.current = 'home'
