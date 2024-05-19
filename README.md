@@ -18,3 +18,11 @@ From managing recurring expenses to planning for long-term financial objectives,
 ~~~
 python manage.py runserver --settings=django_spend_keeper.settings.dev 
 ~~~
+
+## See url of documentation
+
+~~~
+http://your_ip/api/schema/
+http://your_ip/api/schema/redoc/
+http://your_ip/api/schema/swagger-ui/
+~~~
