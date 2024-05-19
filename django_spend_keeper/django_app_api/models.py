@@ -2,7 +2,6 @@ from django.contrib.auth.base_user import BaseUserManager, AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.core.exceptions import ValidationError
 from django.db import models, IntegrityError
-from django.conf import settings
 
 
 class MyUserManager(BaseUserManager):
@@ -83,7 +82,7 @@ class Category(models.Model):
         (EXPENSE, 'Expense'),
     ]
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='categories')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='categories')
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=20, choices=CATEGORY_TYPE_CHOICES)
     picture = models.ImageField(upload_to='category_pics/', null=True, blank=True)
