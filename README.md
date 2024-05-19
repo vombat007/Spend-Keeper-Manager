@@ -26,3 +26,13 @@ http://your_ip/api/schema/
 http://your_ip/api/schema/redoc/
 http://your_ip/api/schema/swagger-ui/
 ~~~
+
+
+## To run tests use this command:
+~~~
+python manage.py test django_app_api.tests --settings=django_spend_keeper.settings.dev
+ 
+python manage.py test django_app_api.tests.tests_models --settings=django_spend_keeper.settings.dev
+
+python manage.py test django_app_api.tests.tests_views --settings=django_spend_keeper.settings.dev 
+~~~
