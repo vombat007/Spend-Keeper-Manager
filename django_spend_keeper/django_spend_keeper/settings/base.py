@@ -60,6 +60,15 @@ SIMPLE_JWT = {
 
 ROOT_URLCONF = 'django_spend_keeper.urls'
 
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Django Spend-Keeper API',
+    'DESCRIPTION': 'This application provides a finance API to spend money. '
+                   'Before use this application need registrate user by email:(api/registration/) '
+                   'after registration you will get'
+                   ' JWT token and be able to access the weather reminder.',
+    'VERSION': '1.0.0',
+}
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

@@ -23,7 +23,7 @@ class AccountSerializer(serializers.ModelSerializer):
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ["name", "type", "description"]
 
 
 class TransactionSerializer(serializers.ModelSerializer):
