@@ -12,7 +12,7 @@ class FinancialApp(App):
 
         sm = ScreenManager()
 
-        sm.add_widget(HomeScreen(name='home'))
+        sm.add_widget(HomeScreen(screen_manager=sm, name='home'))
         sm.add_widget(RegistrationScreen(name='registration'))
         sm.add_widget(LoginScreen(name='login'))
         sm.add_widget(FinanceScreen(name='finance'))

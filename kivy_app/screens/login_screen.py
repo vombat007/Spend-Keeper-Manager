@@ -9,25 +9,24 @@ from kivy.uix.button import Button
 class LoginScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
+        layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
 
-        layout = BoxLayout(orientation='vertical')
-
-        self.email_input = TextInput(hint_text='Email')
+        self.email_input = TextInput(hint_text='Email', multiline=False)
         layout.add_widget(self.email_input)
 
-        self.password_input = TextInput(hint_text='Password', password=True)
+        self.password_input = TextInput(hint_text='Password', password=True, multiline=False)
         layout.add_widget(self.password_input)
 
-        login_button = Button(text='Login')
+        login_button = Button(text='Login', font_size=18, size_hint=(None, None), size=(200, 50))
         login_button.bind(on_press=self.login)
         layout.add_widget(login_button)
 
+        back_button = Button(text='Back', font_size=18, size_hint=(None, None), size=(200, 50))
+        back_button.bind(on_press=self.go_back)
+        layout.add_widget(back_button)
+
         self.error_label = Label(text='', color=(1, 0, 0, 1))
         layout.add_widget(self.error_label)
-
-        home_button = Button(text='Home')
-        home_button.bind(on_press=self.go_to_home)
-        layout.add_widget(home_button)
 
         self.add_widget(layout)
 
@@ -52,5 +51,5 @@ class LoginScreen(Screen):
         else:
             self.error_label.text = 'Login failed: ' + response.text
 
-    def go_to_home(self, instance):
+    def go_back(self, instance):
         self.manager.current = 'home'

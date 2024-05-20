@@ -1,32 +1,33 @@
 import requests
+from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
-from kivy.uix.button import Button
 
 
 class FinanceScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.token = None
-        self.layout = BoxLayout(orientation='vertical')
-        self.add_widget(self.layout)
+        layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
 
-        self.info_label = Label(text='Finance Info')
-        self.layout.add_widget(self.info_label)
+        self.info_label = Label(text='Finance Info', font_size=18)
 
-        fetch_button = Button(text='Fetch Accounts')
-        fetch_button.bind(on_press=self.fetch_accounts)
-        self.layout.add_widget(fetch_button)
+        back_button = Button(text='Back', font_size=18, size_hint=(None, None), size=(200, 50))
+        back_button.bind(on_press=self.go_back)
+        layout.add_widget(back_button)
 
-        home_button = Button(text='Home')
-        home_button.bind(on_press=self.go_to_home)
-        self.layout.add_widget(home_button)
+        layout.add_widget(self.info_label)
+
+        self.add_widget(layout)
+
+    def on_enter(self):
+        self.fetch_accounts()
 
     def set_token(self, token):
         self.token = token
 
-    def fetch_accounts(self, instance):
+    def fetch_accounts(self):
         if not self.token:
             self.info_label.text = 'No token available'
             return
@@ -42,5 +43,5 @@ class FinanceScreen(Screen):
         else:
             self.info_label.text = 'Failed to fetch accounts: ' + response.text
 
-    def go_to_home(self, instance):
+    def go_back(self, instance):
         self.manager.current = 'home'
