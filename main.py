@@ -10,10 +10,8 @@ class FinancialApp(App):
     def build(self):
         self.title = 'Financial App'
 
-        # Create the screen manager
         sm = ScreenManager()
 
-        # Add screens
         sm.add_widget(HomeScreen(name='home'))
         sm.add_widget(RegistrationScreen(name='registration'))
         sm.add_widget(LoginScreen(name='login'))
