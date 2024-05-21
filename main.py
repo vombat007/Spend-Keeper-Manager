@@ -1,10 +1,10 @@
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
-from kivy_app.screens.home_screen import HomeScreen
-from kivy_app.screens.finance_screen import FinanceScreen
-from kivy_app.screens.login_screen import LoginScreen
-from kivy_app.screens.registration_screen import RegistrationScreen
-from kivy_app.screens.splash_screen import SplashScreen
+from kivy_app.screens.py_file.home_screen import HomeScreen
+from kivy_app.screens.py_file.finance_screen import FinanceScreen
+from kivy_app.screens.py_file.login_screen import LoginScreen
+from kivy_app.screens.py_file.registration_screen import RegistrationScreen
+from kivy_app.screens.py_file.splash_screen import SplashScreen
 
 
 class FinancialApp(App):
