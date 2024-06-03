@@ -2,7 +2,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.anchorlayout import AnchorLayout
 from kivy.uix.label import Label
-from kivy_app.screens.py_file.sidebar_menu import SidebarMenu
+from kivy_app.screens.py_files.sidebar_menu import SidebarMenu
 
 
 class HomeScreen(Screen):

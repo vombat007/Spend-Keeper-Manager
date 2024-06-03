@@ -1,0 +1,92 @@
+<LoginScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [50, 100]
+        spacing: 20
+
+        Label:
+            text: 'Ready to tame your finances?'
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            font_size: 32
+            size_hint_y: None
+            height: self.texture_size[1]
+            color: 0, 0, 0, 1
+            bold: True
+
+        TextInput:
+            id: email_input
+            hint_text: 'Email'
+            multiline: False
+            size_hint_y: None
+            height: 50
+            padding_y: [10, 10]
+            font_size: 18
+            background_normal: ''
+            background_color: 0.95, 0.95, 0.95, 1
+            foreground_color: 0, 0, 0, 1
+
+        TextInput:
+            id: password_input
+            hint_text: 'Password'
+            password: True
+            multiline: False
+            size_hint_y: None
+            height: 50
+            padding_y: [10, 10]
+            font_size: 18
+            background_normal: ''
+            background_color: 0.95, 0.95, 0.95, 1
+            foreground_color: 0, 0, 0, 1
+
+        Button:
+            text: 'Forgot password?'
+            size_hint: None, None
+            size: 200, 50
+            font_size: 14
+            color: 0.1, 0.5, 0.8, 1
+            background_normal: ''
+            background_color: 0.9, 0.9, 0.9, 1
+            on_press: root.forgot_password(self)
+
+        Button:
+            text: 'Login'
+            font_size: 20
+            size_hint: None, None
+            size: 200, 50
+            color: 1, 1, 1, 1
+            background_normal: ''
+            background_color: 0.1, 0.5, 0.8, 1
+            on_press: root.login(self)
+
+        Button:
+            text: 'Sign up now'
+            font_size: 20
+            size_hint: None, None
+            size: 200, 50
+            color: 0.1, 0.5, 0.8, 1
+            background_normal: ''
+            background_color: 0.9, 0.9, 0.9, 1
+            on_press: root.signup(self)
+
+        Button:
+            text: 'Back'
+            font_size: 20
+            size_hint: None, None
+            size: 200, 50
+            color: 0.1, 0.5, 0.8, 1
+            background_normal: ''
+            background_color: 0.9, 0.9, 0.9, 1
+            on_press: root.go_back(self)
+
+        Label:
+            id: error_label
+            text: ''
+            color: 1, 0, 0, 1
+            size_hint_y: None
+            height: self.texture_size[1]
