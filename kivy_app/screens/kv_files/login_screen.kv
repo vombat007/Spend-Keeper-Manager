@@ -17,7 +17,7 @@
             pos_hint: {'center_x': 0.5}
 
         Label:
-            text: 'Ready to tame your finances?'
+            text: 'Ready to tame \nYour finances?'
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
             font_size: 30
             size_hint_y: None
@@ -29,7 +29,7 @@
         BoxLayout:
             orientation: 'vertical'
             size_hint: None, None
-            size: 300, 100  # Adjusted the height here
+            size: 300, 100
             spacing: 5
             pos_hint: {'center_x': 0.5}
 
@@ -37,10 +37,11 @@
                 text: 'Email'
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint_y: None
-                height: 20  # Fixed height value
+                height: 20
                 halign: 'left'
                 color: 0, 0, 0, 1
                 text_size: self.size
+                padding_x: 25  # Adjust padding to move text to the right
 
             TextInput:
                 id: email_input
@@ -50,15 +51,20 @@
                 size_hint_y: None
                 height: 50
                 padding_y: [10, 10]
+                padding_x: [10, 10]
                 font_size: 18
                 background_normal: 'kivy_app/assets/img/Rectangle.png'
                 background_color: 0.95, 0.95, 0.95, 1
                 foreground_color: 0, 0, 0, 1
 
+        Widget:
+            size_hint_y: None
+            height: 20  # Height of the space between email and password fields
+
         BoxLayout:
             orientation: 'vertical'
             size_hint: None, None
-            size: 300, 70  # Adjusted the height here
+            size: 300, 70
             spacing: 5
             pos_hint: {'center_x': 0.5}
 
@@ -66,9 +72,10 @@
                 text: 'Password'
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint_y: None
-                height: 20  # Fixed height value
+                height: 20
                 color: 0, 0, 0, 1
                 text_size: self.size
+                padding_x: 25  # Adjust padding to move text to the right
 
             TextInput:
                 id: password_input
@@ -79,25 +86,25 @@
                 size_hint_y: None
                 height: 50
                 padding_y: [10, 10]
+                padding_x: [10, 10]
                 font_size: 18
                 background_normal: 'kivy_app/assets/img/Rectangle.png'
                 background_color: 0.95, 0.95, 0.95, 1
                 foreground_color: 0, 0, 0, 1
 
-        Button:
-            text: 'Forgot password?'
-            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-            size_hint: None, None
-            size: 150, 30
-            font_size: 14
-            color: 0, 0, 0, 1
-            background_normal: ''
-            background_color: 1, 1, 1, 1
-            on_press: root.forgot_password(self)
-            pos_hint: {'center_x': 0.5}
-
-
-
+            Button:
+                text: 'Forgot password?'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                size_hint: None, None
+                size: 150, 30
+                font_size: 14
+                color: 0, 0, 0, 1
+                background_normal: ''
+                background_color: 1, 1, 1, 1
+                on_press: root.forgot_password(self)
+                halign: 'right'
+                valign: 'middle'
+                pos_hint: {'x': 0.5}  # Adjust position to move button closer to password field
 
         Button:
             size_hint: None, None
@@ -110,7 +117,7 @@
         BoxLayout:
             orientation: 'horizontal'
             size_hint: None, None
-            size: 300, 30  # Adjusted the height here
+            size: 300, 30
             spacing: 5
             pos_hint: {'center_x': 0.5}
 
