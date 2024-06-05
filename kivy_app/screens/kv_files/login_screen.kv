@@ -24,7 +24,7 @@
             height: self.texture_size[1]
             color: 0, 0, 0, 1
             bold: True
-            align: 'center'
+            halign: 'center'
 
         BoxLayout:
             orientation: 'vertical'
@@ -38,7 +38,9 @@
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint_y: None
                 height: 20  # Fixed height value
+                halign: 'left'
                 color: 0, 0, 0, 1
+                text_size: self.size
 
             TextInput:
                 id: email_input
@@ -48,7 +50,7 @@
                 size_hint_y: None
                 height: 50
                 padding_y: [10, 10]
-                font_size: 16
+                font_size: 18
                 background_normal: 'kivy_app/assets/img/Rectangle.png'
                 background_color: 0.95, 0.95, 0.95, 1
                 foreground_color: 0, 0, 0, 1
@@ -66,6 +68,7 @@
                 size_hint_y: None
                 height: 20  # Fixed height value
                 color: 0, 0, 0, 1
+                text_size: self.size
 
             TextInput:
                 id: password_input
@@ -76,7 +79,7 @@
                 size_hint_y: None
                 height: 50
                 padding_y: [10, 10]
-                font_size: 16
+                font_size: 18
                 background_normal: 'kivy_app/assets/img/Rectangle.png'
                 background_color: 0.95, 0.95, 0.95, 1
                 foreground_color: 0, 0, 0, 1
@@ -92,6 +95,9 @@
             background_color: 1, 1, 1, 1
             on_press: root.forgot_password(self)
             pos_hint: {'center_x': 0.5}
+
+
+
 
         Button:
             size_hint: None, None
@@ -111,7 +117,7 @@
             Label:
                 text: 'Dont have account?'
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                font_size: 14
+                font_size: 16
                 size_hint_y: None
                 height: self.texture_size[1]
                 color: 0, 0, 0, 1
@@ -119,9 +125,9 @@
             Button:
                 text: 'Sign up now'
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                font_size: 14
+                font_size: 16
                 size_hint: None, None
-                size: 100, 30
+                size: 90, 18
                 color: 0, 0, 1, 1
                 background_normal: ''
                 background_color: 1, 1, 1, 1
