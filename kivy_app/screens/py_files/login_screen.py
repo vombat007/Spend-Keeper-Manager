@@ -19,8 +19,8 @@ class LoginScreen(Screen):
         if response.status_code == 200:
             self.ids.error_label.text = 'Login successful'
             token = response.json().get('access')
-            self.manager.get_screen('finance').set_token(token)
-            self.manager.current = 'finance'
+            self.manager.get_screen('home').set_token(token)
+            self.manager.current = 'home'
         else:
             self.ids.error_label.text = 'Login failed: ' + response.text
 

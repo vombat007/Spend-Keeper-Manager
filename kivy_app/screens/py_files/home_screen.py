@@ -32,6 +32,13 @@ class HomeScreen(Screen):
         layout.add_widget(self.main_layout)
 
         self.add_widget(layout)
+        self.token = None
+
+    def set_token(self, token):
+        self.token = token
+        # Optionally, you can call some method here to update the home screen content
+        # after setting the token.
+        # self.update_home_screen()
 
     def update_balance(self, balance, expenses, income):
         self.balance_label.text = f'Main Balance: ${balance:.2f}'
