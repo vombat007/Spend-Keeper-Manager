@@ -1,17 +1,62 @@
 <StartScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
     BoxLayout:
         orientation: 'vertical'
-        padding: 20
-        spacing: 20
+        padding: [30, 50]
+        spacing: 15
+
+        Image:
+            source: 'kivy_app/assets/img/frames/frame_3.png'
+            size_hint: None, None
+            size: 200, 200
+            pos_hint: {'center_x': 0.5}
 
         Label:
-            text: 'Welcome to Financial App'
-            font_size: 32
+            text: 'Ready to tame \nYour finances?'
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            font_size: 30
+            size_hint_y: None
+            height: self.texture_size[1]
+            color: 0, 0, 0, 1
+            bold: True
+            halign: 'center'
+
 
         Button:
-            text: 'Login'
-            on_release: root.manager.current = 'login'
+            size_hint: None, None
+            size: 200, 40
+            background_normal: 'kivy_app/assets/img/small_login_button.png'
+            background_down: 'kivy_app/assets/img/small_login_button.png'
+            on_press: root.manager.current = 'login'
+            pos_hint: {'center_x': 0.5}
 
-        Button:
-            text: 'Signup'
-            on_release: root.manager.current = 'registration'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            size: 300, 30
+            spacing: 5
+            pos_hint: {'center_x': 0.5}
+
+            Label:
+                text: 'Dont have account?'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                font_size: 16
+                size_hint_y: None
+                height: self.texture_size[1]
+                color: 0, 0, 0, 1
+
+            Button:
+                text: 'Sign up now'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                font_size: 16
+                size_hint: None, None
+                size: 90, 18
+                color: 0, 0, 1, 1
+                background_normal: ''
+                background_color: 1, 1, 1, 1
+                on_press: root.manager.current = 'registration'
