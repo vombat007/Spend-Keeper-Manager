@@ -1,0 +1,17 @@
+<StartScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
+
+        Label:
+            text: 'Welcome to Financial App'
+            font_size: 32
+
+        Button:
+            text: 'Login'
+            on_release: root.manager.current = 'login'
+
+        Button:
+            text: 'Signup'
+            on_release: root.manager.current = 'registration'

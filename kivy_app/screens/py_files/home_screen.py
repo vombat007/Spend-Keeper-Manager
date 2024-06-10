@@ -36,6 +36,9 @@ class HomeScreen(Screen):
 
     def set_token(self, token):
         self.token = token
+        # Save the token to local storage or some form of persistent storage
+        with open('token.txt', 'w') as token_file:
+            token_file.write(token)
         # Optionally, you can call some method here to update the home screen content
         # after setting the token.
         # self.update_home_screen()

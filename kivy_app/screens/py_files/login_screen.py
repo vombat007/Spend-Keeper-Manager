@@ -25,12 +25,11 @@ class LoginScreen(Screen):
             self.ids.error_label.text = 'Login failed: ' + response.text
 
     def go_back(self, instance):
-        self.manager.current = 'home'
+        self.manager.current = 'start'
 
     def forgot_password(self, instance):
         # Implement forgot password logic
         pass
 
     def signup(self, instance):
-        # Implement signup logic
-        pass
+        self.manager.current = 'registration'
