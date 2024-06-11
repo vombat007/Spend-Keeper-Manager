@@ -1,4 +1,4 @@
-<LoginScreen>:
+<RegistrationScreen>:
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1
@@ -10,14 +10,9 @@
         padding: [30, 50]
         spacing: 15
 
-        Image:
-            source: 'kivy_app/assets/img/frames/frame_3.png'
-            size_hint: None, None
-            size: 200, 200
-            pos_hint: {'center_x': 0.5}
 
         Label:
-            text: 'Ready to tame \nYour finances?'
+            text: 'HI! \nCreate a \nNew account !'
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
             font_size: 30
             size_hint_y: None
@@ -38,7 +33,7 @@
         BoxLayout:
             orientation: 'vertical'
             size_hint: None, None
-            size: 300, 40
+            size: 300, 50
             spacing: 5
             pos_hint: {'center_x': 0.5}
 
@@ -103,26 +98,12 @@
                 background_color: 0.95, 0.95, 0.95, 1
                 foreground_color: 0, 0, 0, 1
 
-            Button:
-                text: 'Forgot password?'
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                size_hint: None, None
-                size: 150, 30
-                font_size: 14
-                color: 0, 0, 0, 1
-                background_normal: ''
-                background_color: 1, 1, 1, 1
-                on_press: root.forgot_password(self)
-                halign: 'right'
-                valign: 'middle'
-                pos_hint: {'x': 0.5}  # Adjust position to move button closer to password field
-
         Button:
             size_hint: None, None
             size: 200, 40
-            background_normal: 'kivy_app/assets/img/small_login_button.png'
-            background_down: 'kivy_app/assets/img/small_login_button.png'
-            on_press: root.login(self)
+            background_normal: 'kivy_app/assets/img/sing_up_button.png'
+            background_down: 'kivy_app/assets/img/sing_up_button.png'
+            on_press: root.register(self)
             pos_hint: {'center_x': 0.5}
 
         BoxLayout:
@@ -133,7 +114,7 @@
             pos_hint: {'center_x': 0.5}
 
             Label:
-                text: 'Dont have account?'
+                text: 'Already have account?'
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 font_size: 16
                 size_hint_y: None
@@ -141,7 +122,7 @@
                 color: 0, 0, 0, 1
 
             Button:
-                text: 'Sign up now'
+                text: 'Sign in now'
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 font_size: 16
                 size_hint: None, None
@@ -149,4 +130,3 @@
                 color: 0, 0, 1, 1
                 background_normal: ''
                 background_color: 1, 1, 1, 1
-                on_press: root.signup(self)
