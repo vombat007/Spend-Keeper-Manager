@@ -62,9 +62,6 @@
                 background_color: 0.95, 0.95, 0.95, 1
                 foreground_color: 0, 0, 0, 1
 
-        Widget:
-            size_hint_y: None
-            height: 20  # Height of the space between email and password fields
 
         BoxLayout:
             orientation: 'vertical'
@@ -130,3 +127,4 @@
                 color: 0, 0, 1, 1
                 background_normal: ''
                 background_color: 1, 1, 1, 1
+                on_press: root.signin(self)

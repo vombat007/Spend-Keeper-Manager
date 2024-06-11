@@ -1,9 +1,5 @@
 import requests
 from kivy.uix.screenmanager import Screen
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
-from kivy.uix.button import Button
 
 
 class RegistrationScreen(Screen):
@@ -29,3 +25,6 @@ class RegistrationScreen(Screen):
 
     def go_back(self, instance):
         self.manager.current = 'home'
+
+    def signin(self, instance):
+        self.manager.current = 'login'
