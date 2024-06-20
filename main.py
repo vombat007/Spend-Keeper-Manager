@@ -18,6 +18,7 @@ class FinancialApp(App):
         Builder.load_file('kivy_app/screens/kv_files/start_screen.kv')  # Load StartScreen KV
         Builder.load_file('kivy_app/screens/kv_files/login_screen.kv')
         Builder.load_file('kivy_app/screens/kv_files/registration_screen.kv')
+        Builder.load_file('kivy_app/screens/kv_files/home_screen.kv')
 
         sm = ScreenManager()
 
