@@ -6,14 +6,10 @@
             size: self.size
             pos: self.pos
     sidebar: sidebar_menu_id
-    BoxLayout:
-        orientation: 'horizontal'
-
-        SidebarMenu:
-            id: sidebar_menu_id
-
+    FloatLayout:
         BoxLayout:
             orientation: 'vertical'
+            size_hint: 1, 1
 
             BoxLayout:
                 orientation: 'horizontal'
@@ -50,3 +46,9 @@
                     text: 'Income: $0.00'
                     color: 0, 0, 0, 1
                     font_size: 18
+
+        SidebarMenu:
+            id: sidebar_menu_id
+            size_hint: None, 1
+            width: 250
+            x: -self.width

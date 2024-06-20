@@ -1,4 +1,5 @@
 from kivy.uix.boxlayout import BoxLayout
+from kivy.animation import Animation
 
 
 class SidebarMenu(BoxLayout):
@@ -7,6 +8,7 @@ class SidebarMenu(BoxLayout):
 
     def toggle_sidebar(self):
         if self.x == 0:
-            self.x = -self.width
+            anim = Animation(x=-self.width, duration=0.3)
         else:
-            self.x = 0
+            anim = Animation(x=0, duration=0.3)
+        anim.start(self)
