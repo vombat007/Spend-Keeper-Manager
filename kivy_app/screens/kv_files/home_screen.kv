@@ -11,16 +11,16 @@
             orientation: 'vertical'
             size_hint: 1, 1
 
-            BoxLayout:
-                orientation: 'horizontal'
+            FloatLayout:
                 size_hint_y: None
                 height: '50dp'
                 padding: '10dp'
 
-                Button:
-                    text: '☰'
-                    size_hint_x: None
-                    width: '50dp'
+                CustomSidebarButton:
+                    id: sidebar_toggle_button
+                    size_hint: None, None
+                    size: '50dp', '50dp'
+                    pos_hint: {'x': 0, 'center_y': 0.5}
                     on_release: root.toggle_sidebar()
 
             BoxLayout:
