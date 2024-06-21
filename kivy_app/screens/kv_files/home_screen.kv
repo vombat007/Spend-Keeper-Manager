@@ -11,18 +11,6 @@
             orientation: 'vertical'
             size_hint: 1, 1
 
-            FloatLayout:
-                size_hint_y: None
-                height: '50dp'
-                padding: '10dp'
-
-                CustomSidebarButton:
-                    id: sidebar_toggle_button
-                    size_hint: None, None
-                    size: '50dp', '50dp'
-                    pos_hint: {'x': 0, 'center_y': 0.5}
-                    on_release: root.toggle_sidebar()
-
             BoxLayout:
                 id: main_layout
                 orientation: 'vertical'
@@ -52,3 +40,10 @@
             size_hint: None, 1
             width: 250
             x: -self.width
+
+        CustomSidebarButton:
+            id: sidebar_toggle_button
+            size_hint: None, None
+            size: '54dp', '53dp'
+            pos_hint: {'x': 0, 'y': 0.90}
+            on_release: root.toggle_sidebar()
