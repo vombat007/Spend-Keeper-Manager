@@ -33,11 +33,6 @@ class HomeScreen(Screen):
         with open('token.txt', 'w') as token_file:
             token_file.write(token)
 
-    def update_balance(self, balance, expenses, income):
-        self.ids.balance_label.text = f'Main Balance: ${balance:.2f}'
-        self.ids.expenses_label.text = f'Expenses: ${expenses:.2f}'
-        self.ids.income_label.text = f'Income: ${income:.2f}'
-
     def toggle_sidebar(self):
         button = self.ids.sidebar_toggle_button
         button.toggle()

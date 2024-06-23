@@ -177,6 +177,7 @@ class AccountSummaryView(APIView):
             percent_spent = 0
 
         data = {
+            'total_balance': account.total_balance,  # Add this line
             'income': income,
             'expense': abs(expense),  # Ensure expense is positive for the response
             'percent_spent': percent_spent
