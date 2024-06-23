@@ -2,8 +2,8 @@ from django.urls import path
 from . import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
-from .views import RegisterView, AccountsListView, CategoryListCreateView, SavingCreateView, \
-    AccountDetailView, TransactionListCreateView, TransactionDetailView
+from .views import RegisterView, AccountsListView, CategoryListCreateView, SavingCreateView, AccountSummaryView
+from .views import AccountDetailView, TransactionListCreateView, TransactionDetailView
 
 urlpatterns = [
 
@@ -22,6 +22,8 @@ urlpatterns = [
 
     path('api/categories/', CategoryListCreateView.as_view(), name='category-list'),
     path('api/categorie/<int:pk>/', views.CategoryDetailView.as_view(), name='category-detail'),
+
+    path('api/account/<int:account_id>/summary/', AccountSummaryView.as_view(), name='account-summary'),
 
     # Swagger URLs
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
