@@ -9,6 +9,7 @@ from kivy_app.screens.py_files.registration_screen import RegistrationScreen
 from kivy_app.screens.py_files.splash_screen import SplashScreen
 from kivy_app.screens.py_files.start_screen import StartScreen
 from kivy_app.screens.py_files.sidebar_menu import SidebarMenu
+from kivy_app.screens.py_files.custom_chart import CircularChart
 
 
 class FinancialApp(App):

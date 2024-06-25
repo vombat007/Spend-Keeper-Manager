@@ -1,3 +1,5 @@
+#:import CircularChart kivy_app.screens.py_files.custom_chart.CircularChart
+
 <HomeScreen>:
     canvas.before:
         Color:
@@ -6,6 +8,7 @@
             size: self.size
             pos: self.pos
     sidebar: sidebar_menu_id
+    chart: chart_id
     FloatLayout:
         BoxLayout:
             orientation: 'vertical'
@@ -23,3 +26,25 @@
             size: '54dp', '53dp'
             pos_hint: {'x': 0, 'y': 0.90}
             on_release: root.toggle_sidebar()
+
+
+        Button:
+            text: 'go_finance'
+            font_size: 16
+            size_hint: None, None
+            size: 90, 18
+            color: 0, 0, 1, 1
+            background_normal: ''
+            background_color: 1, 1, 1, 1
+            on_press: root.go_finance(self)
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [50, 280]
+        spacing: 15
+
+        CircularChart:
+            id: chart_id
+            size_hint: None, None
+            size: 300, 300
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
