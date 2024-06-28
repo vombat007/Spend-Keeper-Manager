@@ -10,8 +10,21 @@ from .utils import generate_jwt_token
 from .models import Account, Category, Transaction
 from django.utils import timezone
 from django.db.models import Sum
-from django.utils.dateparse import parse_datetime
 from datetime import timedelta, datetime
+from rest_framework_simplejwt.tokens import RefreshToken
+
+
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        try:
+            refresh_token = request.data["refresh_token"]
+            token = RefreshToken(refresh_token)
+            token.blacklist()
+            return Response(status=status.HTTP_205_RESET_CONTENT)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 
 
 class RegisterView(APIView):
@@ -185,4 +198,3 @@ class AccountSummaryView(APIView):
         }
 
         return Response(data)
-

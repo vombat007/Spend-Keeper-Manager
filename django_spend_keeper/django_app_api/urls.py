@@ -3,7 +3,7 @@ from . import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
 from .views import RegisterView, AccountsListView, CategoryListCreateView, SavingCreateView, AccountSummaryView
-from .views import AccountDetailView, TransactionListCreateView, TransactionDetailView
+from .views import AccountDetailView, TransactionListCreateView, TransactionDetailView, LogoutView
 
 urlpatterns = [
 
@@ -13,6 +13,8 @@ urlpatterns = [
     path('api/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/login/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/login/verify/', TokenVerifyView.as_view(), name='token_verify'),
+
+    path('api/logout/', LogoutView.as_view(), name='auth_logout'),
 
     path('api/accounts/', AccountsListView.as_view(), name='user-account-detail'),
     path('api/account/<int:pk>/', AccountDetailView.as_view(), name='account-detail'),
