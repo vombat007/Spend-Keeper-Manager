@@ -1,5 +1,6 @@
 import requests
 from kivy.uix.screenmanager import Screen
+import json
 
 
 class LoginScreen(Screen):
@@ -18,8 +19,10 @@ class LoginScreen(Screen):
 
         if response.status_code == 200:
             self.ids.error_label.text = 'Login successful'
-            token = response.json().get('access')
-            self.manager.get_screen('home').set_token(token)
+            tokens = response.json()
+            with open('tokens.json', 'w') as token_file:
+                json.dump(tokens, token_file)
+            self.manager.get_screen('home').token = tokens.get('access')
             self.manager.current = 'home'
         else:
             self.ids.error_label.text = 'Login failed: ' + response.text

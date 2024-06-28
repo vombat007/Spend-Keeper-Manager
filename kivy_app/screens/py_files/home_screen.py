@@ -1,8 +1,11 @@
+from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
 from kivy.animation import Animation
 import requests
+import json
+import os
 
 
 class CustomSidebarButton(Button):
@@ -28,15 +31,28 @@ class HomeScreen(Screen):
 
     def __init__(self, screen_manager, **kwargs):
         super().__init__(**kwargs)
-        self.token = None
+        self.token = self.load_token()
 
-    def set_token(self, token):
-        self.token = token
-        with open('token.txt', 'w') as token_file:
-            token_file.write(token)
+    @staticmethod
+    def load_token():
+        if os.path.exists('tokens.json'):
+            with open('tokens.json', 'r') as token_file:
+                tokens = json.load(token_file)
+                return tokens.get('access')
+        return None
 
     def on_pre_enter(self):
+        self.token = self.refresh_token_if_needed()
         self.fetch_account_summary()
+
+    def refresh_token_if_needed(self):
+        response = requests.post('http://127.0.0.1:8000/api/login/verify/', data={
+            'token': self.token
+        })
+        if response.status_code != 200:
+            app = App.get_running_app()
+            self.token = app.refresh_token()
+        return self.token
 
     def fetch_account_summary(self):
         headers = {'Authorization': f'Bearer {self.token}'}
