@@ -61,6 +61,7 @@ class HomeScreen(Screen):
             data = response.json()
             self.chart.total_balance = data['total_balance']
             self.chart.percent_spent = data['percent_spent']
+            self.chart.account_name = data['account_name']
         else:
             print("Failed to fetch account summary")
 
