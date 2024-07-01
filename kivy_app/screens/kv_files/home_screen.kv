@@ -1,5 +1,13 @@
 #:import CircularChart kivy_app.widget.custom_chart.CircularChart
 
+<CustomButton@Button>:
+    background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+    background_down: 'kivy_app/assets/img/Rectangle_down.png'
+    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+    color: 0, 0, 0, 1
+    on_state: self.update_button_state(self.state)
+
+
 <HomeScreen>:
     canvas.before:
         Color:
@@ -120,45 +128,36 @@
         BoxLayout:
             orientation: 'horizontal'
             size_hint: None, None
-            size: 300, 50
+            size: 370, 50
             pos_hint: {'center_x': 0.5, 'center_y': 0.05}
             spacing: 10
 
-            Button:
+            CustomButton:
                 text: 'Day'
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint: None, None
-                size: 50, 50
-                background_color: 1, 1, 0, 1
+                size: 70, 35
                 on_release: root.set_period('day')
 
-            Button:
+            CustomButton:
                 text: 'Week'
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint: None, None
-                size: 50, 50
-                background_color: 1, 1, 0, 1
+                size: 70, 35
                 on_release: root.set_period('week')
 
-            Button:
+            CustomButton:
                 text: 'Month'
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint: None, None
-                size: 50, 50
-                background_color: 1, 1, 0, 1
+                size: 70, 35
                 on_release: root.set_period('month')
 
-            Button:
+            CustomButton:
                 text: 'Year'
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint: None, None
-                size: 50, 50
-                background_color: 1, 1, 0, 1
+                size: 70, 35
                 on_release: root.set_period('year')
 
-            Button:
+            CustomButton:
                 text: 'Period'
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint: None, None
-                size: 50, 50
-                background_color: 1, 1, 0, 1
+                size: 70, 35
+                on_release: root.set_period('period')

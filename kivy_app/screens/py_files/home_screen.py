@@ -25,6 +25,16 @@ class CustomSidebarButton(Button):
             self.background_normal = 'kivy_app/assets/img/settings_button.png'
 
 
+class CustomButton(Button):
+    def update_button_state(self, state):
+        if state == 'down':
+            self.background_color = (1, 1, 0, 1)
+            self.color = (0, 0, 0, 1)
+        else:
+            self.background_color = (1, 1, 1, 1)
+            self.color = (0, 0, 0, 1)
+
+
 class HomeScreen(Screen):
     sidebar = ObjectProperty(None)
     chart = ObjectProperty(None)
