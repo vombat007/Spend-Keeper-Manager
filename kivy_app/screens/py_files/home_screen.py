@@ -28,6 +28,7 @@ class CustomSidebarButton(Button):
 class HomeScreen(Screen):
     sidebar = ObjectProperty(None)
     chart = ObjectProperty(None)
+    selected_period = 'year'  # Default period
 
     def __init__(self, screen_manager, **kwargs):
         super().__init__(**kwargs)
@@ -56,12 +57,10 @@ class HomeScreen(Screen):
 
     def fetch_account_summary(self):
         headers = {'Authorization': f'Bearer {self.token}'}
-        response = requests.get('http://127.0.0.1:8000/api/account/1/summary/?period=year', headers=headers)
+        response = requests.get(f'http://127.0.0.1:8000/api/account/1/summary/?period={self.selected_period}', headers=headers)
         if response.status_code == 200:
             data = response.json()
-            self.chart.total_balance = data['total_balance']
-            self.chart.percent_spent = data['percent_spent']
-            self.chart.account_name = data['account_name']
+            self.chart.update_chart(data['total_balance'], data['percent_spent'], data['account_name'])
         else:
             print("Failed to fetch account summary")
 
@@ -77,3 +76,7 @@ class HomeScreen(Screen):
 
     def go_finance(self, instance):
         self.manager.current = 'finance'
+
+    def set_period(self, period):
+        self.selected_period = period
+        self.fetch_account_summary()

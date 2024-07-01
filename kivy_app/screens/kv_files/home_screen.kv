@@ -47,3 +47,45 @@
             size_hint: None, None
             size: 300, 300
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: 300, 50
+        pos_hint: {'center_x': 0.5, 'center_y': 0.1}
+        spacing: 10
+
+        Button:
+            text: 'Day'
+            size_hint: None, None
+            size: 50, 50
+            background_color: 1, 1, 0, 1
+            on_release: root.set_period('day')
+
+        Button:
+            text: 'Week'
+            size_hint: None, None
+            size: 50, 50
+            background_color: 1, 1, 0, 1
+            on_release: root.set_period('week')
+
+        Button:
+            text: 'Month'
+            size_hint: None, None
+            size: 50, 50
+            background_color: 1, 1, 0, 1
+            on_release: root.set_period('month')
+
+        Button:
+            text: 'Year'
+            size_hint: None, None
+            size: 50, 50
+            background_color: 1, 1, 0, 1
+            on_release: root.set_period('year')
+
+        Button:
+            text: 'Period'
+            size_hint: None, None
+            size: 50, 50
+            background_color: 1, 1, 0, 1
+            on_release: root.set_period('period')

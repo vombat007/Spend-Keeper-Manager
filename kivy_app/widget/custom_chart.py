@@ -26,7 +26,6 @@ Builder.load_string('''
             width: self.line_width
 ''')
 
-
 class CircularChart(Widget):
     total_balance = NumericProperty(0)
     percent_spent = NumericProperty(0)
@@ -80,3 +79,9 @@ class CircularChart(Widget):
         text_pos = (x - text_texture.width / 2, y - text_texture.height / 2)
         Color(0, 0, 0, 1)
         Rectangle(texture=text_texture, pos=text_pos, size=text_texture.size)
+
+    def update_chart(self, total_balance, percent_spent, account_name):
+        self.total_balance = total_balance
+        self.percent_spent = percent_spent
+        self.account_name = account_name
+        self.update_canvas()
