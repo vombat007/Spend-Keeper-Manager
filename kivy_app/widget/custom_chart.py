@@ -26,6 +26,7 @@ Builder.load_string('''
             width: self.line_width
 ''')
 
+
 class CircularChart(Widget):
     total_balance = NumericProperty(0)
     percent_spent = NumericProperty(0)
@@ -72,7 +73,8 @@ class CircularChart(Widget):
 
             self.draw_text(f'Spend %: {self.percent_spent}', self.center_x, self.center_y - 50)
 
-    def draw_text(self, text, x, y):
+    @staticmethod
+    def draw_text(text, x, y):
         label = CoreLabel(text=text, font_size=20, color=(0, 0, 0, 1))
         label.refresh()
         text_texture = label.texture

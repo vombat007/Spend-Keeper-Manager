@@ -39,7 +39,7 @@
 
     BoxLayout:
         orientation: 'vertical'
-        padding: [50, 280]
+        padding: [50, 130]
         spacing: 15
 
         CircularChart:
@@ -48,44 +48,117 @@
             size: 300, 300
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-    BoxLayout:
-        orientation: 'horizontal'
-        size_hint: None, None
-        size: 300, 50
-        pos_hint: {'center_x': 0.5, 'center_y': 0.1}
-        spacing: 10
-
-        Button:
-            text: 'Day'
+        BoxLayout:
+            orientation: 'horizontal'
             size_hint: None, None
-            size: 50, 50
-            background_color: 1, 1, 0, 1
-            on_release: root.set_period('day')
+            size: 300, 50
+            pos_hint: {'center_x': 0.5, 'center_y': 0.37}
+            spacing: 140
 
-        Button:
-            text: 'Week'
-            size_hint: None, None
-            size: 50, 50
-            background_color: 1, 1, 0, 1
-            on_release: root.set_period('week')
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: 90, 32
+                spacing: 5
 
-        Button:
-            text: 'Month'
-            size_hint: None, None
-            size: 50, 50
-            background_color: 1, 1, 0, 1
-            on_release: root.set_period('month')
+                FloatLayout:
+                    size_hint: None, None
+                    size: 32, 32
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 0, 1  # Yellow color
+                        Ellipse:
+                            size: self.size
+                            pos: self.pos
+                        Color:
+                            rgba: 0, 0, 0, 1  # Black color for outline
+                        Line:
+                            width: 1
+                            ellipse: (self.x, self.y, self.width, self.height)
 
-        Button:
-            text: 'Year'
-            size_hint: None, None
-            size: 50, 50
-            background_color: 1, 1, 0, 1
-            on_release: root.set_period('year')
+                Label:
+                    text: 'Left'
+                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    size_hint: None, None
+                    size: 50, 32
+                    valign: 'middle'
+                    halign: 'left'
+                    color: 0, 0, 0, 1
+                    text_size: self.size
 
-        Button:
-            text: 'Period'
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: 90, 32
+                spacing: 5
+
+                FloatLayout:
+                    size_hint: None, None
+                    size: 32, 32
+                    canvas.before:
+                        Color:
+                            rgba: 0.5, 0.5, 0.5, 1  # Gray color
+                        Ellipse:
+                            size: self.size
+                            pos: self.pos
+                        Color:
+                            rgba: 0, 0, 0, 1  # Black color for outline
+                        Line:
+                            width: 1
+                            ellipse: (self.x, self.y, self.width, self.height)
+
+                Label:
+                    text: 'Spend'
+                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    size_hint: None, None
+                    size: 50, 32
+                    valign: 'middle'
+                    halign: 'left'
+                    color: 0, 0, 0, 1
+                    text_size: self.size
+
+        BoxLayout:
+            orientation: 'horizontal'
             size_hint: None, None
-            size: 50, 50
-            background_color: 1, 1, 0, 1
-            on_release: root.set_period('period')
+            size: 300, 50
+            pos_hint: {'center_x': 0.5, 'center_y': 0.05}
+            spacing: 10
+
+            Button:
+                text: 'Day'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                size_hint: None, None
+                size: 50, 50
+                background_color: 1, 1, 0, 1
+                on_release: root.set_period('day')
+
+            Button:
+                text: 'Week'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                size_hint: None, None
+                size: 50, 50
+                background_color: 1, 1, 0, 1
+                on_release: root.set_period('week')
+
+            Button:
+                text: 'Month'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                size_hint: None, None
+                size: 50, 50
+                background_color: 1, 1, 0, 1
+                on_release: root.set_period('month')
+
+            Button:
+                text: 'Year'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                size_hint: None, None
+                size: 50, 50
+                background_color: 1, 1, 0, 1
+                on_release: root.set_period('year')
+
+            Button:
+                text: 'Period'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                size_hint: None, None
+                size: 50, 50
+                background_color: 1, 1, 0, 1
