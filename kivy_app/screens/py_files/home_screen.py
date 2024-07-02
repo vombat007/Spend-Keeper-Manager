@@ -26,23 +26,39 @@ class CustomSidebarButton(Button):
 
 
 class CustomButton(Button):
-    def update_button_state(self, state):
-        if state == 'down':
-            self.background_color = (1, 1, 0, 1)
+    all_buttons = []
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.register_button()
+
+    def register_button(self):
+        CustomButton.all_buttons.append(self)
+
+    def on_release(self):
+        if self.state == 'down':
+            self.background_normal = 'kivy_app/assets/img/Rectangle_down.png'
             self.color = (0, 0, 0, 1)
+            self.deselect_other_buttons()
         else:
-            self.background_color = (1, 1, 1, 1)
-            self.color = (0, 0, 0, 1)
+            self.state = 'down'
+
+    def deselect_other_buttons(self):
+        for button in CustomButton.all_buttons:
+            if button != self:
+                button.state = 'normal'
+                button.background_normal = 'kivy_app/assets/img/Rectangle_normal.png'
 
 
 class HomeScreen(Screen):
     sidebar = ObjectProperty(None)
     chart = ObjectProperty(None)
-    selected_period = 'year'  # Default period
+    selected_period = 'month'  # Default period
 
     def __init__(self, screen_manager, **kwargs):
         super().__init__(**kwargs)
         self.token = self.load_token()
+        self.selected_button = None
 
     @staticmethod
     def load_token():
@@ -54,7 +70,7 @@ class HomeScreen(Screen):
 
     def on_pre_enter(self):
         self.token = self.refresh_token_if_needed()
-        self.fetch_account_summary()
+        self.set_default_selected_button()
 
     def refresh_token_if_needed(self):
         response = requests.post('http://127.0.0.1:8000/api/login/verify/', data={
@@ -67,7 +83,8 @@ class HomeScreen(Screen):
 
     def fetch_account_summary(self):
         headers = {'Authorization': f'Bearer {self.token}'}
-        response = requests.get(f'http://127.0.0.1:8000/api/account/1/summary/?period={self.selected_period}', headers=headers)
+        response = requests.get(f'http://127.0.0.1:8000/api/account/1/summary/?period='
+                                f'{self.selected_period}', headers=headers)
         if response.status_code == 200:
             data = response.json()
             self.chart.update_chart(data['total_balance'], data['percent_spent'], data['account_name'])
@@ -90,3 +107,9 @@ class HomeScreen(Screen):
     def set_period(self, period):
         self.selected_period = period
         self.fetch_account_summary()
+
+    def set_default_selected_button(self):
+        if not self.selected_button:
+            self.selected_button = self.ids.month_button
+            self.selected_button.state = 'down'
+            self.set_period('month')

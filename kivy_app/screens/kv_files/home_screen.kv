@@ -5,8 +5,6 @@
     background_down: 'kivy_app/assets/img/Rectangle_down.png'
     font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
     color: 0, 0, 0, 1
-    on_state: self.update_button_state(self.state)
-
 
 <HomeScreen>:
     canvas.before:
@@ -136,28 +134,39 @@
                 text: 'Day'
                 size_hint: None, None
                 size: 70, 35
-                on_release: root.set_period('day')
+                on_release:
+                    root.set_period('day')
+                    self.state = 'down'
 
             CustomButton:
                 text: 'Week'
                 size_hint: None, None
                 size: 70, 35
-                on_release: root.set_period('week')
+                on_release:
+                    root.set_period('week')
+                    self.state = 'down'
 
             CustomButton:
+                id: month_button
                 text: 'Month'
                 size_hint: None, None
                 size: 70, 35
-                on_release: root.set_period('month')
+                on_release:
+                    root.set_period('month')
+                    self.state = 'down'
 
             CustomButton:
                 text: 'Year'
                 size_hint: None, None
                 size: 70, 35
-                on_release: root.set_period('year')
+                on_release:
+                    root.set_period('year')
+                    self.state = 'down'
 
             CustomButton:
                 text: 'Period'
                 size_hint: None, None
                 size: 70, 35
-                on_release: root.set_period('period')
+                on_release:
+                    root.set_period('period')
+                    self.state = 'down'
