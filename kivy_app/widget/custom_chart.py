@@ -69,13 +69,13 @@ class CircularChart(Widget):
             # Draw the account name in the center
             self.draw_text(self.account_name, self.center_x, self.center_y + 60)
             # Draw the total balance in the center
-            self.draw_text(f'Balance $: {self.total_balance}', self.center_x, self.center_y - 10)
+            self.draw_text(f'Balance $ {self.total_balance}', self.center_x, self.center_y - 10)
 
-            self.draw_text(f'Spend %: {self.percent_spent}', self.center_x, self.center_y - 50)
+            self.draw_text(f'Spend % {self.percent_spent}', self.center_x, self.center_y - 50)
 
-    @staticmethod
-    def draw_text(text, x, y):
-        label = CoreLabel(text=text, font_size=20, color=(0, 0, 0, 1))
+    def draw_text(self, text, x, y):
+        font_path = 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'  # Specify the path to your custom font
+        label = CoreLabel(text=text, font_size=20, color=(0, 0, 0, 1), font_name=font_path)
         label.refresh()
         text_texture = label.texture
         text_pos = (x - text_texture.width / 2, y - text_texture.height / 2)
