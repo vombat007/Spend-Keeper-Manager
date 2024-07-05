@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from kivy.app import App
+from kivymd.app import MDApp
 from kivy.uix.screenmanager import ScreenManager
 from kivy.lang import Builder
 from kivy_app.screens.py_files.home_screen import HomeScreen
@@ -13,7 +13,7 @@ from kivy_app.screens.py_files.start_screen import StartScreen
 from kivy_app.screens.py_files.sidebar_menu import SidebarMenu
 
 
-class FinancialApp(App):
+class FinancialApp(MDApp):
     def build(self):
         self.title = 'Financial App'
 
