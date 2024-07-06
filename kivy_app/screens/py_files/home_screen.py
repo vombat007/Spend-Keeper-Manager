@@ -1,15 +1,13 @@
 from kivy.app import App
-from kivy.metrics import dp
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
 from kivy.animation import Animation
-from kivy.clock import Clock
 from kivymd.uix.pickers import MDDockedDatePicker
 import requests
 import json
 import os
-from datetime import datetime
+from kivy.core.window import Window
 
 
 class CustomSidebarButton(Button):
@@ -122,14 +120,14 @@ class HomeScreen(Screen):
         if period == 'period':
             date_picker = MDDockedDatePicker(mode='range')
             date_picker.bind(on_ok=self.on_ok, on_cancel=self.on_cancel)
+            center_x = (Window.width - date_picker.width) / 2
+            center_y = (Window.height - date_picker.height) / 2
+            date_picker.pos = (center_x, center_y)
             date_picker.open()
         else:
             self.fetch_account_summary()
 
     def on_ok(self, instance):
-        date_range = instance
-        print(instance.get_date()[0].strftime('%Y-%m-%d'))
-        print(instance.get_date()[-1].strftime('%Y-%m-%d'))
         self.start_date = instance.get_date()[0].strftime('%Y-%m-%d')
         self.end_date = instance.get_date()[-1].strftime('%Y-%m-%d')
         self.fetch_account_summary()

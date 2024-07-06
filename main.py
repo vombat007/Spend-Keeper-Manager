@@ -16,6 +16,7 @@ from kivy_app.screens.py_files.sidebar_menu import SidebarMenu
 class FinancialApp(MDApp):
     def build(self):
         self.title = 'Financial App'
+        self.theme_cls.primary_palette = "Whitesmoke"  # Use Thema for Data picker
 
         # Load the KV files
         Builder.load_file('kivy_app/screens/kv_files/start_screen.kv')
