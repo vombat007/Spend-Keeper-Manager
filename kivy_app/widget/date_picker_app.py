@@ -1,14 +1,13 @@
 from kivy.app import App
 from kivy.uix.floatlayout import FloatLayout
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.properties import StringProperty
+from kivy.clock import Clock
 from datetime import datetime, timedelta
 
-Builder.load_file('DatePickerApp.kv')
+Builder.load_file('date_picker_app.kv')
 
 
 class DatePicker(FloatLayout):
@@ -28,16 +27,23 @@ class DatePicker(FloatLayout):
     def update_header(self):
         self.ids.header.clear_widgets()
 
-        prev_button = Button(text='<', size_hint=(None, None), size=(40, 40), background_normal='', background_down='',
-                             background_color=(0.9, 0.9, 0.9, 1), color=(0, 0, 0, 1))
+        prev_button = Button(size_hint=(None, None), size=(45, 32),
+                             background_normal='Button_arrow_left_normal.png',
+                             background_down='Button_arrow_left_down.png'
+                             )
         prev_button.bind(on_press=self.prev_month)
         self.ids.header.add_widget(prev_button)
 
-        self.month_year_label = Label(text=self.selected_date.strftime('%B %Y'), size_hint=(None, None), size=(200, 40), color=(0, 0, 0, 1))
+        self.month_year_label = Label(text=self.selected_date.strftime('%B %Y'),
+                                      size_hint=(None, None),
+                                      size=(200, 40),
+                                      color=(0, 0, 0, 1))
         self.ids.header.add_widget(self.month_year_label)
 
-        next_button = Button(text='>', size_hint=(None, None), size=(40, 40), background_normal='', background_down='',
-                             background_color=(0.9, 0.9, 0.9, 1), color=(0, 0, 0, 1))
+        next_button = Button(size_hint=(None, None), size=(45, 32),
+                             background_normal='Button_arrow_right_normal.png',
+                             background_down='Button_arrow_right_down.png'
+                             )
         next_button.bind(on_press=self.next_month)
         self.ids.header.add_widget(next_button)
 
@@ -93,6 +99,9 @@ class DatePicker(FloatLayout):
         self.ids.footer.add_widget(done_button)
 
     def prev_month(self, instance):
+        Clock.schedule_once(self._prev_month_callback, 0.1)
+
+    def _prev_month_callback(self, dt):
         first_day = self.selected_date.replace(day=1)
         prev_month = first_day - timedelta(days=1)
         self.selected_date = prev_month.replace(day=1)
@@ -100,6 +109,9 @@ class DatePicker(FloatLayout):
         self.update_body()
 
     def next_month(self, instance):
+        Clock.schedule_once(self._next_month_callback, 0.1)
+
+    def _next_month_callback(self, dt):
         first_day = self.selected_date.replace(day=1)
         next_month = first_day + timedelta(days=31)
         self.selected_date = next_month.replace(day=1)

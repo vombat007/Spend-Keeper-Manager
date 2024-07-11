@@ -4,6 +4,11 @@
     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
     canvas.before:
         Color:
+            rgba: 0, 0, 0, 1
+        Line:
+            width: 2
+            rounded_rectangle: self.x, self.y, self.width, self.height, 20, 20, 20, 20
+        Color:
             rgba: 1, 1, 1, 1
         RoundedRectangle:
             pos: self.pos
@@ -55,7 +60,13 @@
             size: self.size
             radius: [10,]
 
-<DateButton@Button>:
+<DayLabel@Label>:
+    font_size: 18
+    size_hint: (None, None)
+    size: (40, 40)
+    color: (0, 0, 0, 1)
+
+<DayButton@Button>:
     font_size: 18
     size_hint: (None, None)
     size: (40, 40)
