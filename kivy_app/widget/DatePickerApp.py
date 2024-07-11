@@ -1,4 +1,5 @@
 from kivy.app import App
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.label import Label
@@ -10,7 +11,7 @@ from datetime import datetime, timedelta
 Builder.load_file('DatePickerApp.kv')
 
 
-class DatePicker(BoxLayout):
+class DatePicker(FloatLayout):
     current_date = StringProperty()
 
     def __init__(self, **kwargs):
@@ -28,15 +29,15 @@ class DatePicker(BoxLayout):
         self.ids.header.clear_widgets()
 
         prev_button = Button(text='<', size_hint=(None, None), size=(40, 40), background_normal='', background_down='',
-                             background_color=(0.9, 0.9, 0.9, 1))
+                             background_color=(0.9, 0.9, 0.9, 1), color=(0, 0, 0, 1))
         prev_button.bind(on_press=self.prev_month)
         self.ids.header.add_widget(prev_button)
 
-        self.month_year_label = Label(text=self.selected_date.strftime('%B %Y'), size_hint=(None, None), size=(200, 40))
+        self.month_year_label = Label(text=self.selected_date.strftime('%B %Y'), size_hint=(None, None), size=(200, 40), color=(0, 0, 0, 1))
         self.ids.header.add_widget(self.month_year_label)
 
         next_button = Button(text='>', size_hint=(None, None), size=(40, 40), background_normal='', background_down='',
-                             background_color=(0.9, 0.9, 0.9, 1))
+                             background_color=(0.9, 0.9, 0.9, 1), color=(0, 0, 0, 1))
         next_button.bind(on_press=self.next_month)
         self.ids.header.add_widget(next_button)
 
@@ -45,7 +46,7 @@ class DatePicker(BoxLayout):
 
         days = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
         for day in days:
-            self.ids.body.add_widget(Label(text=day, size_hint=(None, None), size=(40, 40)))
+            self.ids.body.add_widget(Label(text=day, size_hint=(None, None), size=(40, 40), color=(0, 0, 0, 1)))
 
         first_day = self.selected_date.replace(day=1)
         start_day = first_day.weekday()
@@ -61,19 +62,19 @@ class DatePicker(BoxLayout):
             date = self.selected_date.replace(day=i)
             if self.start_date and self.end_date and self.start_date <= date <= self.end_date:
                 day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
-                                    background_down='', background_color=(1, 1, 0, 1))
+                                    background_down='', background_color=(1, 1, 0, 1), color=(0, 0, 0, 1))
             elif date == self.start_date or date == self.end_date:
                 day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
-                                    background_down='', background_color=(1, 1, 0, 1))
+                                    background_down='', background_color=(1, 1, 0, 1), color=(0, 0, 0, 1))
             elif date.day == current_day and date.month == datetime.now().month and date.year == datetime.now().year:
                 day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
-                                    background_down='', background_color=(1, 0, 0, 1))  # Highlight current day
+                                    background_down='', background_color=(1, 0, 0, 1), color=(0, 0, 0, 1))  # Highlight current day
             elif date < datetime.now():
                 day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
                                     background_down='', color=(0.7, 0.7, 0.7, 1))  # Pale color for past days
             else:
                 day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
-                                    background_down='', background_color=(1, 1, 1, 1))
+                                    background_down='', background_color=(1, 1, 1, 1), color=(0, 0, 0, 1))
             day_button.bind(on_press=self.select_date)
             self.ids.body.add_widget(day_button)
 
@@ -143,7 +144,10 @@ class DatePicker(BoxLayout):
 
 class DatePickerApp(App):
     def build(self):
-        return DatePicker()
+        root = FloatLayout()
+        date_picker = DatePicker(size_hint=(None, None), size=(350, 400), pos_hint={'center_x': 0.5, 'center_y': 0.5})
+        root.add_widget(date_picker)
+        return root
 
 
 if __name__ == '__main__':

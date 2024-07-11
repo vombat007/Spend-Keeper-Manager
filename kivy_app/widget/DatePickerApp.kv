@@ -1,34 +1,43 @@
 <DatePicker>:
-    orientation: 'vertical'
-    padding: [20, 20, 20, 20]
-    spacing: 10
+    size_hint: None, None
+    size: 350, 400
+    pos_hint: {'center_x': 0.5, 'center_y': 0.5}
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1
         RoundedRectangle:
             pos: self.pos
             size: self.size
-            radius: [10,]
+            radius: [20,]
 
     BoxLayout:
-        id: header
-        orientation: 'horizontal'
-        size_hint: (1, 0.2)
-        padding: [10, 0]
+        id: main_layout
+        orientation: 'vertical'
+        padding: [10, 10, 10, 10]
         spacing: 10
+        size_hint: (1, 1)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-    GridLayout:
-        id: body
-        cols: 7
-        spacing: [5, 5]
-        padding: [10, 10]
+        BoxLayout:
+            id: header
+            orientation: 'horizontal'
+            size_hint: (1, 0.15)
+            padding: [10, 0]
+            spacing: 10
 
-    BoxLayout:
-        id: footer
-        orientation: 'horizontal'
-        size_hint: (1, 0.2)
-        padding: [10, 0]
-        spacing: 10
+        GridLayout:
+            id: body
+            cols: 7
+            spacing: [5, 5]
+            padding: [10, 10]
+            size_hint: (1, 0.65)
+
+        BoxLayout:
+            id: footer
+            orientation: 'horizontal'
+            size_hint: (1, 0.2)
+            padding: [10, 0]
+            spacing: 10
 
 <HeaderButton@Button>:
     font_size: 24
@@ -62,10 +71,10 @@
             size: self.size
             radius: [10,]
 
-<SelectedDateButton@Button>:
+<FooterButton@Button>:
     font_size: 18
     size_hint: (None, None)
-    size: (40, 40)
+    size: (120, 40)
     background_color: (1, 1, 0, 1)
     color: (0, 0, 0, 1)
     background_normal: ''
@@ -73,56 +82,6 @@
     canvas.before:
         Color:
             rgba: 1, 1, 0, 1
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10,]
-
-<CurrentDateButton@Button>:
-    font_size: 18
-    size_hint: (None, None)
-    size: (40, 40)
-    background_color: (1, 0, 0, 1)  # Red color for current day
-    color: (1, 1, 1, 1)  # White text for better visibility
-    background_normal: ''
-    background_down: ''
-    canvas.before:
-        Color:
-            rgba: 1, 0, 0, 1
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [20,]  # Circular button
-
-<PastDateButton@Button>:
-    font_size: 18
-    size_hint: (None, None)
-    size: (40, 40)
-    color: (0.7, 0.7, 0.7, 1)  # Pale color for past days
-    background_normal: ''
-    background_down: ''
-    canvas.before:
-        Color:
-            rgba: 1, 1, 1, 1
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10,]
-
-<Label>:
-    font_size: 20
-    color: (0, 0, 0, 1)
-
-<FooterButton@Button>:
-    font_size: 20
-    size_hint: (0.5, 1)
-    background_color: (1, 1, 0, 1) if self.text == 'Done' else (0.7, 0.7, 0.7, 1)
-    color: (0, 0, 0, 1)
-    background_normal: ''
-    background_down: ''
-    canvas.before:
-        Color:
-            rgba: 0.9, 0.9, 0.9, 1
         RoundedRectangle:
             pos: self.pos
             size: self.size
