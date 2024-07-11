@@ -78,6 +78,37 @@
             size: self.size
             radius: [10,]
 
+<CurrentDateButton@Button>:
+    font_size: 18
+    size_hint: (None, None)
+    size: (40, 40)
+    background_color: (1, 0, 0, 1)  # Red color for current day
+    color: (1, 1, 1, 1)  # White text for better visibility
+    background_normal: ''
+    background_down: ''
+    canvas.before:
+        Color:
+            rgba: 1, 0, 0, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [20,]  # Circular button
+
+<PastDateButton@Button>:
+    font_size: 18
+    size_hint: (None, None)
+    size: (40, 40)
+    color: (0.7, 0.7, 0.7, 1)  # Pale color for past days
+    background_normal: ''
+    background_down: ''
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [10,]
+
 <Label>:
     font_size: 20
     color: (0, 0, 0, 1)

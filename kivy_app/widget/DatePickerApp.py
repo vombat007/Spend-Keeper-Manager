@@ -53,7 +53,7 @@ class DatePicker(BoxLayout):
             start_day = -1
 
         days_in_month = (first_day.replace(month=first_day.month % 12 + 1, day=1) - timedelta(days=1)).day
-
+        current_day = datetime.now().day
         for _ in range(start_day + 1):
             self.ids.body.add_widget(Label(text='', size_hint=(None, None), size=(40, 40)))
 
@@ -65,6 +65,12 @@ class DatePicker(BoxLayout):
             elif date == self.start_date or date == self.end_date:
                 day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
                                     background_down='', background_color=(1, 1, 0, 1))
+            elif date.day == current_day and date.month == datetime.now().month and date.year == datetime.now().year:
+                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
+                                    background_down='', background_color=(1, 0, 0, 1))  # Highlight current day
+            elif date < datetime.now():
+                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
+                                    background_down='', color=(0.7, 0.7, 0.7, 1))  # Pale color for past days
             else:
                 day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
                                     background_down='', background_color=(1, 1, 1, 1))
