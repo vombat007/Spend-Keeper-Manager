@@ -44,12 +44,27 @@
             padding: [10, 0]
             spacing: 10
 
-<Button@Button>:
-    font_size: 18
-    size_hint: (None, None)
-    size: (40, 40)
-    background_color: (1, 1, 1, 1)
-    color: (0, 0, 0, 1)
-    background_normal: ''
-    background_down: ''
+            Button:
+                text: 'Cancel'
+                font_size: 20
+                size_hint: (None, None)
+                size: (120, 40)
+                background_normal: ''
+                background_down: ''
+                background_color: (1, 1, 1, 1)
+                color: (0, 0, 0, 1)
+                on_press: root.cancel(self)
 
+            Widget:
+                size_hint: (1, 1)  # Spacer
+
+            Button:
+                text: 'Done'
+                font_size: 20
+                size_hint: (None, None)
+                size: (120, 40)
+                background_normal: 'Rectangle_down.png'
+                background_down: 'Rectangle_normal.png'
+                background_color: (1, 1, 0, 1)
+                color: (0, 0, 0, 1)
+                on_press: root.done(self)

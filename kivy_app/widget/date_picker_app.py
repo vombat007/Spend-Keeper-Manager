@@ -22,7 +22,6 @@ class DatePicker(FloatLayout):
 
         self.update_header()
         self.update_body()
-        self.update_footer()
 
     def update_header(self):
         self.ids.header.clear_widgets()
@@ -99,29 +98,6 @@ class DatePicker(FloatLayout):
 
             day_button.bind(on_press=self.select_date)
             self.ids.body.add_widget(day_button)
-
-    def update_footer(self):
-        self.ids.footer.clear_widgets()
-
-        cancel_button = Button(text='Cancel', font_size=20, size_hint=(None, None),
-                               size=(120, 40),
-                               background_normal='',
-                               background_down='',
-                               background_color=(1, 1, 1, 1),
-                               color=(0, 0, 0, 1))
-
-        cancel_button.bind(on_press=self.cancel)
-        self.ids.footer.add_widget(cancel_button)
-
-        done_button = Button(text='Done', font_size=20, size_hint=(None, None),
-                             size=(120, 40),
-                             background_normal='Rectangle_down.png',
-                             background_down='Rectangle_normal.png',
-                             background_color=(1, 1, 0, 1),
-                             color=(0, 0, 0, 1))
-
-        done_button.bind(on_press=self.done)
-        self.ids.footer.add_widget(done_button)
 
     def prev_month(self, instance):
         Clock.schedule_once(self._prev_month_callback, 0.1)
