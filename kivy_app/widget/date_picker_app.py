@@ -107,7 +107,7 @@ class DatePicker(FloatLayout):
                                size=(120, 40),
                                background_normal='',
                                background_down='',
-                               background_color=(0.7, 0.7, 0.7, 1),
+                               background_color=(1, 1, 1, 1),
                                color=(0, 0, 0, 1))
 
         cancel_button.bind(on_press=self.cancel)
@@ -115,8 +115,8 @@ class DatePicker(FloatLayout):
 
         done_button = Button(text='Done', font_size=20, size_hint=(None, None),
                              size=(120, 40),
-                             background_normal='',
-                             background_down='',
+                             background_normal='Rectangle_down.png',
+                             background_down='Rectangle_normal.png',
                              background_color=(1, 1, 0, 1),
                              color=(0, 0, 0, 1))
 
