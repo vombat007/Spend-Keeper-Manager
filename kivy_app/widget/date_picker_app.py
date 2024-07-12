@@ -36,7 +36,7 @@ class DatePicker(FloatLayout):
 
         self.month_year_label = Label(text=self.selected_date.strftime('%B %Y'),
                                       size_hint=(None, None),
-                                      size=(200, 40),
+                                      size=(200, 30),
                                       color=(0, 0, 0, 1))
         self.ids.header.add_widget(self.month_year_label)
 

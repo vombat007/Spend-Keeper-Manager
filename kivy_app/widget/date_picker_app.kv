@@ -44,18 +44,12 @@
             padding: [10, 0]
             spacing: 10
 
-<HeaderButton@Button>:
-    font_size: 24
+<Button@Button>:
+    font_size: 18
     size_hint: (None, None)
     size: (40, 40)
-    background_color: (0.9, 0.9, 0.9, 1)
+    background_color: (1, 1, 1, 1)
     color: (0, 0, 0, 1)
     background_normal: ''
     background_down: ''
-    canvas.before:
-        Color:
-            rgba: 0.9, 0.9, 0.9, 1
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [10,]
+
