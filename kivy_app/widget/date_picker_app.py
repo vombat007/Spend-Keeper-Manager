@@ -69,23 +69,20 @@ class DatePicker(FloatLayout):
             date = self.selected_date.replace(day=i)
             if self.start_date and self.end_date and self.start_date <= date <= self.end_date:
                 day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40),
-                                    background_normal='',
+                                    background_normal='Yellow_circle.png',
                                     background_down='',
-                                    background_color=(1, 1, 0, 1),
                                     color=(0, 0, 0, 1))
 
             elif date == self.start_date or date == self.end_date:
                 day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40),
-                                    background_normal='',
+                                    background_normal='Yellow_circle.png',
                                     background_down='',
-                                    background_color=(1, 1, 0, 1),
                                     color=(0, 0, 0, 1))
 
             elif date.day == current_day and date.month == datetime.now().month and date.year == datetime.now().year:
                 day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40),
-                                    background_normal='',
+                                    background_normal='Red_circle.png',
                                     background_down='',
-                                    background_color=(1, 0, 0, 1),
                                     color=(0, 0, 0, 1))  # Highlight current day
 
             elif date < datetime.now():
