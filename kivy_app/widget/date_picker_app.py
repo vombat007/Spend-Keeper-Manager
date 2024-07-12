@@ -68,34 +68,61 @@ class DatePicker(FloatLayout):
         for i in range(1, days_in_month + 1):
             date = self.selected_date.replace(day=i)
             if self.start_date and self.end_date and self.start_date <= date <= self.end_date:
-                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
-                                    background_down='', background_color=(1, 1, 0, 1), color=(0, 0, 0, 1))
+                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40),
+                                    background_normal='',
+                                    background_down='',
+                                    background_color=(1, 1, 0, 1),
+                                    color=(0, 0, 0, 1))
+
             elif date == self.start_date or date == self.end_date:
-                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
-                                    background_down='', background_color=(1, 1, 0, 1), color=(0, 0, 0, 1))
+                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40),
+                                    background_normal='',
+                                    background_down='',
+                                    background_color=(1, 1, 0, 1),
+                                    color=(0, 0, 0, 1))
+
             elif date.day == current_day and date.month == datetime.now().month and date.year == datetime.now().year:
-                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
-                                    background_down='', background_color=(1, 0, 0, 1), color=(0, 0, 0, 1))  # Highlight current day
+                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40),
+                                    background_normal='',
+                                    background_down='',
+                                    background_color=(1, 0, 0, 1),
+                                    color=(0, 0, 0, 1))  # Highlight current day
+
             elif date < datetime.now():
-                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
-                                    background_down='', color=(0.7, 0.7, 0.7, 1))  # Pale color for past days
+                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40),
+                                    background_normal='',
+                                    background_down='',
+                                    color=(0.7, 0.7, 0.7, 1))  # Pale color for past days
             else:
-                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40), background_normal='',
-                                    background_down='', background_color=(1, 1, 1, 1), color=(0, 0, 0, 1))
+                day_button = Button(text=str(i), size_hint=(None, None), size=(40, 40),
+                                    background_normal='',
+                                    background_down='',
+                                    background_color=(1, 1, 1, 1),
+                                    color=(0, 0, 0, 1))
+
             day_button.bind(on_press=self.select_date)
             self.ids.body.add_widget(day_button)
 
     def update_footer(self):
         self.ids.footer.clear_widgets()
 
-        cancel_button = Button(text='Cancel', font_size=20, size_hint=(None, None), size=(120, 40),
-                               background_normal='', background_down='', background_color=(0.7, 0.7, 0.7, 1),
+        cancel_button = Button(text='Cancel', font_size=20, size_hint=(None, None),
+                               size=(120, 40),
+                               background_normal='',
+                               background_down='',
+                               background_color=(0.7, 0.7, 0.7, 1),
                                color=(0, 0, 0, 1))
+
         cancel_button.bind(on_press=self.cancel)
         self.ids.footer.add_widget(cancel_button)
 
-        done_button = Button(text='Done', font_size=20, size_hint=(None, None), size=(120, 40), background_normal='',
-                             background_down='', background_color=(1, 1, 0, 1), color=(0, 0, 0, 1))
+        done_button = Button(text='Done', font_size=20, size_hint=(None, None),
+                             size=(120, 40),
+                             background_normal='',
+                             background_down='',
+                             background_color=(1, 1, 0, 1),
+                             color=(0, 0, 0, 1))
+
         done_button.bind(on_press=self.done)
         self.ids.footer.add_widget(done_button)
 
