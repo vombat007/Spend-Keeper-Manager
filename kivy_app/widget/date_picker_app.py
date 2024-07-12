@@ -51,8 +51,9 @@ class DatePicker(FloatLayout):
         self.ids.body.clear_widgets()
 
         days = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
-        for day in days:
-            self.ids.body.add_widget(Label(text=day, size_hint=(None, None), size=(40, 40), color=(0, 0, 0, 1)))
+        for i, day in enumerate(days):
+            color = (1, 0, 0, 1) if i == 0 else (0, 0, 0, 1)  # Red for Sunday
+            self.ids.body.add_widget(Label(text=day, size_hint=(None, None), size=(40, 40), color=color))
 
         first_day = self.selected_date.replace(day=1)
         start_day = first_day.weekday()
