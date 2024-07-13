@@ -7,6 +7,7 @@ from kivy.core.window import Window
 import requests
 import json
 import os
+
 from widget.date_picker_app import DatePicker
 
 
@@ -119,7 +120,8 @@ class HomeScreen(Screen):
         self.selected_period = period
         if period == 'period':
             date_picker = DatePicker()  # Use custom DatePicker
-            date_picker.bind(on_done=self.on_date_picker_done, on_cancel=self.on_date_picker_cancel)
+            date_picker.on_done = self.on_date_picker_done
+            date_picker.on_cancel = self.on_date_picker_cancel
             center_x = (Window.width - date_picker.width) / 2
             center_y = (Window.height - date_picker.height) / 2
             date_picker.pos = (center_x, center_y)
@@ -129,7 +131,7 @@ class HomeScreen(Screen):
 
     def on_date_picker_done(self, instance):
         self.start_date = instance.start_date.strftime('%Y-%m-%d')
-        self.end_date = instance.end_date.strftime('%Y-%m-%d')
+        self.end_date = instance.end_date.strftime('%Y-%m-%d') if instance.end_date else self.start_date
         self.remove_widget(instance)
         self.fetch_account_summary()
 

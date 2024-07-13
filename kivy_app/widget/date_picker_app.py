@@ -9,6 +9,8 @@ from kivy.uix.label import Label
 
 class DatePicker(FloatLayout):
     current_date = StringProperty()
+    on_done = None  # Callback for done action
+    on_cancel = None  # Callback for cancel action
 
     def __init__(self, **kwargs):
         super(DatePicker, self).__init__(**kwargs)
@@ -113,21 +115,14 @@ class DatePicker(FloatLayout):
         self.update_body()
 
     def cancel(self, instance):
-        print("Date selection cancelled.")
-        self.start_date = None
-        self.end_date = None
-        self.update_body()
+        if self.on_cancel:
+            self.on_cancel(self)
 
     def done(self, instance):
-        if self.start_date and self.end_date:
-            print(f"Start date: {self.start_date.strftime('%Y-%m-%d')}, End date: {self.end_date.strftime('%Y-%m-%d')}")
-        elif self.start_date:
-            print(f"Start date: {self.start_date.strftime('%Y-%m-%d')}")
-        else:
-            print("No date selected.")
-        self.start_date = None
-        self.end_date = None
-        self.update_body()
+        if self.start_date and not self.end_date:
+            self.end_date = self.start_date  # Set end_date to start_date if not set
+        if self.on_done:
+            self.on_done(self)
 
 
 class DatePickerApp(App):
