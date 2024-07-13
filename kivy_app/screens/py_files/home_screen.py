@@ -130,13 +130,25 @@ class HomeScreen(Screen):
             self.fetch_account_summary()
 
     def on_date_picker_done(self, instance):
-        self.start_date = instance.start_date.strftime('%Y-%m-%d')
-        self.end_date = instance.end_date.strftime('%Y-%m-%d') if instance.end_date else self.start_date
+        if instance.start_date:
+            self.start_date = instance.start_date.strftime('%Y-%m-%d')
+            self.end_date = instance.end_date.strftime('%Y-%m-%d') if instance.end_date else self.start_date
+            self.fetch_account_summary()
         self.remove_widget(instance)
-        self.fetch_account_summary()
+        self.reset_period_button_state()
 
     def on_date_picker_cancel(self, instance):
         self.remove_widget(instance)
+        self.reset_period_button_state()
+
+    def reset_period_button_state(self):
+        # Reset the state of all period buttons
+        button_ids = ['day_button', 'week_button', 'month_button', 'year_button', 'period_button']
+        for button_id in button_ids:
+            button = self.ids.get(button_id)
+            if button:
+                button.state = 'normal'
+                button.background_normal = 'kivy_app/assets/img/Rectangle_normal.png'
 
     def set_default_selected_button(self):
         if not self.selected_button:
