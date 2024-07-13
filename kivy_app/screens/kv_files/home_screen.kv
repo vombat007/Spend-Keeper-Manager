@@ -18,10 +18,6 @@
     income_label: income_label_id
     expense_label: expense_label_id
     FloatLayout:
-        BoxLayout:
-            orientation: 'vertical'
-            size_hint: 1, 1
-
         SidebarMenu:
             id: sidebar_menu_id
             size_hint: None, 1
@@ -35,197 +31,198 @@
             pos_hint: {'x': 0, 'y': 0.90}
             on_release: root.toggle_sidebar()
 
-    BoxLayout:
-        orientation: 'vertical'
-        padding: [50, 130]
-        spacing: 15
-
-        CircularChart:
-            id: chart_id
-            size_hint: None, None
-            size: 200, 200
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-
-        BoxLayout:
-            orientation: 'horizontal'
-            size_hint: None, None
-            size: 300, 50
-            pos_hint: {'center_x': 0.5, 'center_y': 0.37}
-            spacing: 140
-
-            BoxLayout:
-                orientation: 'horizontal'
-                size_hint: None, None
-                size: 90, 32
-                spacing: 5
-
-                FloatLayout:
-                    size_hint: None, None
-                    size: 32, 32
-                    canvas.before:
-                        Color:
-                            rgba: 1, 1, 0, 1  # Yellow color
-                        Ellipse:
-                            size: self.size
-                            pos: self.pos
-                        Color:
-                            rgba: 0, 0, 0, 1  # Black color for outline
-                        Line:
-                            width: 1
-                            ellipse: (self.x, self.y, self.width, self.height)
-
-                Label:
-                    text: 'Left'
-                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                    size_hint: None, None
-                    size: 50, 32
-                    valign: 'middle'
-                    halign: 'left'
-                    color: 0, 0, 0, 1
-                    text_size: self.size
-
-            BoxLayout:
-                orientation: 'horizontal'
-                size_hint: None, None
-                size: 90, 32
-                spacing: 5
-
-                FloatLayout:
-                    size_hint: None, None
-                    size: 32, 32
-                    canvas.before:
-                        Color:
-                            rgba: 0.5, 0.5, 0.5, 1  # Gray color
-                        Ellipse:
-                            size: self.size
-                            pos: self.pos
-                        Color:
-                            rgba: 0, 0, 0, 1  # Black color for outline
-                        Line:
-                            width: 1
-                            ellipse: (self.x, self.y, self.width, self.height)
-
-                Label:
-                    text: 'Spend'
-                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                    size_hint: None, None
-                    size: 50, 32
-                    valign: 'middle'
-                    halign: 'left'
-                    color: 0, 0, 0, 1
-                    text_size: self.size
-
-        BoxLayout:
-            orientation: 'horizontal'
-            size_hint: None, None
-            size: 370, 50
-            pos_hint: {'center_x': 0.5, 'center_y': 0.05}
-            spacing: 10
-
-            CustomButton:
-                id: day_button
-                text: 'Day'
-                size_hint: None, None
-                size: 70, 35
-                on_release:
-                    root.set_period('day')
-                    self.state = 'down'
-
-            CustomButton:
-                id: week_button
-                text: 'Week'
-                size_hint: None, None
-                size: 70, 35
-                on_release:
-                    root.set_period('week')
-                    self.state = 'down'
-
-            CustomButton:
-                id: month_button
-                text: 'Month'
-                size_hint: None, None
-                size: 70, 35
-                on_release:
-                    root.set_period('month')
-                    self.state = 'down'
-
-            CustomButton:
-                id: year_button
-                text: 'Year'
-                size_hint: None, None
-                size: 70, 35
-                on_release:
-                    root.set_period('year')
-                    self.state = 'down'
-
-            CustomButton:
-                id: period_button
-                text: 'Period'
-                size_hint: None, None
-                size: 70, 35
-                on_release:
-                    root.set_period('period')
-                    self.state = 'down'
-
         BoxLayout:
             orientation: 'vertical'
-            size_hint: None, None
-            size: 330, 280
-            padding: [10, 10, 10, 0]
-            spacing: 10
-            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            size_hint: 1, None
+            height: self.height
+            pos_hint: {'y': 0.05}  # Small indent from the bottom
+
+            CircularChart:
+                id: chart_id
+                size_hint: None, None
+                size: 200, 200
+                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: 300, 50
+                pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                spacing: 140
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: None, None
+                    size: 90, 32
+                    spacing: 5
+
+                    FloatLayout:
+                        size_hint: None, None
+                        size: 32, 32
+                        canvas.before:
+                            Color:
+                                rgba: 1, 1, 0, 1  # Yellow color
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                            Color:
+                                rgba: 0, 0, 0, 1  # Black color for outline
+                            Line:
+                                width: 1
+                                ellipse: (self.x, self.y, self.width, self.height)
+
+                    Label:
+                        text: 'Left'
+                        font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                        size_hint: None, None
+                        size: 50, 32
+                        valign: 'middle'
+                        halign: 'left'
+                        color: 0, 0, 0, 1
+                        text_size: self.size
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: None, None
+                    size: 90, 32
+                    spacing: 5
+
+                    FloatLayout:
+                        size_hint: None, None
+                        size: 32, 32
+                        canvas.before:
+                            Color:
+                                rgba: 0.5, 0.5, 0.5, 1  # Gray color
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                            Color:
+                                rgba: 0, 0, 0, 1  # Black color for outline
+                            Line:
+                                width: 1
+                                ellipse: (self.x, self.y, self.width, self.height)
+
+                    Label:
+                        text: 'Spend'
+                        font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                        size_hint: None, None
+                        size: 50, 32
+                        valign: 'middle'
+                        halign: 'left'
+                        color: 0, 0, 0, 1
+                        text_size: self.size
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: 370, 50
+                pos_hint: {'center_x': 0.5, 'center_y': 0.6}
+                spacing: 10
+
+                CustomButton:
+                    id: day_button
+                    text: 'Day'
+                    size_hint: None, None
+                    size: 70, 35
+                    on_release:
+                        root.set_period('day')
+                        self.state = 'down'
+
+                CustomButton:
+                    id: week_button
+                    text: 'Week'
+                    size_hint: None, None
+                    size: 70, 35
+                    on_release:
+                        root.set_period('week')
+                        self.state = 'down'
+
+                CustomButton:
+                    id: month_button
+                    text: 'Month'
+                    size_hint: None, None
+                    size: 70, 35
+                    on_release:
+                        root.set_period('month')
+                        self.state = 'down'
+
+                CustomButton:
+                    id: year_button
+                    text: 'Year'
+                    size_hint: None, None
+                    size: 70, 35
+                    on_release:
+                        root.set_period('year')
+                        self.state = 'down'
+
+                CustomButton:
+                    id: period_button
+                    text: 'Period'
+                    size_hint: None, None
+                    size: 70, 35
+                    on_release:
+                        root.set_period('period')
+                        self.state = 'down'
 
             BoxLayout:
                 orientation: 'vertical'
                 size_hint: None, None
-                size: 330, 140
-                padding: [10]
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
-                        radius: [20,]
+                size: 350, 250
+                padding: [10, 10, 10, 0]
+                spacing: 10
+                pos_hint: {'center_x': 0.5, 'y': 0.1}  # Adjusted indent from the bottom
 
-                    Color:
-                        rgba: 0, 0, 0, 1
-                    Line:
-                        width: 1.5
-                        rounded_rectangle: (*self.pos, *self.size, 20)
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint: None, None
+                    size: 330, 110
+                    padding: [10]
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [20,]
 
-                Label:
-                    id: income_label_id
-                    text: "Income: "
-                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                    font_size: 24
-                    color: 0, 0, 0, 1
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            width: 1.5
+                            rounded_rectangle: (*self.pos, *self.size, 20)
 
-            BoxLayout:
-                orientation: 'vertical'
-                size_hint: None, None
-                size: 330, 140
-                padding: [10]
-                canvas.before:
-                    Color:
-                        rgba: 1, 1, 1, 1
-                    RoundedRectangle:
-                        size: self.size
-                        pos: self.pos
-                        radius: [20,]
+                    Label:
+                        id: income_label_id
+                        text: "Income"
+                        font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                        font_size: 24
+                        color: 0, 0, 0, 1
 
-                    Color:
-                        rgba: 0, 0, 0, 1
-                    Line:
-                        width: 1.5
-                        rounded_rectangle: (*self.pos, *self.size, 20)
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint: None, None
+                    size: 330, 110
+                    padding: [10]
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [20,]
 
-                    Color:
-                        rgba: 1, 1, 0, 1
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            width: 1.5
+                            rounded_rectangle: (*self.pos, *self.size, 20)
 
-                Label:
-                    id: expense_label_id
-                    text: "Expense: "
-                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                    font_size: 24
-                    color: 0, 0, 0, 1
+                        Color:
+                            rgba: 1, 1, 0, 1
+
+                    Label:
+                        id: expense_label_id
+                        text: "Expense"
+                        font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                        font_size: 24
+                        color: 0, 0, 0, 1

@@ -107,8 +107,8 @@ class HomeScreen(Screen):
             print("Failed to fetch account summary")
 
     def update_income_expense(self, income, expense):
-        self.income_label.text = f'Income: {income}'
-        self.expense_label.text = f'Expense: {expense}'
+        self.income_label.text = f'Income \n  ${income}'
+        self.expense_label.text = f'Expense \n   ${expense}'
 
     def toggle_sidebar(self):
         button = self.ids.sidebar_toggle_button
