@@ -15,6 +15,8 @@
             pos: self.pos
     sidebar: sidebar_menu_id
     chart: chart_id
+    income_label: income_label_id
+    expense_label: expense_label_id
     FloatLayout:
         BoxLayout:
             orientation: 'vertical'
@@ -32,16 +34,6 @@
             size: '54dp', '53dp'
             pos_hint: {'x': 0, 'y': 0.90}
             on_release: root.toggle_sidebar()
-
-        Button:
-            text: 'go_finance'
-            font_size: 16
-            size_hint: None, None
-            size: 90, 18
-            color: 0, 0, 1, 1
-            background_normal: ''
-            background_color: 1, 1, 1, 1
-            on_press: root.go_finance(self)
 
     BoxLayout:
         orientation: 'vertical'
@@ -174,3 +166,66 @@
                 on_release:
                     root.set_period('period')
                     self.state = 'down'
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: None, None
+            size: 330, 280
+            padding: [10, 10, 10, 0]
+            spacing: 10
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: None, None
+                size: 330, 140
+                padding: [10]
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20,]
+
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        width: 1.5
+                        rounded_rectangle: (*self.pos, *self.size, 20)
+
+                Label:
+                    id: income_label_id
+                    text: "Income: "
+                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    font_size: 24
+                    color: 0, 0, 0, 1
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: None, None
+                size: 330, 140
+                padding: [10]
+                canvas.before:
+                    Color:
+                        rgba: 1, 1, 1, 1
+                    RoundedRectangle:
+                        size: self.size
+                        pos: self.pos
+                        radius: [20,]
+
+                    Color:
+                        rgba: 0, 0, 0, 1
+                    Line:
+                        width: 1.5
+                        rounded_rectangle: (*self.pos, *self.size, 20)
+
+                    Color:
+                        rgba: 1, 1, 0, 1
+
+                Label:
+                    id: expense_label_id
+                    text: "Expense: "
+                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    font_size: 24
+                    color: 0, 0, 0, 1

@@ -59,6 +59,8 @@ class HomeScreen(Screen):
     selected_period = 'month'  # Default period
     start_date = None
     end_date = None
+    income_label = ObjectProperty(None)
+    expense_label = ObjectProperty(None)
 
     def __init__(self, screen_manager, **kwargs):
         super().__init__(**kwargs)
@@ -100,8 +102,13 @@ class HomeScreen(Screen):
         if response.status_code == 200:
             data = response.json()
             self.chart.update_chart(data['total_balance'], data['percent_spent'], data['account_name'])
+            self.update_income_expense(data['income'], data['expense'])
         else:
             print("Failed to fetch account summary")
+
+    def update_income_expense(self, income, expense):
+        self.income_label.text = f'Income: {income}'
+        self.expense_label.text = f'Expense: {expense}'
 
     def toggle_sidebar(self):
         button = self.ids.sidebar_toggle_button
