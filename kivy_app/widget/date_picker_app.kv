@@ -1,11 +1,3 @@
-#:import os os
-
-# Define a custom font
-<Label>:
-    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-<Button>:
-    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-
 <DatePicker>:
     size_hint: None, None
     size: 350, 425
@@ -88,12 +80,17 @@
                 size_hint: 1, 1  # Spacer
 
             Button:
+                id: done_button
                 text: 'Done'
                 font_size: 20
                 size_hint: None, None
                 size: 120, 40
                 background_normal: 'kivy_app/assets/img/Rectangle_down.png'
                 background_down: 'kivy_app/assets/img/Rectangle_normal.png'
-                background_color: (1, 1, 0, 1)
+                background_disabled_normal: ''
+                background_disabled_down: ''
+                disabled_color: 1, 1, 1, 1
+                background_color: (1, 1, 1, 1)
                 color: (0, 0, 0, 1)
                 on_press: root.done(self)
+                disabled: True  # Initially disable the button

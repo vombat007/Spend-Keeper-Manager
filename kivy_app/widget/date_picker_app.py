@@ -1,10 +1,10 @@
-from kivy.app import App
-from kivy.uix.button import Button
+from kivy.animation import Animation
 from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import StringProperty
 from kivy.clock import Clock
-from datetime import datetime, timedelta
+from kivy.uix.button import Button
 from kivy.uix.label import Label
+from datetime import datetime, timedelta
 
 
 class DatePicker(FloatLayout):
@@ -21,6 +21,9 @@ class DatePicker(FloatLayout):
 
         self.update_header()
         self.update_body()
+
+        # Initialize the "Done" button state
+        self.ids.done_button.disabled = True
 
     def update_header(self):
         self.ids.header.clear_widgets()
@@ -114,21 +117,27 @@ class DatePicker(FloatLayout):
 
         self.update_body()
 
+        # Enable the "Done" button
+        self.ids.done_button.disabled = False
+
     def cancel(self, instance):
         if self.on_cancel:
             self.on_cancel(self)
+        self.animate_close()
 
     def done(self, instance):
         if self.start_date and not self.end_date:
             self.end_date = self.start_date  # Set end_date to start_date if not set
         if self.on_done:
             self.on_done(self)
+        self.animate_close()
 
+    def animate_close(self):
+        anim = Animation(opacity=0, y=self.y - 100, duration=0.3)
 
-class DatePickerApp(App):
-    def build(self):
-        return DatePicker()
+        def remove_widget_from_parent(*args):
+            if self.parent:
+                self.parent.remove_widget(self)
 
-
-if __name__ == '__main__':
-    DatePickerApp().run()
+        anim.bind(on_complete=remove_widget_from_parent)
+        anim.start(self)

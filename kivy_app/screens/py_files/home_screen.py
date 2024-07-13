@@ -134,11 +134,11 @@ class HomeScreen(Screen):
             self.start_date = instance.start_date.strftime('%Y-%m-%d')
             self.end_date = instance.end_date.strftime('%Y-%m-%d') if instance.end_date else self.start_date
             self.fetch_account_summary()
-        self.remove_widget(instance)
+        instance.animate_close()
         self.reset_period_button_state()
 
     def on_date_picker_cancel(self, instance):
-        self.remove_widget(instance)
+        instance.animate_close()
         self.reset_period_button_state()
 
     def reset_period_button_state(self):
