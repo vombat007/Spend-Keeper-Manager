@@ -1,6 +1,14 @@
+#:import os os
+
+# Define a custom font
+<Label>:
+    font_name: 'IrishGrover-Regular.ttf'
+<Button>:
+    font_name: 'IrishGrover-Regular.ttf'
+
 <DatePicker>:
     size_hint: None, None
-    size: 350, 400
+    size: 350, 425
     pos_hint: {'center_x': 0.5, 'center_y': 0.5}
     canvas.before:
         Color:
@@ -41,6 +49,7 @@
                 id: month_year_label
                 size_hint: None, None
                 size: 200, 30
+                font_size: 24  # Adjust font size here
                 color: 0, 0, 0, 1
 
             Button:
@@ -53,7 +62,7 @@
         GridLayout:
             id: body
             cols: 7
-            spacing: [0, 0]
+            spacing: [5, 1]
             padding: [10, 10]
             size_hint: (1, 0.65)
 
@@ -68,7 +77,7 @@
                 text: 'Cancel'
                 font_size: 20
                 size_hint: None, None
-                size: 115, 35
+                size: 120, 40
                 background_normal: ''
                 background_down: 'Rectangle_normal.png'
                 background_color: (1, 1, 1, 1)
@@ -82,7 +91,7 @@
                 text: 'Done'
                 font_size: 20
                 size_hint: None, None
-                size: 115, 35
+                size: 120, 40
                 background_normal: 'Rectangle_down.png'
                 background_down: 'Rectangle_normal.png'
                 background_color: (1, 1, 0, 1)
