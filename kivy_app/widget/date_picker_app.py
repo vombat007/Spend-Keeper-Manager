@@ -4,10 +4,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.properties import StringProperty
 from kivy.clock import Clock
 from datetime import datetime, timedelta
-from kivy.lang import Builder
 from kivy.uix.label import Label
-
-Builder.load_file('date_picker_app.kv')
 
 
 class DatePicker(FloatLayout):
@@ -58,13 +55,13 @@ class DatePicker(FloatLayout):
         for i in range(1, days_in_month + 1):
             date = self.selected_date.replace(day=i)
             if self.start_date and self.end_date and self.start_date <= date <= self.end_date:
-                day_button = self.create_day_button(str(i), 'Yellow_circle.png')
+                day_button = self.create_day_button(str(i), 'kivy_app/assets/img/Yellow_circle.png')
 
             elif date == self.start_date or date == self.end_date:
-                day_button = self.create_day_button(str(i), 'Yellow_circle.png')
+                day_button = self.create_day_button(str(i), 'kivy_app/assets/img/Yellow_circle.png')
 
             elif date.day == current_day and date.month == datetime.now().month and date.year == datetime.now().year:
-                day_button = self.create_day_button(str(i), 'Red_circle.png')
+                day_button = self.create_day_button(str(i), 'kivy_app/assets/img/Red_circle.png')
 
             elif date < datetime.now():
                 day_button = self.create_day_button(str(i), '', (0.7, 0.7, 0.7, 1))

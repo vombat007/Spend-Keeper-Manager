@@ -3,11 +3,11 @@ from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
 from kivy.animation import Animation
-from kivymd.uix.pickers import MDDockedDatePicker
+from kivy.core.window import Window
 import requests
 import json
 import os
-from kivy.core.window import Window
+from widget.date_picker_app import DatePicker
 
 
 class CustomSidebarButton(Button):
@@ -118,22 +118,23 @@ class HomeScreen(Screen):
     def set_period(self, period):
         self.selected_period = period
         if period == 'period':
-            date_picker = MDDockedDatePicker(mode='range')
-            date_picker.bind(on_ok=self.on_ok, on_cancel=self.on_cancel)
+            date_picker = DatePicker()  # Use custom DatePicker
+            date_picker.bind(on_done=self.on_date_picker_done, on_cancel=self.on_date_picker_cancel)
             center_x = (Window.width - date_picker.width) / 2
             center_y = (Window.height - date_picker.height) / 2
             date_picker.pos = (center_x, center_y)
-            date_picker.open()
+            self.add_widget(date_picker)
         else:
             self.fetch_account_summary()
 
-    def on_ok(self, instance):
-        self.start_date = instance.get_date()[0].strftime('%Y-%m-%d')
-        self.end_date = instance.get_date()[-1].strftime('%Y-%m-%d')
+    def on_date_picker_done(self, instance):
+        self.start_date = instance.start_date.strftime('%Y-%m-%d')
+        self.end_date = instance.end_date.strftime('%Y-%m-%d')
+        self.remove_widget(instance)
         self.fetch_account_summary()
 
-    def on_cancel(self, instance, value):
-        pass
+    def on_date_picker_cancel(self, instance):
+        self.remove_widget(instance)
 
     def set_default_selected_button(self):
         if not self.selected_button:

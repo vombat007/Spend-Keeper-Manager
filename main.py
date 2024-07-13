@@ -1,9 +1,9 @@
 import os
 import json
 import requests
-from kivymd.app import MDApp
-from kivy.uix.screenmanager import ScreenManager
+from kivy.app import App
 from kivy.lang import Builder
+from kivy.uix.screenmanager import ScreenManager
 from kivy_app.screens.py_files.home_screen import HomeScreen
 from kivy_app.screens.py_files.finance_screen import FinanceScreen
 from kivy_app.screens.py_files.login_screen import LoginScreen
@@ -13,10 +13,9 @@ from kivy_app.screens.py_files.start_screen import StartScreen
 from kivy_app.screens.py_files.sidebar_menu import SidebarMenu
 
 
-class FinancialApp(MDApp):
+class FinancialApp(App):
     def build(self):
         self.title = 'Financial App'
-        self.theme_cls.primary_palette = "Whitesmoke"  # Use Thema for Data picker
 
         # Load the KV files
         Builder.load_file('kivy_app/screens/kv_files/start_screen.kv')
@@ -24,6 +23,7 @@ class FinancialApp(MDApp):
         Builder.load_file('kivy_app/screens/kv_files/registration_screen.kv')
         Builder.load_file('kivy_app/screens/kv_files/home_screen.kv')
         Builder.load_file('kivy_app/screens/kv_files/sidebar_menu.kv')
+        Builder.load_file('kivy_app/widget/date_picker_app.kv')
 
         sm = ScreenManager()
 

@@ -2,9 +2,9 @@
 
 # Define a custom font
 <Label>:
-    font_name: 'IrishGrover-Regular.ttf'
+    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
 <Button>:
-    font_name: 'IrishGrover-Regular.ttf'
+    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
 
 <DatePicker>:
     size_hint: None, None
@@ -42,8 +42,8 @@
                 id: prev_button
                 size_hint: None, None
                 size: 45, 32
-                background_normal: 'Button_arrow_left_normal.png'
-                background_down: 'Button_arrow_left_down.png'
+                background_normal: 'kivy_app/assets/img/Button_arrow_left_normal.png'
+                background_down: 'kivy_app/assets/img/Button_arrow_left_down.png'
 
             Label:
                 id: month_year_label
@@ -56,8 +56,8 @@
                 id: next_button
                 size_hint: None, None
                 size: 45, 32
-                background_normal: 'Button_arrow_right_normal.png'
-                background_down: 'Button_arrow_right_down.png'
+                background_normal: 'kivy_app/assets/img/Button_arrow_right_normal.png'
+                background_down: 'kivy_app/assets/img/Button_arrow_right_down.png'
 
         GridLayout:
             id: body
@@ -79,7 +79,7 @@
                 size_hint: None, None
                 size: 120, 40
                 background_normal: ''
-                background_down: 'Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_normal.png'
                 background_color: (1, 1, 1, 1)
                 color: (0, 0, 0, 1)
                 on_press: root.cancel(self)
@@ -92,8 +92,8 @@
                 font_size: 20
                 size_hint: None, None
                 size: 120, 40
-                background_normal: 'Rectangle_down.png'
-                background_down: 'Rectangle_normal.png'
+                background_normal: 'kivy_app/assets/img/Rectangle_down.png'
+                background_down: 'kivy_app/assets/img/Rectangle_normal.png'
                 background_color: (1, 1, 0, 1)
                 color: (0, 0, 0, 1)
                 on_press: root.done(self)
