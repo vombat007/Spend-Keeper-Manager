@@ -169,7 +169,7 @@
             BoxLayout:
                 orientation: 'horizontal'
                 size_hint: None, None
-                size: 350, 50
+                size: 340, 50
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 spacing: 10
 
@@ -180,12 +180,14 @@
                     background_down: 'kivy_app/assets/img/Button_arrow_left_down.png'
                     on_release: root.change_period(-1)
 
-                Label:
+                Button:
                     id: period_label_id
                     text: ''
                     font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                    background_down: 'kivy_app/assets/img/Rectangle_normal.png'
                     size_hint: None, None
-                    size: 230, 35
+                    size: 220, 32
                     valign: 'middle'
                     halign: 'center'
                     color: 0, 0, 0, 1
