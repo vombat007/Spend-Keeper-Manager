@@ -97,8 +97,9 @@ class HomeScreen(Screen):
                 print("Please select a date range.")
                 return
             url = f'http://127.0.0.1:8000/api/account/1/summary/?start_date={self.start_date}&end_date={self.end_date}'
-        else:
-            url = f'http://127.0.0.1:8000/api/account/1/summary/?period={self.selected_period}'
+        elif self.selected_period in ['day', 'week', 'month', 'year']:
+            start_date, end_date = self.get_period_dates()
+            url = f'http://127.0.0.1:8000/api/account/1/summary/?start_date={start_date}&end_date={end_date}'
 
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
@@ -107,6 +108,22 @@ class HomeScreen(Screen):
             self.update_income_expense(data['income'], data['expense'])
         else:
             print("Failed to fetch account summary")
+
+    def get_period_dates(self):
+        if self.selected_period == 'day':
+            start_date = self.current_date.strftime('%Y-%m-%d')
+            end_date = start_date
+        elif self.selected_period == 'week':
+            start_date = (self.current_date - timedelta(days=self.current_date.weekday())).strftime('%Y-%m-%d')
+            end_date = (self.current_date + timedelta(days=6 - self.current_date.weekday())).strftime('%Y-%m-%d')
+        elif self.selected_period == 'month':
+            start_date = self.current_date.replace(day=1).strftime('%Y-%m-%d')
+            next_month = self.current_date.replace(day=28) + timedelta(days=4)  # this will never fail
+            end_date = (next_month - timedelta(days=next_month.day)).strftime('%Y-%m-%d')
+        elif self.selected_period == 'year':
+            start_date = self.current_date.replace(month=1, day=1).strftime('%Y-%m-%d')
+            end_date = self.current_date.replace(month=12, day=31).strftime('%Y-%m-%d')
+        return start_date, end_date
 
     def update_income_expense(self, income, expense):
         self.income_label.text = f'Income \n  ${income}'
