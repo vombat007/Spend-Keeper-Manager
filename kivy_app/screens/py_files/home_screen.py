@@ -1,13 +1,13 @@
+from datetime import datetime, timedelta
+import json
+import os
+import requests
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
 from kivy.animation import Animation
 from kivy.core.window import Window
-import requests
-import json
-import os
-
 from widget.date_picker_app import DatePicker
 
 
@@ -57,10 +57,12 @@ class HomeScreen(Screen):
     sidebar = ObjectProperty(None)
     chart = ObjectProperty(None)
     selected_period = 'month'  # Default period
+    current_date = datetime.now()
     start_date = None
     end_date = None
     income_label = ObjectProperty(None)
     expense_label = ObjectProperty(None)
+    period_label = ObjectProperty(None)
 
     def __init__(self, screen_manager, **kwargs):
         super().__init__(**kwargs)
@@ -125,6 +127,8 @@ class HomeScreen(Screen):
 
     def set_period(self, period):
         self.selected_period = period
+        self.current_date = datetime.now()  # Reset to today whenever period changes
+        self.update_period_label()
         if period == 'period':
             date_picker = DatePicker()  # Use custom DatePicker
             date_picker.on_done = self.on_date_picker_done
@@ -162,3 +166,42 @@ class HomeScreen(Screen):
             self.selected_button = self.ids.month_button
             self.selected_button.state = 'down'
             self.set_period('month')
+
+    def update_period_label(self):
+        if self.selected_period == 'day':
+            today = datetime.now().date()
+            selected_day = self.current_date.date()
+            days_ago = (today - selected_day).days
+
+            if days_ago == 0:
+                self.period_label.text = f'Today, {selected_day.strftime("%B %d")}'
+            elif days_ago == 1:
+                self.period_label.text = f'Yesterday, {selected_day.strftime("%B %d")}'
+            else:
+                self.period_label.text = selected_day.strftime('%B %d')
+        elif self.selected_period == 'week':
+            start_of_week = self.current_date - timedelta(days=self.current_date.weekday())
+            end_of_week = start_of_week + timedelta(days=6)
+            self.period_label.text = f'{start_of_week.strftime("%b %d")} - {end_of_week.strftime("%b %d")}'
+        elif self.selected_period == 'month':
+            self.period_label.text = self.current_date.strftime('%B %Y')
+        elif self.selected_period == 'year':
+            self.period_label.text = self.current_date.strftime('%Y')
+
+    def change_period(self, direction):
+        if self.selected_period == 'day':
+            self.current_date += timedelta(days=direction)
+        elif self.selected_period == 'week':
+            self.current_date += timedelta(weeks=direction)
+        elif self.selected_period == 'month':
+            month = self.current_date.month - 1 + direction
+            year = self.current_date.year + month // 12
+            month = month % 12 + 1
+            day = min(self.current_date.day,
+                      [31, 29 if year % 4 == 0 and not year % 100 == 0 or year % 400 == 0 else 28, 31, 30,
+                       31, 30, 31, 31, 30, 31, 30, 31][month - 1])
+            self.current_date = self.current_date.replace(year=year, month=month, day=day)
+        elif self.selected_period == 'year':
+            self.current_date = self.current_date.replace(year=self.current_date.year + direction)
+        self.update_period_label()
+        self.fetch_account_summary()

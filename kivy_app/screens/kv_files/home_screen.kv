@@ -13,10 +13,12 @@
         Rectangle:
             size: self.size
             pos: self.pos
+
     sidebar: sidebar_menu_id
     chart: chart_id
     income_label: income_label_id
     expense_label: expense_label_id
+    period_label: period_label_id
     FloatLayout:
         SidebarMenu:
             id: sidebar_menu_id
@@ -163,6 +165,36 @@
                     on_release:
                         root.set_period('period')
                         self.state = 'down'
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: 385, 50
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                spacing: 10
+
+                Button:
+                    text: '<'
+                    size_hint: None, None
+                    size: 70, 35
+                    on_release: root.change_period(-1)
+
+                Label:
+                    id: period_label_id
+                    text: ''
+                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    size_hint: None, None
+                    size: 200, 35
+                    valign: 'middle'
+                    halign: 'center'
+                    color: 0, 0, 0, 1
+                    text_size: self.size
+
+                Button:
+                    text: '>'
+                    size_hint: None, None
+                    size: 70, 35
+                    on_release: root.change_period(1)
 
             BoxLayout:
                 orientation: 'vertical'
