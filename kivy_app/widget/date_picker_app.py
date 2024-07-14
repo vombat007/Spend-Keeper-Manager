@@ -16,6 +16,7 @@ class DatePicker(FloatLayout):
         super(DatePicker, self).__init__(**kwargs)
         self.current_date = datetime.now().strftime('%Y-%m-%d')
         self.selected_date = datetime.now()
+        self.month_year_label = None
         self.start_date = None
         self.end_date = None
 
@@ -69,14 +70,15 @@ class DatePicker(FloatLayout):
                 day_button = self.create_day_button(str(i), 'kivy_app/assets/img/Red_circle.png')
 
             elif date < datetime.now():
-                day_button = self.create_day_button(str(i), '', (0.7, 0.7, 0.7, 1))
+                day_button = self.create_day_button(str(i),)
             else:
-                day_button = self.create_day_button(str(i))
+                day_button = self.create_day_button(str(i), '', (0.7, 0.7, 0.7, 1))
 
             day_button.bind(on_press=self.select_date)
             self.ids.body.add_widget(day_button)
 
-    def create_day_button(self, text, background_normal='', color=(0, 0, 0, 1)):
+    @staticmethod
+    def create_day_button(text, background_normal='', color=(0, 0, 0, 1)):
         return Button(text=text, size_hint=(None, None), size=(40, 40),
                       background_normal=background_normal,
                       background_down='',
