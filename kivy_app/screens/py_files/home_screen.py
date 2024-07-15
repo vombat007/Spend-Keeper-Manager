@@ -181,9 +181,17 @@ class HomeScreen(Screen):
         instance.animate_close()
         self.reset_period_button_state()
 
+        # Set the period button state to background_down
+        period_button = self.ids.period_button
+        period_button.background_normal = period_button.background_down
+
     def on_date_picker_cancel(self, instance):
         instance.animate_close()
         self.reset_period_button_state()
+
+        # Reset to the default month button
+        self.set_period('month')
+        self.ids.month_button.state = 'down'
 
     def reset_period_button_state(self):
         # Reset the state of all period buttons
