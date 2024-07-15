@@ -37,13 +37,35 @@
             orientation: 'vertical'
             size_hint: 1, None
             height: self.height
-            pos_hint: {'y': 0.05}  # Small indent from the bottom
+            pos_hint: {'y': 0.02}  # Small indent from the bottom
 
-            CircularChart:
-                id: chart_id
+            BoxLayout:
+                orientation: 'horizontal'
                 size_hint: None, None
-                size: 200, 200
-                pos_hint: {'center_x': 0.5, 'center_y': 0.8}
+                size: 340, 50
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}  # Center the box layout
+                spacing: 40  # Add spacing between elements
+
+                Button:
+                    background_normal: 'kivy_app/assets/img/Big_arrow_left_normal.png'
+                    background_down: 'kivy_app/assets/img/Big_arrow_left_down.png'
+                    size_hint: None, None
+                    size: 29, 60
+                    pos_hint: {'center_x': 0.5, 'y': 1.4}
+                    on_release: root.switch_account(-1)
+
+                CircularChart:
+                    id: chart_id
+                    size_hint: None, None
+                    size: 200, 200
+
+                Button:
+                    background_normal: 'kivy_app/assets/img/Big_arrow_right_normal.png'
+                    background_down: 'kivy_app/assets/img/Big_arrow_right_down.png'
+                    size_hint: None, None
+                    size: 29, 60
+                    pos_hint: {'center_x': 0.5, 'y': 1.4}
+                    on_release: root.switch_account(1)
 
             BoxLayout:
                 orientation: 'horizontal'
