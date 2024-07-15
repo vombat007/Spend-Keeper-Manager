@@ -174,11 +174,14 @@
                 spacing: 10
 
                 Button:
+                    id: left_arrow_button
                     size_hint: None, None
                     size: 45, 32
                     background_normal: 'kivy_app/assets/img/Button_arrow_left_normal.png'
                     background_down: 'kivy_app/assets/img/Button_arrow_left_down.png'
-                    on_release: root.change_period(-1)
+                    on_release:
+                        root.change_period(-1)
+                        root.update_button_visibility()
 
                 Button:
                     id: period_label_id
@@ -194,11 +197,16 @@
                     text_size: self.size
 
                 Button:
+                    id: right_arrow_button
                     background_normal: 'kivy_app/assets/img/Button_arrow_right_normal.png'
                     background_down: 'kivy_app/assets/img/Button_arrow_right_down.png'
+                    background_disabled_normal: ''
                     size_hint: None, None
                     size: 45, 32
-                    on_release: root.change_period(1)
+                    disabled_color: 1, 1, 1, 0  # Fully transparent
+                    on_release:
+                        root.change_period(1)
+                        root.update_button_visibility()
 
             BoxLayout:
                 orientation: 'vertical'

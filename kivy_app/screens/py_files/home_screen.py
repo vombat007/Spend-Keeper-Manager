@@ -80,6 +80,7 @@ class HomeScreen(Screen):
     def on_pre_enter(self):
         self.token = self.refresh_token_if_needed()
         self.set_default_selected_button()
+        self.update_button_visibility()
 
     def refresh_token_if_needed(self):
         response = requests.post('http://127.0.0.1:8000/api/login/verify/', data={
@@ -206,19 +207,50 @@ class HomeScreen(Screen):
             self.period_label.text = self.current_date.strftime('%Y')
 
     def change_period(self, direction):
+        new_date = self.current_date
         if self.selected_period == 'day':
-            self.current_date += timedelta(days=direction)
+            new_date += timedelta(days=direction)
         elif self.selected_period == 'week':
-            self.current_date += timedelta(weeks=direction)
+            new_date += timedelta(weeks=direction)
         elif self.selected_period == 'month':
-            month = self.current_date.month - 1 + direction
-            year = self.current_date.year + month // 12
+            month = new_date.month - 1 + direction
+            year = new_date.year + month // 12
             month = month % 12 + 1
-            day = min(self.current_date.day,
+            day = min(new_date.day,
                       [31, 29 if year % 4 == 0 and not year % 100 == 0 or year % 400 == 0 else 28, 31, 30,
                        31, 30, 31, 31, 30, 31, 30, 31][month - 1])
-            self.current_date = self.current_date.replace(year=year, month=month, day=day)
+            new_date = new_date.replace(year=year, month=month, day=day)
         elif self.selected_period == 'year':
-            self.current_date = self.current_date.replace(year=self.current_date.year + direction)
-        self.update_period_label()
-        self.fetch_account_summary()
+            new_date = new_date.replace(year=new_date.year + direction)
+
+        # Ensure the new date is not in the future
+        if new_date <= datetime.now():
+            self.current_date = new_date
+            self.update_period_label()
+            self.fetch_account_summary()
+        else:
+            print("Cannot set a period in the future.")
+
+        # Update the visibility of the buttons
+        self.update_button_visibility()
+
+    def update_button_visibility(self):
+        now = datetime.now()
+
+        left_button = self.ids.left_arrow_button
+        right_button = self.ids.right_arrow_button
+
+        if self.selected_period == 'day':
+            left_button.disabled = False
+            right_button.disabled = self.current_date >= now
+        elif self.selected_period == 'week':
+            left_button.disabled = False
+            right_button.disabled = self.current_date + timedelta(weeks=1) > now
+        elif self.selected_period == 'month':
+            next_month = self.current_date.replace(day=28) + timedelta(days=4)  # this will never fail
+            end_of_month = next_month - timedelta(days=next_month.day)
+            left_button.disabled = False
+            right_button.disabled = end_of_month >= now
+        elif self.selected_period == 'year':
+            left_button.disabled = False
+            right_button.disabled = self.current_date.replace(year=self.current_date.year + 1) > now
