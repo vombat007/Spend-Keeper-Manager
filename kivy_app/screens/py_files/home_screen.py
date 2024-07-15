@@ -1,13 +1,13 @@
-from datetime import datetime, timedelta
 import json
 import os
 import requests
 from kivy.app import App
 from kivy.uix.button import Button
+from kivy.core.window import Window
+from kivy.animation import Animation
+from datetime import datetime, timedelta
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
-from kivy.animation import Animation
-from kivy.core.window import Window
 from widget.date_picker_app import DatePicker
 
 
@@ -63,11 +63,14 @@ class HomeScreen(Screen):
     income_label = ObjectProperty(None)
     expense_label = ObjectProperty(None)
     period_label = ObjectProperty(None)
+    accounts = []
+    current_account_index = 0
 
     def __init__(self, screen_manager, **kwargs):
         super().__init__(**kwargs)
         self.token = self.load_token()
         self.selected_button = None
+        self.fetch_accounts()
 
     @staticmethod
     def load_token():
@@ -91,16 +94,28 @@ class HomeScreen(Screen):
             self.token = app.refresh_token()
         return self.token
 
+    def fetch_accounts(self):
+        headers = {'Authorization': f'Bearer {self.token}'}
+        response = requests.get('http://127.0.0.1:8000/api/accounts/', headers=headers)
+        if response.status_code == 200:
+            self.accounts = response.json()
+            self.current_account_index = 0  # Start with the first account
+            self.fetch_account_summary()
+        else:
+            print("Failed to fetch accounts")
+
     def fetch_account_summary(self):
         headers = {'Authorization': f'Bearer {self.token}'}
+        current_account_id = self.accounts[self.current_account_index]['id']
+
         if self.selected_period == 'period':
             if not self.start_date or not self.end_date:
                 print("Please select a date range.")
                 return
-            url = f'http://127.0.0.1:8000/api/account/1/summary/?start_date={self.start_date}&end_date={self.end_date}'
+            url = f'http://127.0.0.1:8000/api/account/{current_account_id}/summary/?start_date={self.start_date}&end_date={self.end_date}'
         elif self.selected_period in ['day', 'week', 'month', 'year']:
             start_date, end_date = self.get_period_dates()
-            url = f'http://127.0.0.1:8000/api/account/1/summary/?start_date={start_date}&end_date={end_date}'
+            url = f'http://127.0.0.1:8000/api/account/{current_account_id}/summary/?start_date={start_date}&end_date={end_date}'
 
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
@@ -234,11 +249,19 @@ class HomeScreen(Screen):
         # Update the visibility of the buttons
         self.update_button_visibility()
 
+    def switch_account(self, direction):
+        self.current_account_index = (self.current_account_index + direction) % len(self.accounts)
+        self.fetch_account_summary()
+
+    # Ensure the new methods are called when the arrow buttons are pressed
     def update_button_visibility(self):
         now = datetime.now()
 
         left_button = self.ids.left_arrow_button
         right_button = self.ids.right_arrow_button
+
+        left_button.disabled = len(self.accounts) <= 1
+        right_button.disabled = len(self.accounts) <= 1
 
         if self.selected_period == 'day':
             left_button.disabled = False

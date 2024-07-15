@@ -17,7 +17,7 @@ class UserSerializer(serializers.ModelSerializer):
 class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
-        fields = ["name", "total_balance"]
+        fields = ["id", "name", "total_balance"]
 
 
 class CategorySerializer(serializers.ModelSerializer):
