@@ -53,9 +53,9 @@ class CircularChart(Widget):
         with self.canvas:
             Color(1, 1, 1, 1)
             Ellipse(pos=self.pos, size=self.size, angle_start=0, angle_end=360)
-            Color(1, 1, 0, 1)
+            Color(0.788, 0.788, 0.788, 1)
             Line(circle=(self.center_x, self.center_y, self.radius, 0, self.spent_angle), width=self.line_width)
-            Color(0.5, 0.5, 0.5, 1)
+            Color(1, 1, 0, 1)
             Line(circle=(self.center_x, self.center_y, self.radius, self.spent_angle, 360), width=self.line_width)
 
             # Draw inner black stroke
