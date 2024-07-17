@@ -279,10 +279,11 @@
                         pos_hint:  {'center_x': 0.85, 'y': 1.30}
 
                         Button:
-                            text: "B1"
+                            text: "+"
                             size_hint: None, None
                             size: 32, 32
                             pos_hint:  {'center_x': 0.85, 'y': 1}
+                            on_press: root.go_transaction(self)
 
 
                 BoxLayout:
@@ -327,7 +328,8 @@
                         pos_hint:  {'center_x': 0.85, 'y': 1.30}
 
                         Button:
-                            text: "B1"
+                            text: "+"
                             size_hint: None, None
                             size: 32, 32
                             pos_hint:  {'center_x': 0.85, 'y': 1}
+                            on_press: root.go_transaction(self)

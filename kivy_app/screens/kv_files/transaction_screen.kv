@@ -1,0 +1,15 @@
+<TransactionScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+
+    Button:
+        text: "<--"
+        size_hint: None, None
+        size: '54dp', '53dp'
+        pos_hint: {'x': 0, 'y': 0.90}
+        on_press: root.go_back(self)

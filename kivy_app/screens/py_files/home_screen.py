@@ -155,8 +155,8 @@ class HomeScreen(Screen):
             anim = Animation(x=-self.sidebar.width, duration=0.3)
         anim.start(self.sidebar)
 
-    def go_finance(self, instance):
-        self.manager.current = 'finance'
+    def go_transaction(self, instance):
+        self.manager.current = 'transaction'
 
     def set_period(self, period):
         self.selected_period = period

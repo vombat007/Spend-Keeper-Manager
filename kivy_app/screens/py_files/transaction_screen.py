@@ -5,17 +5,13 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
 
 
-class FinanceScreen(Screen):
+class TransactionScreen(Screen):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.token = None
         layout = BoxLayout(orientation='vertical', padding=20, spacing=10)
 
         self.info_label = Label(text='Finance Info', font_size=18)
-
-        back_button = Button(text='Back', font_size=18, size_hint=(None, None), size=(200, 50))
-        back_button.bind(on_press=self.go_back)
-        layout.add_widget(back_button)
 
         layout.add_widget(self.info_label)
 
