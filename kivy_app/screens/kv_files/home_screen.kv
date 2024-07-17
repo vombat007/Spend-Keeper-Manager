@@ -269,6 +269,21 @@
                         font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                         font_size: 24
                         color: 0, 0, 0, 1
+                        padding: [0, 30, 0, 0]  # Add padding to move text down
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint: None, None
+                        size: 32, 32
+                        spacing: 5
+                        pos_hint:  {'center_x': 0.85, 'y': 1.30}
+
+                        Button:
+                            text: "B1"
+                            size_hint: None, None
+                            size: 32, 32
+                            pos_hint:  {'center_x': 0.85, 'y': 1}
+
 
                 BoxLayout:
                     orientation: 'vertical'
@@ -295,9 +310,24 @@
                             width: 4
                             rounded_rectangle: (self.x + 5, self.y + 5, self.width - 10, self.height - 10, 20)
 
+
                     Label:
                         id: expense_label_id
                         text: "Expense"
                         font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                         font_size: 24
                         color: 0, 0, 0, 1
+                        padding: [0, 30, 0, 0]  # Add padding to move text down
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint: None, None
+                        size: 32, 32
+                        spacing: 5
+                        pos_hint:  {'center_x': 0.85, 'y': 1.30}
+
+                        Button:
+                            text: "B1"
+                            size_hint: None, None
+                            size: 32, 32
+                            pos_hint:  {'center_x': 0.85, 'y': 1}
