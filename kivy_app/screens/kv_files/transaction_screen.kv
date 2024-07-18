@@ -1,4 +1,5 @@
 <TransactionScreen>:
+    on_pre_enter: root.load_categories()
     canvas.before:
         Color:
             rgba: 1, 1, 1, 1
@@ -6,11 +7,43 @@
             size: self.size
             pos: self.pos
 
+    BoxLayout:
+        orientation: 'vertical'
+        padding: 20
+        spacing: 20
 
-    Button:
-        size_hint: None, None
-        size: '54dp', '54dp'
-        background_normal: 'kivy_app/assets/img/return_button.png'
-        background_down: 'kivy_app/assets/img/return_button.png'
-        pos_hint: {'x': 0, 'y': 0.90}
-        on_press: root.go_back(self)
+        Button:
+            size_hint: None, None
+            size: '54dp', '54dp'
+            background_normal: 'kivy_app/assets/img/return_button.png'
+            background_down: 'kivy_app/assets/img/return_button.png'
+            pos_hint: {'x': 0, 'y': 0.90}
+            on_press: root.go_back(self)
+
+        Label:
+            text: "Create Transaction"
+            font_size: 32
+            size_hint_y: None
+            height: self.texture_size[1]
+
+        TextInput:
+            id: amount_input
+            hint_text: "Amount"
+            input_filter: 'float'
+            multiline: False
+
+        TextInput:
+            id: description_input
+            hint_text: "Description"
+            multiline: False
+
+        Spinner:
+            id: category_spinner
+            text: 'Select Category'
+            values: []
+            size_hint_y: None
+            height: '40dp'
+
+        Button:
+            text: "Create"
+            on_press: root.create_transaction()

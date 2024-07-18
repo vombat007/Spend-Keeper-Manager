@@ -14,6 +14,8 @@ from kivy_app.screens.py_files.sidebar_menu import SidebarMenu
 
 
 class FinancialApp(App):
+    token = None
+
     def build(self):
         self.title = 'Financial App'
 
@@ -25,6 +27,8 @@ class FinancialApp(App):
         Builder.load_file('kivy_app/screens/kv_files/sidebar_menu.kv')
         Builder.load_file('kivy_app/widget/date_picker_app.kv')
         Builder.load_file('kivy_app/screens/kv_files/transaction_screen.kv')
+
+        self.token = self.load_token()
 
         sm = ScreenManager()
 
@@ -46,7 +50,14 @@ class FinancialApp(App):
         return os.path.exists('tokens.json')
 
     @staticmethod
-    def refresh_token():
+    def load_token():
+        if os.path.exists('tokens.json'):
+            with open('tokens.json', 'r') as token_file:
+                tokens = json.load(token_file)
+                return tokens.get('access')
+        return None
+
+    def refresh_token(self):
         if os.path.exists('tokens.json'):
             with open('tokens.json', 'r') as token_file:
                 tokens = json.load(token_file)
@@ -58,6 +69,7 @@ class FinancialApp(App):
                     new_tokens = response.json()
                     with open('tokens.json', 'w') as token_file:
                         json.dump(new_tokens, token_file)
+                    self.token = new_tokens['access']
                     return new_tokens['access']
                 else:
                     os.remove('tokens.json')
