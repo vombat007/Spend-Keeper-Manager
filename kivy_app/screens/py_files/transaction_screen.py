@@ -10,11 +10,7 @@ from kivy.app import App
 
 
 class TransactionScreen(Screen):
-    transaction_type = StringProperty('Income')  # Default to 'Income'
-    amount = NumericProperty(0.0)
-    description = StringProperty('')
     account_id = NumericProperty(1)  # Assuming the account_id is available
-    category_data = {}  # Add category_data as an attribute
 
     def on_pre_enter(self, *args):
         self.load_categories()
@@ -67,7 +63,8 @@ class TransactionScreen(Screen):
         else:
             self.show_popup('Error', 'Failed to create transaction')
 
-    def show_popup(self, title, message):
+    @staticmethod
+    def show_popup(title, message):
         box = BoxLayout(orientation='vertical')
         box.add_widget(Label(text=message))
         btn = Button(text='OK', size_hint=(1, 0.25))
@@ -76,6 +73,3 @@ class TransactionScreen(Screen):
         btn.bind(on_release=popup.dismiss)
         popup.open()
 
-    def set_transaction_type(self, transaction_type):
-        self.transaction_type = transaction_type
-        self.ids.transaction_type_label.text = transaction_type

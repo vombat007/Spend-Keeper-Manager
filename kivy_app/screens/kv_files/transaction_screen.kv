@@ -15,10 +15,39 @@
         Button:
             size_hint: None, None
             size: '54dp', '54dp'
-            background_normal: 'kivy_app/assets/img/return_button.png'
-            background_down: 'kivy_app/assets/img/return_button.png'
-            pos_hint: {'x': 0, 'y': 0.90}
+            background_normal: 'kivy_app/assets/img/return_button_normal.png'
+            background_down: 'kivy_app/assets/img/return_button_normal.png'
+            pos_hint: {'x': 0, 'y': 1.90}
             on_press: root.go_back(self)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            pos_hint: {'x': 0.3, 'y': 0.5}
+            spacing: 40
+
+            Button:
+                text: 'Income'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                size: 120, 32
+                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_down.png'
+
+            Button:
+                text: 'Expense'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                size: 120, 32
+                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_down.png'
+
+        Label:
+            text: 'Account:'
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            color: 0, 0, 0, 1
+            pos_hint: {'x': 0, 'y': 0.5}
 
         Label:
             text: "Create Transaction"

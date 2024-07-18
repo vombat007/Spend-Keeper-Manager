@@ -21,9 +21,9 @@ class CustomSidebarButton(Button):
 
     def update_style(self):
         if self.is_sidebar_open:
-            self.background_normal = 'kivy_app/assets/img/return_button.png'
+            self.background_normal = 'kivy_app/assets/img/return_button_normal.png'
         else:
-            self.background_normal = 'kivy_app/assets/img/settings_button.png'
+            self.background_normal = 'kivy_app/assets/img/settings_button_normal.png'
 
 
 class CustomButton(Button):
