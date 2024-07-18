@@ -8,8 +8,9 @@
 
 
     Button:
-        text: "<--"
         size_hint: None, None
-        size: '54dp', '53dp'
+        size: '54dp', '54dp'
+        background_normal: 'kivy_app/assets/img/return_button.png'
+        background_down: 'kivy_app/assets/img/return_button.png'
         pos_hint: {'x': 0, 'y': 0.90}
         on_press: root.go_back(self)
