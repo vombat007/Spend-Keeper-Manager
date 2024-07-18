@@ -1,13 +1,11 @@
-import json
-import os
 import requests
-from kivy.app import App
 from kivy.uix.button import Button
 from kivy.core.window import Window
 from kivy.animation import Animation
 from datetime import datetime, timedelta
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
+from utils import TokenManager
 from widget.date_picker_app import DatePicker
 
 
@@ -68,17 +66,9 @@ class HomeScreen(Screen):
 
     def __init__(self, screen_manager, **kwargs):
         super().__init__(**kwargs)
-        self.token = self.load_token()
+        self.token = TokenManager.load_token()  # Use TokenManager to load token
         self.selected_button = None
         self.fetch_accounts()
-
-    @staticmethod
-    def load_token():
-        if os.path.exists('tokens.json'):
-            with open('tokens.json', 'r') as token_file:
-                tokens = json.load(token_file)
-                return tokens.get('access')
-        return None
 
     def on_pre_enter(self):
         self.token = self.refresh_token_if_needed()
@@ -90,8 +80,7 @@ class HomeScreen(Screen):
             'token': self.token
         })
         if response.status_code != 200:
-            app = App.get_running_app()
-            self.token = app.refresh_token()
+            self.token = TokenManager.refresh_token()  # Use TokenManager to refresh token
         return self.token
 
     def fetch_accounts(self):
@@ -261,7 +250,6 @@ class HomeScreen(Screen):
         self.current_account_index = (self.current_account_index + direction) % len(self.accounts)
         self.fetch_account_summary()
 
-    # Ensure the new methods are called when the arrow buttons are pressed
     def update_button_visibility(self):
         now = datetime.now()
 

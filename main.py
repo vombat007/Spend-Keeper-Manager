@@ -11,6 +11,7 @@ from kivy_app.screens.py_files.registration_screen import RegistrationScreen
 from kivy_app.screens.py_files.splash_screen import SplashScreen
 from kivy_app.screens.py_files.start_screen import StartScreen
 from kivy_app.screens.py_files.sidebar_menu import SidebarMenu
+from utils import TokenManager
 
 
 class FinancialApp(App):
@@ -28,7 +29,7 @@ class FinancialApp(App):
         Builder.load_file('kivy_app/widget/date_picker_app.kv')
         Builder.load_file('kivy_app/screens/kv_files/transaction_screen.kv')
 
-        self.token = self.load_token()
+        self.token = TokenManager.load_token()
 
         sm = ScreenManager()
 
@@ -48,32 +49,6 @@ class FinancialApp(App):
     @staticmethod
     def is_user_logged_in():
         return os.path.exists('tokens.json')
-
-    @staticmethod
-    def load_token():
-        if os.path.exists('tokens.json'):
-            with open('tokens.json', 'r') as token_file:
-                tokens = json.load(token_file)
-                return tokens.get('access')
-        return None
-
-    def refresh_token(self):
-        if os.path.exists('tokens.json'):
-            with open('tokens.json', 'r') as token_file:
-                tokens = json.load(token_file)
-                refresh_token = tokens.get('refresh')
-                response = requests.post('http://127.0.0.1:8000/api/login/refresh/', data={
-                    'refresh': refresh_token
-                })
-                if response.status_code == 200:
-                    new_tokens = response.json()
-                    with open('tokens.json', 'w') as token_file:
-                        json.dump(new_tokens, token_file)
-                    self.token = new_tokens['access']
-                    return new_tokens['access']
-                else:
-                    os.remove('tokens.json')
-        return None
 
 
 if __name__ == '__main__':
