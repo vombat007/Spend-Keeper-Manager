@@ -1,6 +1,6 @@
-from kivy.uix.spinner import Spinner
+from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
-from kivy.properties import StringProperty, NumericProperty
+from kivy.properties import StringProperty, NumericProperty, ObjectProperty
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.button import Button
@@ -11,6 +11,8 @@ from kivy.app import App
 
 class TransactionScreen(Screen):
     account_id = NumericProperty(1)  # Assuming the account_id is available
+    selected_type = StringProperty('Expense')
+    selected_category = ObjectProperty(None)
 
     def on_pre_enter(self, *args):
         self.load_categories()
@@ -26,11 +28,28 @@ class TransactionScreen(Screen):
         response = requests.get('http://127.0.0.1:8000/api/categories/', headers=headers)
         if response.status_code == 200:
             categories = response.json()
-            category_spinner = self.ids.category_spinner
-            category_spinner.values = [f"{cat['name']} ({cat['type']})" for cat in categories]
-            self.category_data = {f"{cat['name']} ({cat['type']})": cat for cat in categories}
+            self.display_categories(categories)
         else:
             self.show_popup('Error', 'Failed to load categories')
+
+    def display_categories(self, categories):
+        grid = self.ids.category_grid
+        grid.clear_widgets()
+
+        filtered_categories = [cat for cat in categories if cat['type'].lower() == self.selected_type.lower()]
+
+        for cat in filtered_categories:
+            btn = Button(
+                text=cat['name'],
+                size_hint=(None, None),
+                size=(70, 70)
+            )
+            btn.bind(on_press=self.on_category_button_press)
+            btn.category_id = cat['id']
+            grid.add_widget(btn)
+
+    def on_category_button_press(self, instance):
+        self.selected_category = instance.category_id
 
     def go_back(self, instance):
         self.manager.current = 'home'
@@ -42,19 +61,16 @@ class TransactionScreen(Screen):
             self.show_popup('Error', 'Token is missing. Please log in again.')
             return
 
-        selected_category = self.ids.category_spinner.text
-        if selected_category not in self.category_data:
+        if not self.selected_category:
             self.show_popup('Error', 'Please select a valid category.')
             return
-
-        category = self.category_data[selected_category]
 
         headers = {'Authorization': f'Bearer {token}'}
         data = {
             'amount': self.ids.amount_input.text,
             'description': self.ids.description_input.text,
             'account': self.account_id,
-            'category': category['id']
+            'category': self.selected_category
         }
 
         response = requests.post('http://127.0.0.1:8000/api/transactions/', headers=headers, data=data)
@@ -73,3 +89,6 @@ class TransactionScreen(Screen):
         btn.bind(on_release=popup.dismiss)
         popup.open()
 
+    def set_type(self, trans_type):
+        self.selected_type = trans_type
+        self.load_categories()

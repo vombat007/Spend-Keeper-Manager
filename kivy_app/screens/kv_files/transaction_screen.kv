@@ -1,4 +1,5 @@
 <TransactionScreen>:
+    selected_type: 'Expense'
     on_pre_enter: root.load_categories()
     canvas.before:
         Color:
@@ -22,7 +23,7 @@
 
         BoxLayout:
             orientation: 'horizontal'
-            pos_hint: {'x': 0.3, 'y': 0.5}
+            pos_hint: {'x': 0.33, 'y': 0.5}
             spacing: 40
 
             Button:
@@ -33,6 +34,7 @@
                 size: 120, 32
                 background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.set_type('Income')
 
             Button:
                 text: 'Expense'
@@ -42,6 +44,7 @@
                 size: 120, 32
                 background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.set_type('Expense')
 
         Label:
             text: 'Account:'
@@ -55,24 +58,57 @@
             size_hint_y: None
             height: self.texture_size[1]
 
-        TextInput:
-            id: amount_input
-            hint_text: "Amount"
-            input_filter: 'float'
-            multiline: False
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: None, None
+            size: 300, 40
+            spacing: 15
+            pos_hint: {'center_x': 0.5}
 
-        TextInput:
-            id: description_input
-            hint_text: "Description"
-            multiline: False
+            TextInput:
+                id: amount_input
+                hint_text: "Amount"
+                input_filter: 'float'
+                multiline: False
+                size_hint_y: None
+                height: 45
+                padding_y: [10, 10]
+                padding_x: [10, 10]
+                font_size: 18
 
-        Spinner:
-            id: category_spinner
-            text: 'Select Category'
-            values: []
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: None, None
+            size: 300, 60
+            spacing: 15
+            pos_hint: {'center_x': 0.5}
+
+            TextInput:
+                id: description_input
+                hint_text: "Description"
+                multiline: False
+                height: 45
+                padding_y: [10, 10]
+                padding_x: [10, 10]
+                font_size: 18
+
+
+        GridLayout:
+            id: category_grid
+            cols: 4
             size_hint_y: None
-            height: '40dp'
+            pos_hint: {'x': 0.3, 'y': 0.5}
+            height: '280dp'
+            spacing: 10
 
         Button:
-            text: "Create"
+            text: "Add"
+            font_size: 24
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            color: 0, 0, 0, 1
+            size_hint: None, None
+            pos_hint: {'center_x': 0.5}
+            size: 120, 32
             on_press: root.create_transaction()
+            background_normal: 'kivy_app/assets/img/Rectangle_down.png'
+            background_down: 'kivy_app/assets/img/Rectangle_normal.png'
