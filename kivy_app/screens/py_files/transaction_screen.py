@@ -14,14 +14,7 @@ class TransactionScreen(Screen):
     selected_category = ObjectProperty(None)
 
     def set_initial_type(self, trans_type):
-        if trans_type == 'income':
-            self.ids.income_button.state = 'down'
-            self.ids.expense_button.state = 'normal'
-            self.set_type('Income')
-        else:
-            self.ids.income_button.state = 'normal'
-            self.ids.expense_button.state = 'down'
-            self.set_type('Expense')
+        self.set_type(trans_type.capitalize())
 
     def on_pre_enter(self, *args):
         self.load_categories()
@@ -103,8 +96,11 @@ class TransactionScreen(Screen):
         if trans_type == 'Income':
             self.ids.income_button.state = 'down'
             self.ids.expense_button.state = 'normal'
+            self.ids.income_button.background_normal = self.ids.income_button.background_down
+            self.ids.expense_button.background_normal = 'kivy_app/assets/img/Rectangle_normal.png'
         else:
             self.ids.income_button.state = 'normal'
             self.ids.expense_button.state = 'down'
+            self.ids.expense_button.background_normal = self.ids.expense_button.background_down
+            self.ids.income_button.background_normal = 'kivy_app/assets/img/Rectangle_normal.png'
         self.load_categories()
-
