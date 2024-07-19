@@ -144,8 +144,10 @@ class HomeScreen(Screen):
             anim = Animation(x=-self.sidebar.width, duration=0.3)
         anim.start(self.sidebar)
 
-    def go_transaction(self, instance):
+    def go_transaction(self, trans_type):
         self.manager.current = 'transaction'
+        transaction_screen = self.manager.get_screen('transaction')
+        transaction_screen.set_initial_type(trans_type)
 
     def set_period(self, period):
         self.selected_period = period

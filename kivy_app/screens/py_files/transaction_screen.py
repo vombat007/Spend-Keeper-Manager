@@ -13,6 +13,16 @@ class TransactionScreen(Screen):
     selected_type = StringProperty('Expense')
     selected_category = ObjectProperty(None)
 
+    def set_initial_type(self, trans_type):
+        if trans_type == 'income':
+            self.ids.income_button.state = 'down'
+            self.ids.expense_button.state = 'normal'
+            self.set_type('Income')
+        else:
+            self.ids.income_button.state = 'normal'
+            self.ids.expense_button.state = 'down'
+            self.set_type('Expense')
+
     def on_pre_enter(self, *args):
         self.load_categories()
 
@@ -90,4 +100,11 @@ class TransactionScreen(Screen):
 
     def set_type(self, trans_type):
         self.selected_type = trans_type
+        if trans_type == 'Income':
+            self.ids.income_button.state = 'down'
+            self.ids.expense_button.state = 'normal'
+        else:
+            self.ids.income_button.state = 'normal'
+            self.ids.expense_button.state = 'down'
         self.load_categories()
+

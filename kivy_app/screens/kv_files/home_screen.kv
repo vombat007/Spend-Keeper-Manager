@@ -283,7 +283,7 @@
                             size_hint: None, None
                             size: 32, 32
                             pos_hint:  {'center_x': 0.85, 'y': 1}
-                            on_press: root.go_transaction(self)
+                            on_press: on_press: root.go_transaction('income')
 
 
                 BoxLayout:
@@ -332,4 +332,4 @@
                             size_hint: None, None
                             size: 32, 32
                             pos_hint:  {'center_x': 0.85, 'y': 1}
-                            on_press: root.go_transaction(self)
+                            on_press: root.go_transaction('expense')
