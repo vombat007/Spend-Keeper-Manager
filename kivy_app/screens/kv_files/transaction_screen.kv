@@ -11,13 +11,12 @@
     BoxLayout:
         orientation: 'vertical'
         padding: 20
-        spacing: 20
-        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        spacing: 5  # Reduced spacing to move content down
+        pos_hint: {'center_x': 0.5, 'center_y': 0.53}  # Adjusted pos_hint to move everything down
 
         BoxLayout:
             orientation: 'horizontal'
             size_hint: None, None
-            size: 354, 54  # Adjusted size to fit buttons
             spacing: 10
 
             Button:
@@ -26,6 +25,13 @@
                 background_normal: 'kivy_app/assets/img/return_button_normal.png'
                 background_down: 'kivy_app/assets/img/return_button_normal.png'
                 on_press: root.go_back(self)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            size: 340, 50
+            pos_hint: {'center_x': 0.52}  # Centered the BoxLayout
+            spacing: 60
 
             Button:
                 text: 'Income'
@@ -54,6 +60,7 @@
             size_hint: None, None
             pos_hint: {'center_x': 0.5}
             size: self.texture_size
+            spacing: 10
 
         BoxLayout:
             orientation: 'vertical'
@@ -93,7 +100,7 @@
             id: category_grid
             cols: 4
             size_hint: None, None
-            pos_hint: {'center_x': 0.36}
+            pos_hint: {'center_x': 0.36}  # Centered the GridLayout
             height: '280dp'
             spacing: 10
 
