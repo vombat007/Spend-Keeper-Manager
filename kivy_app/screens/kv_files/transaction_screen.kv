@@ -12,19 +12,20 @@
         orientation: 'vertical'
         padding: 20
         spacing: 20
-
-        Button:
-            size_hint: None, None
-            size: '54dp', '54dp'
-            background_normal: 'kivy_app/assets/img/return_button_normal.png'
-            background_down: 'kivy_app/assets/img/return_button_normal.png'
-            pos_hint: {'x': 0, 'y': 1.90}
-            on_press: root.go_back(self)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
         BoxLayout:
             orientation: 'horizontal'
-            pos_hint: {'x': 0.33, 'y': 0.5}
-            spacing: 40
+            size_hint: None, None
+            size: 354, 54  # Adjusted size to fit buttons
+            spacing: 10
+
+            Button:
+                size_hint: None, None
+                size: '54dp', '54dp'
+                background_normal: 'kivy_app/assets/img/return_button_normal.png'
+                background_down: 'kivy_app/assets/img/return_button_normal.png'
+                on_press: root.go_back(self)
 
             Button:
                 text: 'Income'
@@ -50,18 +51,14 @@
             text: 'Account:'
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
             color: 0, 0, 0, 1
-            pos_hint: {'x': 0, 'y': 0.5}
-
-        Label:
-            text: "Create Transaction"
-            font_size: 32
-            size_hint_y: None
-            height: self.texture_size[1]
+            size_hint: None, None
+            pos_hint: {'center_x': 0.5}
+            size: self.texture_size
 
         BoxLayout:
             orientation: 'vertical'
             size_hint: None, None
-            size: 300, 40
+            size: 310, 40
             spacing: 15
             pos_hint: {'center_x': 0.5}
 
@@ -79,7 +76,7 @@
         BoxLayout:
             orientation: 'vertical'
             size_hint: None, None
-            size: 300, 60
+            size: 310, 60
             spacing: 15
             pos_hint: {'center_x': 0.5}
 
@@ -92,12 +89,11 @@
                 padding_x: [10, 10]
                 font_size: 18
 
-
         GridLayout:
             id: category_grid
             cols: 4
-            size_hint_y: None
-            pos_hint: {'x': 0.3, 'y': 0.5}
+            size_hint: None, None
+            pos_hint: {'center_x': 0.36}
             height: '280dp'
             spacing: 10
 

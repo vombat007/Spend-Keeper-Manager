@@ -1,4 +1,3 @@
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import Screen
 from kivy.properties import StringProperty, NumericProperty, ObjectProperty
 from kivy.uix.popup import Popup
