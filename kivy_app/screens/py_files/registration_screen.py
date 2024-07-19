@@ -1,5 +1,6 @@
 import requests
 from kivy.uix.screenmanager import Screen
+from config import ENDPOINTS
 
 
 class RegistrationScreen(Screen):
@@ -12,7 +13,7 @@ class RegistrationScreen(Screen):
             self.ids.error_label.text = 'Please fill in all fields'
             return
 
-        response = requests.post('http://127.0.0.1:8000/api/registration/', data={
+        response = requests.post(ENDPOINTS['registration'], data={
             'email': email,
             'password': password
         })

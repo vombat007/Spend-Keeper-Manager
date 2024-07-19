@@ -7,6 +7,8 @@ from kivy.uix.boxlayout import BoxLayout
 import requests
 from kivy.app import App
 
+from config import ENDPOINTS
+
 
 class TransactionScreen(Screen):
     account_id = NumericProperty(1)  # Assuming the account_id is available
@@ -27,7 +29,7 @@ class TransactionScreen(Screen):
             return
 
         headers = {'Authorization': f'Bearer {token}'}
-        response = requests.get('http://127.0.0.1:8000/api/categories/', headers=headers)
+        response = requests.get(ENDPOINTS['categories'], headers=headers)
         if response.status_code == 200:
             categories = response.json()
             self.display_categories(categories)
@@ -75,7 +77,7 @@ class TransactionScreen(Screen):
             'category': self.selected_category
         }
 
-        response = requests.post('http://127.0.0.1:8000/api/transactions/', headers=headers, data=data)
+        response = requests.post(ENDPOINTS['transactions'], headers=headers, data=data)
         if response.status_code == 201:
             self.show_popup('Success', 'Transaction created successfully!')
         else:

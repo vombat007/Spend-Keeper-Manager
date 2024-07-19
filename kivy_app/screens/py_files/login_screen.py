@@ -2,6 +2,8 @@ import requests
 from kivy.uix.screenmanager import Screen
 import json
 
+from config import ENDPOINTS
+
 
 class LoginScreen(Screen):
     def login(self, instance):
@@ -12,7 +14,7 @@ class LoginScreen(Screen):
             self.ids.error_label.text = 'Please fill in all fields'
             return
 
-        response = requests.post('http://127.0.0.1:8000/api/login/', data={
+        response = requests.post(ENDPOINTS['login'], data={
             'email': email,
             'password': password
         })

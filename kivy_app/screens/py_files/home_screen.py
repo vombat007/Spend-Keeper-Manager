@@ -5,6 +5,7 @@ from kivy.animation import Animation
 from datetime import datetime, timedelta
 from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
+from config import ENDPOINTS
 from utils import TokenManager
 from widget.date_picker_app import DatePicker
 
@@ -76,7 +77,7 @@ class HomeScreen(Screen):
         self.update_button_visibility()
 
     def refresh_token_if_needed(self):
-        response = requests.post('http://127.0.0.1:8000/api/login/verify/', data={
+        response = requests.post(ENDPOINTS['verify_token'], data={
             'token': self.token
         })
         if response.status_code != 200:
@@ -85,7 +86,7 @@ class HomeScreen(Screen):
 
     def fetch_accounts(self):
         headers = {'Authorization': f'Bearer {self.token}'}
-        response = requests.get('http://127.0.0.1:8000/api/accounts/', headers=headers)
+        response = requests.get(ENDPOINTS['accounts'], headers=headers)
         if response.status_code == 200:
             self.accounts = response.json()
             self.current_account_index = 0  # Start with the first account
@@ -101,10 +102,12 @@ class HomeScreen(Screen):
             if not self.start_date or not self.end_date:
                 print("Please select a date range.")
                 return
-            url = f'http://127.0.0.1:8000/api/account/{current_account_id}/summary/?start_date={self.start_date}&end_date={self.end_date}'
+            url = (ENDPOINTS['account_summary'].format(account_id=current_account_id) +
+                   f'?start_date={self.start_date}&end_date={self.end_date}')
         elif self.selected_period in ['day', 'week', 'month', 'year']:
             start_date, end_date = self.get_period_dates()
-            url = f'http://127.0.0.1:8000/api/account/{current_account_id}/summary/?start_date={start_date}&end_date={end_date}'
+            url = (ENDPOINTS['account_summary'].format(account_id=current_account_id) +
+                   f'?start_date={start_date}&end_date={end_date}')
 
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
