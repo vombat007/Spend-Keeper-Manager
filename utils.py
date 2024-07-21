@@ -37,8 +37,3 @@ def extract_frames(gif_path, output_folder):
         for i in range(img.n_frames):
             img.seek(i)
             img.save(os.path.join(output_folder, f"frame_{i}.png"))
-
-
-extract_frames('kivy_app/assets/img/test_start_animation.gif', 'kivy_app/assets/img/frames')
-
-
