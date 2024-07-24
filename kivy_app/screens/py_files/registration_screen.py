@@ -1,6 +1,6 @@
 import requests
 from kivy.uix.screenmanager import Screen
-from config import ENDPOINTS
+from kivy_app.config import ENDPOINTS
 
 
 class RegistrationScreen(Screen):

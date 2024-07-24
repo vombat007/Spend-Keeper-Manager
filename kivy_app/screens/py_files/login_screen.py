@@ -1,8 +1,7 @@
 import requests
 from kivy.uix.screenmanager import Screen
 import json
-
-from config import ENDPOINTS
+from kivy_app.config import ENDPOINTS
 
 
 class LoginScreen(Screen):

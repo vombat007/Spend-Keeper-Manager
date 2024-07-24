@@ -1,11 +1,11 @@
 import os
 
 # Set the environment to 'development' or 'production'
-ENVIRONMENT = os.getenv('ENVIRONMENT', 'production')
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 
 
 if ENVIRONMENT == 'production':
-    BASE_URL = 'https://c864-217-254-6-124.ngrok-free.app/api'
+    BASE_URL = 'https://8709-217-254-6-124.ngrok-free.app/api'
 else:
     BASE_URL = 'http://127.0.0.1:8000/api'
 
