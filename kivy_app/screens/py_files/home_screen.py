@@ -7,7 +7,7 @@ from kivy.uix.screenmanager import Screen
 from kivy.properties import ObjectProperty
 from config import ENDPOINTS
 from utils import TokenManager
-from widget.date_picker_app import DatePicker
+from kivy_app.widget.date_picker_app import DatePicker
 
 
 class CustomSidebarButton(Button):
