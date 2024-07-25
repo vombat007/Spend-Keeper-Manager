@@ -1,7 +1,7 @@
 import os
 
 # Set the environment to 'development' or 'production'
-ENVIRONMENT = os.getenv('ENVIRONMENT', 'production')
+ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 
 
 if ENVIRONMENT == 'production':

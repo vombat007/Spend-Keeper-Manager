@@ -23,7 +23,9 @@ class LoginScreen(Screen):
             tokens = response.json()
             with open('tokens.json', 'w') as token_file:
                 json.dump(tokens, token_file)
-            self.manager.get_screen('home').token = tokens.get('access')
+            home_screen = self.manager.get_screen('home')
+            home_screen.token = tokens.get('access')
+            home_screen.fetch_accounts()
             self.manager.current = 'home'
         else:
             self.ids.error_label.text = 'Login failed: ' + response.text

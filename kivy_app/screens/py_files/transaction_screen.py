@@ -10,9 +10,10 @@ from kivy_app.config import ENDPOINTS
 
 
 class TransactionScreen(Screen):
-    account_id = NumericProperty(1)  # Assuming the account_id is available
+    account_id = NumericProperty(1)
     selected_type = StringProperty('Expense')
     selected_category = ObjectProperty(None)
+    token = StringProperty('')
 
     def set_initial_type(self, trans_type):
         self.set_type(trans_type.capitalize())
@@ -21,13 +22,11 @@ class TransactionScreen(Screen):
         self.load_categories()
 
     def load_categories(self):
-        app = App.get_running_app()
-        token = app.token
-        if not token:
+        if not self.token:
             self.show_popup('Error', 'Token is missing. Please log in again.')
             return
 
-        headers = {'Authorization': f'Bearer {token}'}
+        headers = {'Authorization': f'Bearer {self.token}'}
         response = requests.get(ENDPOINTS['categories'], headers=headers)
         if response.status_code == 200:
             categories = response.json()
@@ -58,9 +57,7 @@ class TransactionScreen(Screen):
         self.manager.current = 'home'
 
     def create_transaction(self):
-        app = App.get_running_app()
-        token = app.token  # Accessing token from FinancialApp instance
-        if not token:
+        if not self.token:
             self.show_popup('Error', 'Token is missing. Please log in again.')
             return
 
@@ -68,7 +65,7 @@ class TransactionScreen(Screen):
             self.show_popup('Error', 'Please select a valid category.')
             return
 
-        headers = {'Authorization': f'Bearer {token}'}
+        headers = {'Authorization': f'Bearer {self.token}'}
         data = {
             'amount': self.ids.amount_input.text,
             'description': self.ids.description_input.text,

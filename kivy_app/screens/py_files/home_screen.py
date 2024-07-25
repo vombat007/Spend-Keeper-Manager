@@ -75,6 +75,10 @@ class HomeScreen(Screen):
         self.token = self.refresh_token_if_needed()
         self.set_default_selected_button()
         self.update_button_visibility()
+        if not self.accounts:
+            self.fetch_accounts()
+        else:
+            self.fetch_account_summary()
 
     def refresh_token_if_needed(self):
         response = requests.post(ENDPOINTS['verify_token'], data={
@@ -95,9 +99,14 @@ class HomeScreen(Screen):
             print("Failed to fetch accounts")
 
     def fetch_account_summary(self):
+        if not self.accounts:
+            print("No accounts to fetch summary for.")
+            return
+
         headers = {'Authorization': f'Bearer {self.token}'}
         current_account_id = self.accounts[self.current_account_index]['id']
 
+        # Construct URL based on selected period
         if self.selected_period == 'period':
             if not self.start_date or not self.end_date:
                 print("Please select a date range.")
@@ -148,9 +157,10 @@ class HomeScreen(Screen):
         anim.start(self.sidebar)
 
     def go_transaction(self, trans_type):
-        self.manager.current = 'transaction'
         transaction_screen = self.manager.get_screen('transaction')
+        transaction_screen.token = self.token
         transaction_screen.set_initial_type(trans_type)
+        self.manager.current = 'transaction'
 
     def set_period(self, period):
         self.selected_period = period
