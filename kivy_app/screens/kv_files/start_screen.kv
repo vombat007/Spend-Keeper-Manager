@@ -28,9 +28,13 @@
 
         Button:
             size_hint: None, None
-            size: dp(200), dp(40)
-            background_normal: 'kivy_app/assets/img/small_login_button.png'
-            background_down: 'kivy_app/assets/img/small_login_button.png'
+            size: dp(140), dp(40)
+            text: 'Login?'
+            color: 0, 0, 0, 1
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            font_size: sp(24)
+            background_normal: 'kivy_app/assets/img/Rectangle_down.png'
+            background_down: 'kivy_app/assets/img/Rectangle_normal.png'
             on_press: root.manager.current = 'login'
             pos_hint: {'center_x': 0.5}
 
