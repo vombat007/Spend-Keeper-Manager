@@ -4,8 +4,8 @@ from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
-import requests
 from kivy_app.config import ENDPOINTS
+import requests
 
 
 class TransactionScreen(Screen):
@@ -40,14 +40,31 @@ class TransactionScreen(Screen):
         filtered_categories = [cat for cat in categories if cat['type'].lower() == self.selected_type.lower()]
 
         for cat in filtered_categories:
+            box = BoxLayout(orientation='vertical', size_hint=(None, None), size=(70, 90))
+
             btn = Button(
-                text=cat['name'],
+                text='',
                 size_hint=(None, None),
                 size=(70, 70)
             )
             btn.bind(on_press=self.on_category_button_press)
             btn.category_id = cat['id']
-            grid.add_widget(btn)
+
+            label = Label(
+                text=cat['name'],
+                font_name='kivy_app/assets/fonts/IrishGrover-Regular.ttf',
+                size_hint=(None, None),
+                size=(70, 20),
+                font_size=12,
+                color=(0, 0, 0, 1),
+                halign='center',
+                valign='middle'
+            )
+            label.bind(size=label.setter('text_size'))
+
+            box.add_widget(btn)
+            box.add_widget(label)
+            grid.add_widget(box)
 
     def on_category_button_press(self, instance):
         self.selected_category = instance.category_id
