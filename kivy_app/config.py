@@ -5,7 +5,7 @@ ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 
 
 if ENVIRONMENT == 'production':
-    BASE_URL = 'https://b8a0-93-218-154-157.ngrok-free.app/api'
+    BASE_URL = 'https://5be6-79-218-178-27.ngrok-free.app/api'
 else:
     BASE_URL = 'http://127.0.0.1:8000/api'
 
