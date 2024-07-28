@@ -10,7 +10,7 @@ import requests
 
 class TransactionScreen(Screen):
     account_id = NumericProperty(1)
-    account_name = StringProperty('Default Account')  # Add this line
+    account_name = StringProperty('Default Account')
     selected_type = StringProperty('Expense')
     selected_category = ObjectProperty(None)
     token = StringProperty('')
@@ -43,10 +43,15 @@ class TransactionScreen(Screen):
         for cat in filtered_categories:
             box = BoxLayout(orientation='vertical', size_hint=(None, None), size=(70, 90))
 
+            icon_path = f"kivy_app/assets/icon/{cat['type'].lower()}/{cat['icon']}"  # Construct the icon path
+            print(icon_path)
+
             btn = Button(
                 text='',
                 size_hint=(None, None),
-                size=(70, 70)
+                size=(70, 70),
+                background_normal=icon_path,  # Set the button icon
+                background_down=icon_path
             )
             btn.bind(on_press=self.on_category_button_press)
             btn.category_id = cat['id']
