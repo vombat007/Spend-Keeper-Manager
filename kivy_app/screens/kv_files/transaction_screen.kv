@@ -25,7 +25,7 @@
                 background_normal: 'kivy_app/assets/img/return_button_normal.png'
                 background_down: 'kivy_app/assets/img/return_button_down.png'
                 on_press: root.go_back(self)
-                pos_hint: {'center_x': 0.5, 'center_y': 4}
+                pos_hint: {'center_x': 0.5, 'center_y': 3}
 
         BoxLayout:
             orientation: 'horizontal'
@@ -56,14 +56,25 @@
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
                 on_press: root.set_type('Expense')
 
-        Label:
-            text: 'Account:'
-            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-            color: 0, 0, 0, 1
+        BoxLayout:
+            orientation: 'horizontal'
             size_hint: None, None
             pos_hint: {'center_x': 0.5}
-            size: self.texture_size
             spacing: 10
+
+            Label:
+                text: 'Account:'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                size: self.texture_size
+
+            Label:
+                text: root.account_name  # Bind to account_name property
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                size: self.texture_size
 
         BoxLayout:
             orientation: 'vertical'

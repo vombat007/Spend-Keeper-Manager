@@ -81,9 +81,7 @@ class HomeScreen(Screen):
             self.fetch_account_summary()
 
     def refresh_token_if_needed(self):
-        response = requests.post(ENDPOINTS['verify_token'], data={
-            'token': self.token
-        })
+        response = requests.post(ENDPOINTS['verify_token'], data={'token': self.token})
         if response.status_code != 200:
             self.token = TokenManager.refresh_token()  # Use TokenManager to refresh token
         return self.token
@@ -160,6 +158,8 @@ class HomeScreen(Screen):
         transaction_screen = self.manager.get_screen('transaction')
         transaction_screen.token = self.token
         transaction_screen.set_initial_type(trans_type)
+        transaction_screen.account_id = self.accounts[self.current_account_index]['id']
+        transaction_screen.account_name = self.accounts[self.current_account_index]['name']
         self.manager.current = 'transaction'
 
     def set_period(self, period):

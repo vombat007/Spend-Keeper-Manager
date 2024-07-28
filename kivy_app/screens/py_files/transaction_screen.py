@@ -10,6 +10,7 @@ import requests
 
 class TransactionScreen(Screen):
     account_id = NumericProperty(1)
+    account_name = StringProperty('Default Account')  # Add this line
     selected_type = StringProperty('Expense')
     selected_category = ObjectProperty(None)
     token = StringProperty('')
