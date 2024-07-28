@@ -5,7 +5,9 @@ from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy_app.config import ENDPOINTS
+from PIL import Image, ImageOps
 import requests
+import os
 
 
 class TransactionScreen(Screen):
@@ -44,14 +46,16 @@ class TransactionScreen(Screen):
             box = BoxLayout(orientation='vertical', size_hint=(None, None), size=(70, 90))
 
             icon_path = f"kivy_app/assets/icon/{cat['type'].lower()}/{cat['icon']}"  # Construct the icon path
-            print(icon_path)
+
+            # Create the image with a yellow border
+            yellow_border_path = self.add_yellow_border(icon_path)
 
             btn = Button(
                 text='',
                 size_hint=(None, None),
                 size=(70, 70),
                 background_normal=icon_path,  # Set the button icon
-                background_down=icon_path
+                background_down=yellow_border_path  # Set the button icon with yellow border
             )
             btn.bind(on_press=self.on_category_button_press)
             btn.category_id = cat['id']
@@ -74,6 +78,15 @@ class TransactionScreen(Screen):
 
     def on_category_button_press(self, instance):
         self.selected_category = instance.category_id
+
+        # Reset background of other buttons
+        for button in self.ids.category_grid.children:
+            if isinstance(button, BoxLayout):
+                btn = button.children[1]  # Accessing the button inside the BoxLayout
+                btn.background_normal = btn.background_down.replace('_selected', '')
+
+        # Set the selected button background
+        instance.background_normal = instance.background_down
 
     def go_back(self, instance):
         self.manager.current = 'home'
@@ -124,3 +137,15 @@ class TransactionScreen(Screen):
             self.ids.expense_button.background_normal = self.ids.expense_button.background_down
             self.ids.income_button.background_normal = 'kivy_app/assets/img/Rectangle_normal.png'
         self.load_categories()
+
+    def add_yellow_border(self, image_path):
+        base_path, filename = os.path.split(image_path)
+        name, ext = os.path.splitext(filename)
+        bordered_image_path = os.path.join(base_path, f"{name}_selected{ext}")
+
+        if not os.path.exists(bordered_image_path):
+            with Image.open(image_path) as img:
+                border = ImageOps.expand(img, border=5, fill='yellow')
+                border.save(bordered_image_path)
+
+        return bordered_image_path
