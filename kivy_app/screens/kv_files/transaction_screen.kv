@@ -110,6 +110,48 @@
                 padding_x: [10, 10]
                 font_size: 18
 
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            size: '340dp', '50dp'
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            spacing: '10dp'
+
+            Button:
+                id: left_arrow_button
+                size_hint: None, None
+                size: '45dp', '32dp'
+                background_normal: 'kivy_app/assets/img/Button_arrow_left_normal.png'
+                background_down: 'kivy_app/assets/img/Button_arrow_left_down.png'
+                on_release:
+                    root.change_period(-1)
+                    root.update_button_visibility()
+
+            Button:
+                id: period_label_id
+                text: root.selected_date
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_normal.png'
+                size_hint: None, None
+                size: '220dp', '32dp'
+                valign: 'middle'
+                halign: 'center'
+                color: 0, 0, 0, 1
+                text_size: self.size
+
+            Button:
+                id: right_arrow_button
+                background_normal: 'kivy_app/assets/img/Button_arrow_right_normal.png'
+                background_down: 'kivy_app/assets/img/Button_arrow_right_down.png'
+                background_disabled_normal: ''
+                size_hint: None, None
+                size: '45dp', '32dp'
+                disabled_color: 1, 1, 1, 0  # Fully transparent
+                on_release:
+                    root.change_period(1)
+                    root.update_button_visibility()
+
         Label:
             text: "Categories"
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'

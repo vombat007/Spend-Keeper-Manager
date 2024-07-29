@@ -1,13 +1,19 @@
-from kivy.uix.screenmanager import Screen
-from kivy.properties import StringProperty, NumericProperty, ObjectProperty
+import os
+import json
+import logging
+import requests
+from PIL import Image, ImageOps
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
 from kivy_app.config import ENDPOINTS
-from PIL import Image, ImageOps
-import requests
-import os
+from datetime import datetime, timedelta
+from kivy.uix.screenmanager import Screen
+from widget.date_picker_app import DatePicker
+from kivy.properties import StringProperty, NumericProperty, ObjectProperty
+
+logger = logging.getLogger(__name__)
 
 
 class TransactionScreen(Screen):
@@ -16,12 +22,16 @@ class TransactionScreen(Screen):
     selected_type = StringProperty('Expense')
     selected_category = ObjectProperty(None)
     token = StringProperty('')
+    selected_date = StringProperty(datetime.now().strftime('%Y-%m-%d'))
+    current_date = datetime.now()
 
     def set_initial_type(self, trans_type):
         self.set_type(trans_type.capitalize())
 
     def on_pre_enter(self, *args):
         self.load_categories()
+        self.update_period_label()
+        self.update_button_visibility()
 
     def load_categories(self):
         if not self.token:
@@ -100,18 +110,20 @@ class TransactionScreen(Screen):
             self.show_popup('Error', 'Please select a valid category.')
             return
 
-        headers = {'Authorization': f'Bearer {self.token}'}
+        headers = {'Authorization': f'Bearer {self.token}', 'Content-Type': 'application/json'}
         data = {
             'amount': self.ids.amount_input.text,
             'description': self.ids.description_input.text,
             'account': self.account_id,
-            'category': self.selected_category
+            'category': self.selected_category,
+            'datetime': self.selected_date  # Ensure the selected date is included in the data
         }
 
-        response = requests.post(ENDPOINTS['transactions'], headers=headers, data=data)
+        response = requests.post(ENDPOINTS['transactions'], headers=headers, data=json.dumps(data))
         if response.status_code == 201:
             self.show_popup('Success', 'Transaction created successfully!')
         else:
+            logger.error("Failed to create transaction: %s", response.content)
             self.show_popup('Error', 'Failed to create transaction')
 
     @staticmethod
@@ -149,3 +161,37 @@ class TransactionScreen(Screen):
                 border.save(bordered_image_path)
 
         return bordered_image_path
+
+    def open_date_picker(self):
+        date_picker = DatePicker()
+        date_picker.bind(on_date=self.on_date_selected)
+        date_picker.open()
+
+    def on_date_selected(self, instance, value):
+        if value <= datetime.now().date():
+            self.selected_date = value.strftime('%Y-%m-%d')
+            self.ids.period_label_id.text = self.selected_date
+        else:
+            self.show_popup('Invalid Date', 'Please select today or a past date.')
+
+    def change_period(self, direction):
+        new_date = self.current_date + timedelta(days=direction)
+        if new_date <= datetime.now():
+            self.current_date = new_date
+            self.selected_date = self.current_date.strftime('%Y-%m-%d')
+            self.ids.period_label_id.text = self.selected_date
+            self.update_button_visibility()
+        else:
+            self.show_popup('Invalid Date', 'Cannot set a date in the future.')
+
+    def update_button_visibility(self):
+        now = datetime.now().date()
+
+        left_button = self.ids.left_arrow_button
+        right_button = self.ids.right_arrow_button
+
+        left_button.disabled = self.current_date.date() <= datetime(2000, 1, 1).date()
+        right_button.disabled = self.current_date.date() >= now
+
+    def update_period_label(self):
+        self.ids.period_label_id.text = self.selected_date
