@@ -101,6 +101,9 @@ class TransactionScreen(Screen):
     def go_back(self, instance):
         self.manager.current = 'home'
 
+    def go_calculator(self, instance):
+        self.manager.current = 'calculator'
+
     def create_transaction(self):
         if not self.token:
             self.show_popup('Error', 'Token is missing. Please log in again.')

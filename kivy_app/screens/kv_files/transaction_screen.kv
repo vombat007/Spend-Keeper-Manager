@@ -24,8 +24,8 @@
                 size: '45dp', '45dp'
                 background_normal: 'kivy_app/assets/img/return_button_normal.png'
                 background_down: 'kivy_app/assets/img/return_button_down.png'
-                on_press: root.go_back(self)
                 pos_hint: {'center_x': 0.5, 'center_y': 2}
+                on_press: root.go_back(self)
 
         BoxLayout:
             orientation: 'horizontal'
@@ -100,6 +100,7 @@
                 text: 'calc'
                 size_hint: None, None
                 size: '45dp', '45dp'
+                on_press: root.go_calculator(self)
 
 
         BoxLayout:
