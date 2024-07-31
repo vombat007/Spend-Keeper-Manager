@@ -7,15 +7,11 @@ class CalculatorScreen(Screen):
     result_text = StringProperty("0")
 
     def go_back(self, instance):
+        self.reset_calculator()
         self.manager.current = 'transaction'
 
     def clear(self):
-        self.operation_text = ""
-        self.result_text = "0"
-        self.ids.operation.height = '50dp'
-        self.ids.result.height = '75dp'
-        self.ids.result.font_size = 50
-        self.ids.result.opacity = 1
+        self.reset_calculator()
 
     def half(self):
         if self.result_text and self.result_text != "Error":
@@ -75,6 +71,9 @@ class CalculatorScreen(Screen):
             self.result_text = ""
 
     def on_ok(self):
+        self.reset_calculator()
+
+    def reset_calculator(self):
         self.ids.equals_button.text = "="  # Reset the button text to equals
         self.operation_text = ""
         self.result_text = "0"
