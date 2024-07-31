@@ -10,7 +10,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy_app.config import ENDPOINTS
 from datetime import datetime, timedelta
 from kivy.uix.screenmanager import Screen
-from widget.date_picker_app import DatePicker
+from kivy_app.widget.date_picker_app import DatePicker
 from kivy.properties import StringProperty, NumericProperty, ObjectProperty
 
 logger = logging.getLogger(__name__)
