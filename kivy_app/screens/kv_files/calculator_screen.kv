@@ -34,17 +34,34 @@
             size: self.texture_size
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
-        Label:
-            id: display
-            text: root.display_text
-            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-            color: 0, 0, 0, 1
-            font_size: 50
-            halign: 'right'
-            valign: 'middle'
-            size_hint: 1, None
-            height: '100dp'
-            text_size: self.size
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            height: '150dp'
+
+            Label:
+                id: operation
+                text: root.operation_text
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                font_size: 30
+                halign: 'right'
+                valign: 'middle'
+                size_hint: 1, None
+                height: '50dp'
+                text_size: self.size
+
+            Label:
+                id: result
+                text: root.result_text
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                font_size: 50
+                halign: 'right'
+                valign: 'middle'
+                size_hint: 1, None
+                height: '75dp'
+                text_size: self.size
 
         GridLayout:
             cols: 4
@@ -157,4 +174,10 @@
                 id: equals_button
                 text: "="
                 on_press: root.calculate()
+                font_size: 24
+                background_color: 1, 0.6, 0, 1
+
+            Button:
+                text: "⌫"
+                on_press: root.delete_last()
                 font_size: 24
