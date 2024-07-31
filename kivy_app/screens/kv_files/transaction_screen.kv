@@ -77,22 +77,30 @@
                 size: self.texture_size
 
         BoxLayout:
-            orientation: 'vertical'
+            orientation: 'horizontal'  # Change orientation to horizontal
             size_hint: None, None
-            size: 310, 40
-            spacing: 15
+            size: 188, 55
+            spacing: 10  # Adjust spacing as needed
             pos_hint: {'center_x': 0.5}
 
             TextInput:
                 id: amount_input
                 hint_text: "Amount"
                 input_filter: 'float'
+                background_normal: 'kivy_app/assets/img/Rectangle_Dash.png.'
+                background_active: 'kivy_app/assets/img/Rectangle_Dash.png.'
                 multiline: False
                 size_hint_y: None
                 height: 45
                 padding_y: [10, 10]
                 padding_x: [10, 10]
                 font_size: 18
+
+            Button:
+                text: 'calc'
+                size_hint: None, None
+                size: '45dp', '45dp'
+
 
         BoxLayout:
             orientation: 'vertical'
