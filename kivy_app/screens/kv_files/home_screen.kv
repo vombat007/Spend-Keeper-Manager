@@ -37,13 +37,13 @@
             orientation: 'vertical'
             size_hint: 1, None
             height: self.height
-            pos_hint: {'y': 0.02}  # Small indent from the bottom
+            pos_hint: {'y': 0.15}  # Small indent from the bottom, adjust as needed
 
             BoxLayout:
                 orientation: 'horizontal'
                 size_hint: 1, None
                 height: '50dp'
-                pos_hint: {'center_x': 0.91, 'center_y': 0.5}
+                pos_hint: {'center_x': 0.6, 'center_y': 2.55}  # Adjusting y position to move up
                 spacing: '40dp'
 
                 Button:
@@ -51,7 +51,7 @@
                     background_down: 'kivy_app/assets/img/Big_arrow_left_down.png'
                     size_hint: None, None
                     size: '29dp', '60dp'
-                    pos_hint: {'center_x': 0.5, 'y': 1.4}
+                    pos_hint: {'center_x': 0.5, 'y': 1.5}  # Adjusting y position to move up
                     on_release: root.switch_account(-1)
 
                 CircularChart:
@@ -64,7 +64,7 @@
                     background_down: 'kivy_app/assets/img/Big_arrow_right_down.png'
                     size_hint: None, None
                     size: '29dp', '60dp'
-                    pos_hint: {'center_x': 0.5, 'y': 1.4}
+                    pos_hint: {'center_x': 0.5, 'y': 1.5}  # Adjusting y position to move up
                     on_release: root.switch_account(1)
 
             BoxLayout:
