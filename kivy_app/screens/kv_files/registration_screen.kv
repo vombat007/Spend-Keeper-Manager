@@ -105,10 +105,14 @@
                 foreground_color: 0, 0, 0, 1
 
         Button:
+            text: 'Sing Up'
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            font_size: 20
+            color: 0, 0, 0, 1
             size_hint: None, None
-            size: 200, 40
-            background_normal: 'kivy_app/assets/img/sing_up_button.png'
-            background_down: 'kivy_app/assets/img/sing_up_button.png'
+            size: dp(160), dp(35)
+            background_normal: 'kivy_app/assets/img/Rectangle_down.png'
+            background_down: 'kivy_app/assets/img/Rectangle_normal.png'
             on_press: root.register(self)
             pos_hint: {'center_x': 0.5}
 
