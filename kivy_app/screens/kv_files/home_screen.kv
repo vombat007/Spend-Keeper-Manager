@@ -20,19 +20,6 @@
     expense_label: expense_label_id
     period_label: period_label_id
     FloatLayout:
-        SidebarMenu:
-            id: sidebar_menu_id
-            size_hint: None, 1
-            width: '250dp'
-            x: -self.width
-
-        CustomSidebarButton:
-            id: sidebar_toggle_button
-            size_hint: None, None
-            size: '45dp', '45dp'
-            pos_hint: {'x': 0.01, 'y': 0.93}
-            on_release: root.toggle_sidebar()
-
         BoxLayout:
             orientation: 'vertical'
             size_hint: 1, None
@@ -311,7 +298,6 @@
                             width: 4
                             rounded_rectangle: (self.x + 5, self.y + 5, self.width - 10, self.height - 10, 20)
 
-
                     Label:
                         id: expense_label_id
                         text: "Expense"
@@ -333,3 +319,17 @@
                             size: '32dp', '32dp'
                             pos_hint:  {'center_x': 0.85, 'y': 1}
                             on_press: root.go_transaction('expense')
+
+        FloatLayout:
+            SidebarMenu:
+                id: sidebar_menu_id
+                size_hint: None, 1
+                width: '300dp'
+                x: -self.width
+
+            CustomSidebarButton:
+                id: sidebar_toggle_button
+                size_hint: None, None
+                size: '45dp', '45dp'
+                pos_hint: {'x': 0.01, 'y': 0.93}
+                on_release: root.toggle_sidebar()
