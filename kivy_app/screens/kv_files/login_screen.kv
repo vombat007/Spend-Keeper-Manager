@@ -9,6 +9,8 @@
         orientation: 'vertical'
         padding: [30, 50]
         spacing: 15
+        size_hint: None, None
+        pos_hint: {'center_x': 0.5, 'center_y': 0.2}
 
         Image:
             source: 'kivy_app/assets/img/frames/frame_3.png'
@@ -26,14 +28,21 @@
             bold: True
             halign: 'center'
 
-        Label:
-            id: error_label
-            text: ''
-            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-            color: 1, 0, 0, 1
-            size_hint_y: None
-            height: self.texture_size[1]
-            pos_hint: {'center_x': 0.5}
+        BoxLayout:
+            orientation: 'vertical'
+            padding: [10, 40]
+            spacing: 15
+            size_hint: None, None
+            pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+
+            Label:
+                id: error_label
+                text: ''
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 1, 0, 0, 1
+                size_hint_y: None
+                height: self.texture_size[1]
+                pos_hint: {'center_x': 0.5}
 
         BoxLayout:
             orientation: 'vertical'
@@ -129,28 +138,29 @@
             on_press: root.login(self)
             pos_hint: {'center_x': 0.5}
 
-        BoxLayout:
-            orientation: 'horizontal'
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: dp(300), dp(30)
+        spacing: dp(20)
+        padding: [30, 10]
+        pos_hint: {'center_x': 0.5}
+
+        Label:
+            text: "Don't have account?"
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            font_size: sp(16)
+            size_hint_y: None
+            height: self.texture_size[1]
+            color: 0, 0, 0, 1
+
+        Button:
+            text: 'Sign up now'
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            font_size: sp(16)
             size_hint: None, None
-            size: dp(300), dp(30)
-            spacing: dp(5)
-            pos_hint: {'center_x': 0.5}
-
-            Label:
-                text: "Don't have account?"
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                font_size: sp(16)
-                size_hint_y: None
-                height: self.texture_size[1]
-                color: 0, 0, 0, 1
-
-            Button:
-                text: 'Sign up now'
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                font_size: sp(16)
-                size_hint: None, None
-                size: dp(90), dp(18)
-                color: 0, 0, 1, 1
-                background_normal: ''
-                background_color: 1, 1, 1, 1
-                on_press: root.signup(self)
+            size: dp(90), dp(18)
+            color: 0, 0, 1, 1
+            background_normal: ''
+            background_color: 1, 1, 1, 1
+            on_press: root.signup(self)
