@@ -266,10 +266,11 @@
                         pos_hint: {'center_x': 0.85, 'y': 1.30}
 
                         Button:
-                            text: "+"
                             size_hint: None, None
-                            size: '32dp', '32dp'
-                            pos_hint:  {'center_x': 0.85, 'y': 1}
+                            size: '54dp', '54dp'
+                            background_normal: 'kivy_app/assets/img/Circle_with_cross_yellow_normal.png'
+                            background_down: 'kivy_app/assets/img/Circle_with_cross_yellow_down.png'
+                            pos_hint:  {'center_x': 0.85, 'y': 0.6}
                             on_press: root.go_transaction('income')
 
 
@@ -314,10 +315,11 @@
                         pos_hint:  {'center_x': 0.85, 'y': 1.30}
 
                         Button:
-                            text: "+"
                             size_hint: None, None
-                            size: '32dp', '32dp'
-                            pos_hint:  {'center_x': 0.85, 'y': 1}
+                            size: '54dp', '54dp'
+                            background_normal: 'kivy_app/assets/img/Circle_with_cross_grey_normal.png'
+                            background_down: 'kivy_app/assets/img/Circle_with_cross_grey_down.png'
+                            pos_hint:  {'center_x': 0.85, 'y': 0.6}
                             on_press: root.go_transaction('expense')
 
         FloatLayout:
