@@ -19,7 +19,7 @@
             pos_hint: {'center_x': 0.5}
 
         Label:
-            text: 'Ready to tame \nYour finances?'
+            text: 'Ready to tame\nYour finances?'
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
             font_size: sp(30)
             size_hint_y: None
@@ -27,11 +27,12 @@
             color: 0, 0, 0, 1
             bold: True
             halign: 'center'
-            text_size: self.size
+            valign: 'middle'
+            text_size: self.width, None
 
         Button:
             size_hint: 0.5, None
-            height: dp(40)
+            size: dp(300), dp(35)
             text: 'Login'
             color: 0, 0, 0, 1
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'

@@ -11,7 +11,7 @@
         padding: [dp(30), dp(50)]
         spacing: dp(15)
         size_hint: 0.9, 0.7
-        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        pos_hint: {'center_x': 0.5, 'center_y': 0.6}
 
         Image:
             source: 'kivy_app/assets/img/frames/frame_3.png'
@@ -27,7 +27,8 @@
             color: 0, 0, 0, 1
             bold: True
             halign: 'center'
-            text_size: self.size
+            valign: 'middle'
+            text_size: self.width, None
 
         BoxLayout:
             orientation: 'vertical'
@@ -76,9 +77,6 @@
                 background_color: 0.95, 0.95, 0.95, 1
                 foreground_color: 0, 0, 0, 1
 
-        Widget:
-            size_hint_y: None
-            height: dp(20)
 
         BoxLayout:
             orientation: 'vertical'
@@ -127,7 +125,7 @@
 
         Button:
             size_hint: 0.5, None
-            height: dp(40)
+            size: dp(300), dp(35)
             text: 'Login'
             color: 0, 0, 0, 1
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
