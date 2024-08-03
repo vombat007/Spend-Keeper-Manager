@@ -1,7 +1,7 @@
 <SidebarMenu>:
     orientation: 'vertical'
     size_hint_x: None
-    width: 300
+    width: dp(300)
     x: -self.width
     canvas.before:
         Color:
@@ -13,43 +13,43 @@
     Button:
         text: 'Home'
         size_hint_y: None
-        height: 50
+        height: dp(50)
 
     Button:
         text: 'Accounts'
         size_hint_y: None
-        height: 50
+        height: dp(50)
 
     Button:
         text: 'Family'
         size_hint_y: None
-        height: 50
+        height: dp(50)
 
     Button:
         text: 'Charts'
         size_hint_y: None
-        height: 50
+        height: dp(50)
 
     Button:
         text: 'Notifications'
         size_hint_y: None
-        height: 50
+        height: dp(50)
 
     Button:
         text: 'Settings'
         size_hint_y: None
-        height: 50
+        height: dp(50)
 
     Button:
         text: 'Help'
         size_hint_y: None
-        height: 50
+        height: dp(50)
 
     Button:
         id: logout_button
         text: 'Logout'
         size_hint_y: None
-        height: 50
+        height: dp(50)
         background_color: 1, 0, 0, 1
         color: 1, 1, 1, 1
         on_release: root.logout()

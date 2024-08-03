@@ -27,5 +27,5 @@ class RegistrationScreen(Screen):
     def go_back(self, instance):
         self.manager.current = 'home'
 
-    def signin(self, instance):
+    def sign_in(self, instance):
         self.manager.current = 'login'

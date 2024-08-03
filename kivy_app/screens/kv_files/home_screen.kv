@@ -29,47 +29,47 @@
             BoxLayout:
                 orientation: 'horizontal'
                 size_hint: 1, None
-                height: '50dp'
-                pos_hint: {'center_x': 0.6, 'center_y': 2.55}  # Adjusting y position to move up
-                spacing: '40dp'
+                height: dp(50)
+                pos_hint: {'center_x': 0.6, 'center_y': 0.5}  # Move slightly to the right
+                spacing: dp(40)
 
                 Button:
                     background_normal: 'kivy_app/assets/img/Big_arrow_left_normal.png'
                     background_down: 'kivy_app/assets/img/Big_arrow_left_down.png'
                     size_hint: None, None
-                    size: '29dp', '60dp'
-                    pos_hint: {'center_x': 0.5, 'y': 1.5}  # Adjusting y position to move up
+                    size: dp(29), dp(60)
+                    pos_hint: {'center_x': 0.5, 'center_y': 2}
                     on_release: root.switch_account(-1)
 
                 CircularChart:
                     id: chart_id
                     size_hint: None, None
-                    size: '200dp', '200dp'
+                    size: dp(200), dp(200)
 
                 Button:
                     background_normal: 'kivy_app/assets/img/Big_arrow_right_normal.png'
                     background_down: 'kivy_app/assets/img/Big_arrow_right_down.png'
                     size_hint: None, None
-                    size: '29dp', '60dp'
-                    pos_hint: {'center_x': 0.5, 'y': 1.5}  # Adjusting y position to move up
+                    size: dp(29), dp(60)
+                    pos_hint: {'center_x': 0.5, 'center_y': 2}
                     on_release: root.switch_account(1)
 
             BoxLayout:
                 orientation: 'horizontal'
                 size_hint: None, None
-                size: '300dp', '50dp'
+                size: dp(300), dp(50)
                 pos_hint: {'center_x': 0.5, 'center_y': 0.7}
-                spacing: '140dp'
+                spacing: dp(140)
 
                 BoxLayout:
                     orientation: 'horizontal'
                     size_hint: None, None
-                    size: '90dp', '32dp'
-                    spacing: '5dp'
+                    size: dp(90), dp(32)
+                    spacing: dp(5)
 
                     FloatLayout:
                         size_hint: None, None
-                        size: '32dp', '32dp'
+                        size: dp(32), dp(32)
                         canvas.before:
                             Color:
                                 rgba: 1, 1, 0, 1  # Yellow color
@@ -86,7 +86,7 @@
                         text: 'Left'
                         font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                         size_hint: None, None
-                        size: '50dp', '32dp'
+                        size: dp(50), dp(32)
                         valign: 'middle'
                         halign: 'left'
                         color: 0, 0, 0, 1
@@ -95,12 +95,12 @@
                 BoxLayout:
                     orientation: 'horizontal'
                     size_hint: None, None
-                    size: '90dp', '32dp'
-                    spacing: '5dp'
+                    size: dp(90), dp(32)
+                    spacing: dp(5)
 
                     FloatLayout:
                         size_hint: None, None
-                        size: '32dp', '32dp'
+                        size: dp(32), dp(32)
                         canvas.before:
                             Color:
                                 rgba: 0.788, 0.788, 0.788, 1  # Gray color
@@ -117,7 +117,7 @@
                         text: 'Spend'
                         font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                         size_hint: None, None
-                        size: '50dp', '32dp'
+                        size: dp(50), dp(32)
                         valign: 'middle'
                         halign: 'left'
                         color: 0, 0, 0, 1
@@ -126,15 +126,15 @@
             BoxLayout:
                 orientation: 'horizontal'
                 size_hint: None, None
-                size: '385dp', '50dp'
+                size: dp(385), dp(50)
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                spacing: '10dp'
+                spacing: dp(10)
 
                 CustomButton:
                     id: day_button
                     text: 'Day'
                     size_hint: None, None
-                    size: '70dp', '35dp'
+                    size: dp(70), dp(35)
                     on_release:
                         root.set_period('day')
                         self.state = 'down'
@@ -143,7 +143,7 @@
                     id: week_button
                     text: 'Week'
                     size_hint: None, None
-                    size: '70dp', '35dp'
+                    size: dp(70), dp(35)
                     on_release:
                         root.set_period('week')
                         self.state = 'down'
@@ -152,7 +152,7 @@
                     id: month_button
                     text: 'Month'
                     size_hint: None, None
-                    size: '70dp', '35dp'
+                    size: dp(70), dp(35)
                     on_release:
                         root.set_period('month')
                         self.state = 'down'
@@ -161,7 +161,7 @@
                     id: year_button
                     text: 'Year'
                     size_hint: None, None
-                    size: '70dp', '35dp'
+                    size: dp(70), dp(35)
                     on_release:
                         root.set_period('year')
                         self.state = 'down'
@@ -170,7 +170,7 @@
                     id: period_button
                     text: 'Period'
                     size_hint: None, None
-                    size: '70dp', '35dp'
+                    size: dp(70), dp(35)
                     on_release:
                         root.set_period('period')
                         self.state = 'down'
@@ -178,14 +178,14 @@
             BoxLayout:
                 orientation: 'horizontal'
                 size_hint: None, None
-                size: '340dp', '50dp'
+                size: dp(340), dp(50)
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-                spacing: '10dp'
+                spacing: dp(10)
 
                 Button:
                     id: left_arrow_button
                     size_hint: None, None
-                    size: '45dp', '32dp'
+                    size: dp(45), dp(32)
                     background_normal: 'kivy_app/assets/img/Button_arrow_left_normal.png'
                     background_down: 'kivy_app/assets/img/Button_arrow_left_down.png'
                     on_release:
@@ -199,7 +199,7 @@
                     background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
                     background_down: 'kivy_app/assets/img/Rectangle_normal.png'
                     size_hint: None, None
-                    size: '220dp', '32dp'
+                    size: dp(220), dp(32)
                     valign: 'middle'
                     halign: 'center'
                     color: 0, 0, 0, 1
@@ -211,7 +211,7 @@
                     background_down: 'kivy_app/assets/img/Button_arrow_right_down.png'
                     background_disabled_normal: ''
                     size_hint: None, None
-                    size: '45dp', '32dp'
+                    size: dp(45), dp(32)
                     disabled_color: 1, 1, 1, 0  # Fully transparent
                     on_release:
                         root.change_period(1)
@@ -220,35 +220,35 @@
             BoxLayout:
                 orientation: 'vertical'
                 size_hint: None, None
-                size: '350dp', '250dp'
-                padding: ['10dp', '10dp', '10dp', 0]
-                spacing: '10dp'
+                size: dp(350), dp(250)
+                padding: [dp(10), dp(10), dp(10), 0]
+                spacing: dp(10)
                 pos_hint: {'center_x': 0.5, 'y': 0.1}  # Adjusted indent from the bottom
 
                 BoxLayout:
                     orientation: 'vertical'
                     size_hint: None, None
-                    size: '330dp', '110dp'
-                    padding: ['10dp']
+                    size: dp(330), dp(110)
+                    padding: [dp(10)]
                     canvas.before:
                         Color:
                             rgba: 1, 1, 1, 1
                         RoundedRectangle:
                             size: self.size
                             pos: self.pos
-                            radius: [20,]
+                            radius: [dp(20),]
 
                         Color:
                             rgba: 0, 0, 0, 1
                         Line:
-                            width: 3
-                            rounded_rectangle: (*self.pos, *self.size, 20)
+                            width: dp(3)
+                            rounded_rectangle: (*self.pos, *self.size, dp(20))
                         # Yellow inner outline
                         Color:
                             rgba: 1, 1, 0, 1
                         Line:
-                            width: 4
-                            rounded_rectangle: (self.x + 5, self.y + 5, self.width - 10, self.height - 10, 20)
+                            width: dp(4)
+                            rounded_rectangle: (self.x + dp(5), self.y + dp(5), self.width - dp(10), self.height - dp(10), dp(20))
 
                     Label:
                         id: income_label_id
@@ -256,48 +256,47 @@
                         font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                         font_size: '24sp'
                         color: 0, 0, 0, 1
-                        padding: [0, '30dp', 0, 0]  # Add padding to move text down
+                        padding: [0, dp(30), 0, 0]  # Add padding to move text down
 
                     BoxLayout:
                         orientation: 'horizontal'
                         size_hint: None, None
-                        size: '32dp', '32dp'
-                        spacing: '5dp'
+                        size: dp(32), dp(32)
+                        spacing: dp(5)
                         pos_hint: {'center_x': 0.85, 'y': 1.30}
 
                         Button:
                             size_hint: None, None
-                            size: '54dp', '54dp'
+                            size: dp(54), dp(54)
                             background_normal: 'kivy_app/assets/img/Circle_with_cross_yellow_normal.png'
                             background_down: 'kivy_app/assets/img/Circle_with_cross_yellow_down.png'
                             pos_hint:  {'center_x': 0.85, 'y': 0.6}
                             on_press: root.go_transaction('income')
 
-
                 BoxLayout:
                     orientation: 'vertical'
                     size_hint: None, None
-                    size: '330dp', '110dp'
-                    padding: ['10dp']
+                    size: dp(330), dp(110)
+                    padding: [dp(10)]
                     canvas.before:
                         Color:
                             rgba: 1, 1, 1, 1
                         RoundedRectangle:
                             size: self.size
                             pos: self.pos
-                            radius: [20,]
+                            radius: [dp(20),]
 
                         Color:
                             rgba: 0, 0, 0, 1
                         Line:
-                            width: 3
-                            rounded_rectangle: (*self.pos, *self.size, 20)
+                            width: dp(3)
+                            rounded_rectangle: (*self.pos, *self.size, dp(20))
                         # Yellow inner outline
                         Color:
                             rgba: 0.788, 0.788, 0.788, 1
                         Line:
-                            width: 4
-                            rounded_rectangle: (self.x + 5, self.y + 5, self.width - 10, self.height - 10, 20)
+                            width: dp(4)
+                            rounded_rectangle: (self.x + dp(5), self.y + dp(5), self.width - dp(10), self.height - dp(10), dp(20))
 
                     Label:
                         id: expense_label_id
@@ -305,18 +304,18 @@
                         font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                         font_size: '24sp'
                         color: 0, 0, 0, 1
-                        padding: [0, '30dp', 0, 0]  # Add padding to move text down
+                        padding: [0, dp(30), 0, 0]  # Add padding to move text down
 
                     BoxLayout:
                         orientation: 'horizontal'
                         size_hint: None, None
-                        size: '32dp', '32dp'
-                        spacing: '5dp'
+                        size: dp(32), dp(32)
+                        spacing: dp(5)
                         pos_hint:  {'center_x': 0.85, 'y': 1.30}
 
                         Button:
                             size_hint: None, None
-                            size: '54dp', '54dp'
+                            size: dp(54), dp(54)
                             background_normal: 'kivy_app/assets/img/Circle_with_cross_grey_normal.png'
                             background_down: 'kivy_app/assets/img/Circle_with_cross_grey_down.png'
                             pos_hint:  {'center_x': 0.85, 'y': 0.6}
@@ -326,12 +325,12 @@
             SidebarMenu:
                 id: sidebar_menu_id
                 size_hint: None, 1
-                width: '300dp'
+                width: dp(300)
                 x: -self.width
 
             CustomSidebarButton:
                 id: sidebar_toggle_button
                 size_hint: None, None
-                size: '45dp', '45dp'
+                size: dp(45), dp(45)
                 pos_hint: {'x': 0.01, 'y': 0.93}
                 on_release: root.toggle_sidebar()

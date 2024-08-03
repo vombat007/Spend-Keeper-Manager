@@ -10,18 +10,19 @@
 
     BoxLayout:
         orientation: 'vertical'
-        padding: 20
-        spacing: 5
+        padding: [dp(20), dp(20), dp(20), dp(20)]
+        spacing: dp(5)
         pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
         BoxLayout:
             orientation: 'horizontal'
-            size_hint: None, None
-            spacing: 10
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
 
             Button:
                 size_hint: None, None
-                size: '45dp', '45dp'
+                size: dp(45), dp(45)
                 background_normal: 'kivy_app/assets/img/return_button_normal.png'
                 background_down: 'kivy_app/assets/img/return_button_down.png'
                 pos_hint: {'center_x': 0.5, 'center_y': 1}
@@ -30,9 +31,9 @@
         BoxLayout:
             orientation: 'horizontal'
             size_hint: None, None
-            size: 340, 50
+            size: dp(340), dp(50)
             pos_hint: {'center_x': 0.52}
-            spacing: 60
+            spacing: dp(60)
 
             Button:
                 id: income_button
@@ -40,7 +41,7 @@
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 color: 0, 0, 0, 1
                 size_hint: None, None
-                size: 120, 32
+                size: dp(120), dp(32)
                 background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
                 on_press: root.set_type('Income')
@@ -51,16 +52,17 @@
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 color: 0, 0, 0, 1
                 size_hint: None, None
-                size: 120, 32
+                size: dp(120), dp(32)
                 background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
                 on_press: root.set_type('Expense')
 
         BoxLayout:
             orientation: 'horizontal'
-            size_hint: None, None
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
             pos_hint: {'center_x': 0.5}
-            spacing: 10
 
             Label:
                 text: 'Account:'
@@ -77,10 +79,10 @@
                 size: self.texture_size
 
         BoxLayout:
-            orientation: 'horizontal'  # Change orientation to horizontal
+            orientation: 'horizontal'
             size_hint: None, None
-            size: 188, 55
-            spacing: 10  # Adjust spacing as needed
+            size: dp(188), dp(55)
+            spacing: dp(10)
             pos_hint: {'center_x': 0.5}
 
             TextInput:
@@ -91,46 +93,45 @@
                 background_active: 'kivy_app/assets/img/Rectangle_Dash.png.'
                 multiline: False
                 size_hint_y: None
-                height: 45
-                padding_y: [10, 10]
-                padding_x: [10, 10]
-                font_size: 18
+                height: dp(45)
+                padding_y: [dp(10), dp(10)]
+                padding_x: [dp(10), dp(10)]
+                font_size: sp(18)
 
             Button:
                 size_hint: None, None
-                size: '45dp', '45dp'
+                size: dp(45), dp(45)
                 background_normal: 'kivy_app/assets/img/Button_calculator.png'
                 background_down: 'kivy_app/assets/img/Button_calculator_down.png'
                 on_press: root.go_calculator(self)
 
-
         BoxLayout:
             orientation: 'vertical'
             size_hint: None, None
-            size: 310, 60
-            spacing: 15
+            size: dp(310), dp(60)
+            spacing: dp(15)
             pos_hint: {'center_x': 0.5}
 
             TextInput:
                 id: description_input
                 hint_text: "Description"
                 multiline: False
-                height: 45
-                padding_y: [10, 10]
-                padding_x: [10, 10]
-                font_size: 18
+                height: dp(45)
+                padding_y: [dp(10), dp(10)]
+                padding_x: [dp(10), dp(10)]
+                font_size: sp(18)
 
         BoxLayout:
             orientation: 'horizontal'
             size_hint: None, None
-            size: '340dp', '50dp'
+            size: dp(340), dp(50)
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
-            spacing: '10dp'
+            spacing: dp(10)
 
             Button:
                 id: left_arrow_button
                 size_hint: None, None
-                size: '45dp', '32dp'
+                size: dp(45), dp(32)
                 background_normal: 'kivy_app/assets/img/Button_arrow_left_normal.png'
                 background_down: 'kivy_app/assets/img/Button_arrow_left_down.png'
                 on_release:
@@ -144,7 +145,7 @@
                 background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
                 background_down: 'kivy_app/assets/img/Rectangle_normal.png'
                 size_hint: None, None
-                size: '220dp', '32dp'
+                size: dp(220), dp(32)
                 valign: 'middle'
                 halign: 'center'
                 color: 0, 0, 0, 1
@@ -156,7 +157,7 @@
                 background_down: 'kivy_app/assets/img/Button_arrow_right_down.png'
                 background_disabled_normal: ''
                 size_hint: None, None
-                size: '45dp', '32dp'
+                size: dp(45), dp(32)
                 disabled_color: 1, 1, 1, 0  # Fully transparent
                 on_release:
                     root.change_period(1)
@@ -168,24 +169,24 @@
             color: 0, 0, 0, 1
             size_hint: None, None
             pos_hint: {'center_x': 0.5}
-            font_size: 20
+            font_size: sp(20)
 
         GridLayout:
             id: category_grid
             cols: 4
-            size_hint: None, None
-            pos_hint: {'center_x': 0.2}
-            height: '280dp'
-            spacing: 10
+            size_hint_y: None
+            height: dp(280)
+            spacing: dp(10)
+            pos_hint: {'center_x': 0.5}
 
         Button:
             text: "Add"
-            font_size: 24
+            font_size: sp(24)
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
             color: 0, 0, 0, 1
             size_hint: None, None
             pos_hint: {'center_x': 0.5}
-            size: 120, 32
+            size: dp(120), dp(32)
             on_press: root.create_transaction()
             background_normal: 'kivy_app/assets/img/Rectangle_down.png'
             background_down: 'kivy_app/assets/img/Rectangle_normal.png'

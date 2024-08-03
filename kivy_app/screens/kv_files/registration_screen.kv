@@ -5,30 +5,31 @@
         Rectangle:
             size: self.size
             pos: self.pos
+
     BoxLayout:
         orientation: 'vertical'
-        padding: [30, 50]
-        spacing: 15
-        size_hint: None, None
-        pos_hint: {'center_x': 0.5, 'center_y': 0.3}
-
+        padding: [dp(30), dp(50)]
+        spacing: dp(15)
+        size_hint: 0.9, 0.7
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
         Label:
-            text: 'HI! \nCreate a \nNew account !'
+            text: 'HI! \nCreate a \nNew account!'
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-            font_size: 30
+            font_size: sp(30)
             size_hint_y: None
             height: self.texture_size[1]
             color: 0, 0, 0, 1
             bold: True
             halign: 'center'
+            text_size: self.size
 
         BoxLayout:
             orientation: 'vertical'
-            padding: [10, 40]
-            spacing: 15
-            size_hint: None, None
-            pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+            padding: [dp(10), dp(40)]
+            spacing: dp(15)
+            size_hint: 1, None
+            height: self.minimum_height
 
             Label:
                 id: error_label
@@ -37,24 +38,23 @@
                 color: 1, 0, 0, 1
                 size_hint_y: None
                 height: self.texture_size[1]
-                pos_hint: {'center_x': 0.5}
+                text_size: self.size
 
         BoxLayout:
             orientation: 'vertical'
-            size_hint: None, None
-            size: 300, 50
-            spacing: 5
-            pos_hint: {'center_x': 0.5}
+            size_hint: 1, None
+            height: self.minimum_height
+            spacing: dp(5)
 
             Label:
                 text: 'Email'
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint_y: None
-                height: 20
+                height: dp(20)
                 halign: 'left'
                 color: 0, 0, 0, 1
                 text_size: self.size
-                padding_x: 25  # Adjust padding to move text to the right
+                padding_x: dp(25)
 
             TextInput:
                 id: email_input
@@ -62,31 +62,33 @@
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 multiline: False
                 size_hint_y: None
-                height: 45
-                padding_y: [10, 10]
-                padding_x: [10, 10]
-                font_size: 18
+                height: dp(45)
+                padding_y: [dp(10), dp(10)]
+                padding_x: [dp(10), dp(10)]
+                font_size: sp(18)
                 background_normal: 'kivy_app/assets/img/Rectangle.png'
                 background_active: 'kivy_app/assets/img/Rectangle.png'
                 background_color: 0.95, 0.95, 0.95, 1
                 foreground_color: 0, 0, 0, 1
 
+        Widget:
+            size_hint_y: None
+            height: dp(20)
 
         BoxLayout:
             orientation: 'vertical'
-            size_hint: None, None
-            size: 300, 70
-            spacing: 5
-            pos_hint: {'center_x': 0.5}
+            size_hint: 1, None
+            height: self.minimum_height
+            spacing: dp(5)
 
             Label:
                 text: 'Password'
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint_y: None
-                height: 20
+                height: dp(20)
                 color: 0, 0, 0, 1
                 text_size: self.size
-                padding_x: 25  # Adjust padding to move text to the right
+                padding_x: dp(25)
 
             TextInput:
                 id: password_input
@@ -95,22 +97,22 @@
                 password: True
                 multiline: False
                 size_hint_y: None
-                height: 45
-                padding_y: [10, 10]
-                padding_x: [10, 10]
-                font_size: 18
+                height: dp(45)
+                padding_y: [dp(10), dp(10)]
+                padding_x: [dp(10), dp(10)]
+                font_size: sp(18)
                 background_normal: 'kivy_app/assets/img/Rectangle.png'
                 background_active: 'kivy_app/assets/img/Rectangle.png'
                 background_color: 0.95, 0.95, 0.95, 1
                 foreground_color: 0, 0, 0, 1
 
         Button:
-            text: 'Sing Up'
+            text: 'Sign Up'
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-            font_size: 20
+            font_size: sp(20)
             color: 0, 0, 0, 1
-            size_hint: None, None
-            size: dp(160), dp(35)
+            size_hint: 0.5, None
+            height: dp(35)
             background_normal: 'kivy_app/assets/img/Rectangle_down.png'
             background_down: 'kivy_app/assets/img/Rectangle_normal.png'
             on_press: root.register(self)
@@ -120,14 +122,14 @@
         orientation: 'horizontal'
         size_hint: None, None
         size: dp(300), dp(30)
-        spacing: dp(40)
-        padding: [30, 10]
+        spacing: dp(60)
+        padding: [dp(30), dp(10)]
         pos_hint: {'center_x': 0.5}
 
         Label:
-            text: 'Already have account?'
+            text: 'Already have an account?'
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-            font_size: 16
+            font_size: sp(16)
             size_hint_y: None
             height: self.texture_size[1]
             color: 0, 0, 0, 1
@@ -135,10 +137,10 @@
         Button:
             text: 'Sign in now'
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-            font_size: 16
+            font_size: sp(16)
             size_hint: None, None
-            size: 90, 18
+            size: dp(90), dp(18)
             color: 0, 0, 1, 1
             background_normal: ''
             background_color: 1, 1, 1, 1
-            on_press: root.signin(self)
+            on_press: root.sign_in(self)

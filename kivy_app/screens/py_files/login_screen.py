@@ -37,5 +37,5 @@ class LoginScreen(Screen):
         # Implement forgot password logic
         pass
 
-    def sing_up(self, instance):
+    def sign_up(self, instance):
         self.manager.current = 'registration'
