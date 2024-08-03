@@ -2,34 +2,48 @@ import os
 import json
 import requests
 from PIL import Image
+from kivy_app.config import ENDPOINTS
 
 
 class TokenManager:
+    token_file_path = 'tokens.json'
+
     @staticmethod
     def load_token():
-        if os.path.exists('tokens.json'):
-            with open('tokens.json', 'r') as token_file:
+        if os.path.exists(TokenManager.token_file_path):
+            with open(TokenManager.token_file_path, 'r') as token_file:
                 tokens = json.load(token_file)
                 return tokens.get('access')
         return None
 
     @staticmethod
-    def refresh_token():
-        if os.path.exists('tokens.json'):
-            with open('tokens.json', 'r') as token_file:
+    def load_refresh_token():
+        if os.path.exists(TokenManager.token_file_path):
+            with open(TokenManager.token_file_path, 'r') as token_file:
                 tokens = json.load(token_file)
-                refresh_token = tokens.get('refresh')
-                response = requests.post('http://127.0.0.1:8000/api/login/refresh/', data={
-                    'refresh': refresh_token
-                })
-                if response.status_code == 200:
-                    new_tokens = response.json()
-                    with open('tokens.json', 'w') as token_file:
-                        json.dump(new_tokens, token_file)
-                    return new_tokens['access']
-                else:
-                    os.remove('tokens.json')
+                return tokens.get('refresh')
         return None
+
+    @staticmethod
+    def refresh_token():
+        refresh_token = TokenManager.load_refresh_token()
+        if refresh_token:
+            response = requests.post(ENDPOINTS['refresh_token'], data={
+                'refresh': refresh_token
+            })
+            if response.status_code == 200:
+                new_tokens = response.json()
+                with open(TokenManager.token_file_path, 'w') as token_file:
+                    json.dump(new_tokens, token_file)
+                return new_tokens['access']
+            else:
+                TokenManager.remove_tokens()
+        return None
+
+    @staticmethod
+    def remove_tokens():
+        if os.path.exists(TokenManager.token_file_path):
+            os.remove(TokenManager.token_file_path)
 
 
 def extract_frames(gif_path, output_folder):
