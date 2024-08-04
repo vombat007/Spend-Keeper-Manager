@@ -10,7 +10,8 @@ from kivy.uix.popup import Popup
 from kivy.uix.image import Image
 from kivy.app import App
 from kivy.properties import StringProperty, ListProperty
-from kivy.graphics import Color, Rectangle
+from kivy.graphics import Color, RoundedRectangle
+
 
 class CreateCategoryScreen(Screen):
     selected_icon = StringProperty('')
@@ -47,11 +48,15 @@ class CreateCategoryScreen(Screen):
             with self.ids.selected_icon_display.canvas.before:
                 # Draw the color-changing square first
                 Color(*self.selected_color)
-                Rectangle(pos=self.ids.selected_icon_display.pos, size=self.ids.selected_icon_display.size)
+                RoundedRectangle(pos=self.ids.selected_icon_display.pos,
+                                 size=self.ids.selected_icon_display.size,
+                                 radius=[20, 20, 20, 20])
                 # Draw the selected icon on top of the color-changing square
                 Color(1, 1, 1, 1)
-                Rectangle(source=self.selected_icon, pos=self.ids.selected_icon_display.pos,
-                          size=self.ids.selected_icon_display.size)
+                RoundedRectangle(source=self.selected_icon,
+                                 pos=self.ids.selected_icon_display.pos,
+                                 size=self.ids.selected_icon_display.size,
+                                 radius=[20, 20, 20, 20])
 
     def select_color(self, instance, color):
         self.selected_color = color

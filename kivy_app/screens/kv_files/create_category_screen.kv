@@ -50,19 +50,29 @@
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
 
         BoxLayout:
-            orientation: 'horizontal'
-            size_hint_y: None
+            orientation: 'vertical'
+            size_hint: None, None
+            size: dp(200), dp(40)
+            height: self.minimum_height
             height: dp(50)
+            pos_hint: {'center_x': 0.5}
 
             Label:
                 text: "Name:"
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint_x: None
                 width: dp(50)
 
             TextInput:
                 id: name_input
                 hint_text: "Category Name"
+                font_size: sp(18)
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 multiline: False
+                size_hint: None, None
+                size: dp(200), dp(40)
+                background_normal: 'kivy_app/assets/img/Rectangle.png'
+                background_active: 'kivy_app/assets/img/Rectangle.png'
                 on_text: root.category_name = self.text
 
         Label:
