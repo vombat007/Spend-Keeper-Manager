@@ -11,6 +11,7 @@ from kivy_app.screens.py_files.splash_screen import SplashScreen
 from kivy_app.screens.py_files.transaction_screen import TransactionScreen
 from kivy_app.screens.py_files.registration_screen import RegistrationScreen
 from kivy_app.screens.py_files.calculator_screen import CalculatorScreen
+from kivy_app.screens.py_files.create_category_screen import CreateCategoryScreen
 from kivy_app.utils import TokenManager
 
 
@@ -24,14 +25,15 @@ class FinancialApp(App):
         Window.size = (412, 915)  # Example size, change as needed
 
         # Load the KV files
+        Builder.load_file('kivy_app/widget/date_picker_app.kv')
         Builder.load_file('kivy_app/screens/kv_files/start_screen.kv')
         Builder.load_file('kivy_app/screens/kv_files/login_screen.kv')
         Builder.load_file('kivy_app/screens/kv_files/registration_screen.kv')
         Builder.load_file('kivy_app/screens/kv_files/home_screen.kv')
         Builder.load_file('kivy_app/screens/kv_files/sidebar_menu.kv')
-        Builder.load_file('kivy_app/widget/date_picker_app.kv')
         Builder.load_file('kivy_app/screens/kv_files/transaction_screen.kv')
         Builder.load_file('kivy_app/screens/kv_files/calculator_screen.kv')
+        Builder.load_file('kivy_app/screens/kv_files/create_category_screen.kv')
 
         self.token = TokenManager.load_token()
 
@@ -43,6 +45,7 @@ class FinancialApp(App):
         sm.add_widget(HomeScreen(screen_manager=sm, name='home'))
         sm.add_widget(TransactionScreen(name='transaction'))
         sm.add_widget(CalculatorScreen(name='calculator'))
+        sm.add_widget(CreateCategoryScreen(name='create_category'))
 
         if self.is_user_logged_in():
             sm.current = 'home'

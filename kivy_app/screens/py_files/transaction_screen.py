@@ -227,5 +227,4 @@ class TransactionScreen(Screen):
         self.ids.period_label_id.text = self.selected_date
 
     def create_category(self, instance):
-        self.show_popup('Create Category', 'Category creation is not yet implemented.')
-        # Implement your category creation logic here
+        self.manager.current = 'create_category'
