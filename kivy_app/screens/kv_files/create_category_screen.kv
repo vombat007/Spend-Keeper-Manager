@@ -6,7 +6,6 @@
             size: self.size
             pos: self.pos
 
-
     BoxLayout:
         orientation: 'vertical'
         padding: dp(10)
@@ -26,11 +25,10 @@
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 on_press: root.go_back(self)
 
-
             Button:
                 id: income_button
                 text: 'Income'
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                # font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 color: 0, 0, 0, 1
                 size_hint: None, None
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
@@ -41,7 +39,7 @@
             Button:
                 id: expense_button
                 text: 'Expense'
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                # font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 color: 0, 0, 0, 1
                 size_hint: None, None
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
@@ -52,16 +50,17 @@
         BoxLayout:
             orientation: 'vertical'
             size_hint: None, None
-            size: dp(200), dp(40)
-            height: self.minimum_height
-            height: dp(50)
+            size: dp(200), dp(50)
+            spacing: dp(10)
             pos_hint: {'center_x': 0.5}
 
             Label:
                 text: "Name:"
+                font_size: sp(18)
                 font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 size_hint_x: None
-                width: dp(50)
+                width: dp(100)
+                color: (0, 0, 0, 1)  # Ensure the text color is visible
 
             TextInput:
                 id: name_input
@@ -77,15 +76,20 @@
 
         Label:
             text: "Select Icon:"
+            font_size: sp(18)
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            color: (0, 0, 0, 1)
             size_hint_y: None
             height: dp(50)
 
         GridLayout:
             id: icon_grid
-            cols: 4
+            cols: 5
             size_hint_y: None
             height: dp(200)
             spacing: dp(10)
+            size_hint_x: None
+            pos_hint: {'center_x': 0.17}
 
         Label:
             text: "Selected Icon:"
@@ -116,6 +120,13 @@
 
         Button:
             text: "Create Category"
+            font_size: sp(20)
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            color: (0, 0, 0, 1)
             size_hint_y: None
-            height: dp(50)
+            size_hint: None, None
+            size: dp(200), dp(40)
+            background_normal: 'kivy_app/assets/img/Rectangle_down.png'
+            background_down: 'kivy_app/assets/img/Rectangle_normal.png'
+            pos_hint: {'center_x': 0.5}
             on_press: root.create_category()
