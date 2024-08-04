@@ -12,7 +12,7 @@
         orientation: 'vertical'
         padding: [dp(20), dp(20), dp(20), dp(20)]
         spacing: dp(5)
-        pos_hint: {'center_x': 0.47, 'center_y': 0.68}
+        pos_hint: {'center_x': 0.47, 'center_y': 0.69}
 
         BoxLayout:
             orientation: 'horizontal'
@@ -109,21 +109,21 @@
                 background_down: 'kivy_app/assets/img/Button_calculator_down.png'
                 on_press: root.go_calculator(self)
 
-        BoxLayout:
-            orientation: 'vertical'
+        Label:
+            text: "Categories"
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            color: 0, 0, 0, 1
             size_hint: None, None
-            size: dp(310), dp(60)
-            spacing: dp(15)
             pos_hint: {'center_x': 0.5}
+            font_size: sp(20)
 
-            TextInput:
-                id: description_input
-                hint_text: "Description"
-                multiline: False
-                height: dp(45)
-                padding_y: [dp(10), dp(10)]
-                padding_x: [dp(10), dp(10)]
-                font_size: sp(18)
+        GridLayout:
+            id: category_grid
+            cols: 4
+            size_hint: None, None
+            size: dp(320), dp(280)
+            spacing: dp(10)
+            pos_hint: {'center_x': 0.5}
 
         BoxLayout:
             orientation: 'horizontal'
@@ -167,21 +167,50 @@
                     root.change_period(1)
                     root.update_button_visibility()
 
-        Label:
-            text: "Categories"
-            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-            color: 0, 0, 0, 1
+        BoxLayout:
+            orientation: 'vertical'
             size_hint: None, None
-            pos_hint: {'center_x': 0.5}
-            font_size: sp(20)
-
-        GridLayout:
-            id: category_grid
-            cols: 4
-            size_hint: None, None
-            size: dp(320), dp(280)
+            size: dp(45), dp(45)
             spacing: dp(10)
             pos_hint: {'center_x': 0.5}
+
+
+            Label:
+                text: "Notes:"
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                font_size: sp(24)
+                halign: 'center'
+                valign: 'middle'
+                size_hint: None, None
+                size: self.texture_size
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: None, None
+            size: dp(310), dp(45)
+            spacing: dp(15)
+            pos_hint: {'center_x': 0.5}
+
+            TextInput:
+                id: description_input
+                hint_text: "Description"
+                multiline: False
+                size: dp(310), dp(45)
+                background_normal: 'kivy_app/assets/img/Big_rectangle_Dash.png'
+                background_active: 'kivy_app/assets/img/Big_rectangle_Dash.png'
+                padding_y: [dp(10), dp(10)]
+                padding_x: [dp(10), dp(10)]
+                font_size: sp(18)
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: dp(300), dp(30)
+        spacing: dp(40)
+        padding: [dp(30), dp(10)]
+        pos_hint: {'center_x': 0.64}
 
         Button:
             text: "Add"
