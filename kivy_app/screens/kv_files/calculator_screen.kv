@@ -5,23 +5,21 @@
         Rectangle:
             size: self.size
             pos: self.pos
-    BoxLayout:
-        orientation: 'vertical'
-        padding: [dp(20), dp(40), dp(20), dp(20)]
-        spacing: dp(10)
 
-        BoxLayout:
-            orientation: 'horizontal'
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: dp(45), dp(45)
+        pos_hint: {'center_x': 0.1, 'center_y': 0.97}
+        spacing: dp(80)
+
+        Button:
             size_hint: None, None
             size: dp(45), dp(45)
+            background_normal: 'kivy_app/assets/img/return_button_normal.png'
+            background_down: 'kivy_app/assets/img/return_button_down.png'
+            on_press: root.go_back(self)
 
-            Button:
-                size_hint: None, None
-                size: dp(45), dp(45)
-                background_normal: 'kivy_app/assets/img/return_button_normal.png'
-                background_down: 'kivy_app/assets/img/return_button_down.png'
-                on_press: root.go_back(self)
-                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
         Label:
             text: "Calculator"
@@ -33,6 +31,11 @@
             size_hint: None, None
             size: self.texture_size
             pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [dp(20), dp(40), dp(20), dp(20)]
+        spacing: dp(10)
 
         BoxLayout:
             orientation: 'vertical'
