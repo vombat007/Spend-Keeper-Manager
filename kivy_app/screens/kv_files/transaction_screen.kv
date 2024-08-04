@@ -64,19 +64,26 @@
             spacing: dp(10)
             pos_hint: {'center_x': 0.5}
 
-            Label:
-                text: 'Account:'
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                color: 0, 0, 0, 1
+            BoxLayout:
+                orientation: 'horizontal'
                 size_hint: None, None
-                size: self.texture_size
+                size: dp(340), dp(50)
+                pos_hint: {'center_x': 0.5}
+                spacing: dp(10)
 
-            Label:
-                text: root.account_name  # Bind to account_name property
-                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-                color: 0, 0, 0, 1
-                size_hint: None, None
-                size: self.texture_size
+                Label:
+                    text: 'Account:'
+                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.texture_size
+
+                Label:
+                    text: root.account_name  # Bind to account_name property
+                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.texture_size
 
         BoxLayout:
             orientation: 'horizontal'
@@ -174,8 +181,8 @@
         GridLayout:
             id: category_grid
             cols: 4
-            size_hint_y: None
-            height: dp(280)
+            size_hint: None, None
+            size: dp(320), dp(280)
             spacing: dp(10)
             pos_hint: {'center_x': 0.5}
 
