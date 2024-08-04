@@ -86,6 +86,33 @@ class TransactionScreen(Screen):
             box.add_widget(label)
             grid.add_widget(box)
 
+        # Add the "Create" button at the end
+        create_box = BoxLayout(orientation='vertical', size_hint=(None, None), size=(70, 90))
+        create_btn = Button(
+            size_hint=(None, None),
+            size=(70, 70),
+            background_normal='kivy_app/assets/icon/create_icon.png',
+            # Set the appropriate path for the create button icon
+            background_down='kivy_app/assets/icon/create_icon.png'
+        )
+        create_btn.bind(on_press=self.create_category)
+
+        create_label = Label(
+            text='Create',
+            font_name='kivy_app/assets/fonts/IrishGrover-Regular.ttf',
+            size_hint=(None, None),
+            size=(70, 20),
+            font_size=12,
+            color=(0, 0, 0, 1),
+            halign='center',
+            valign='middle'
+        )
+        create_label.bind(size=create_label.setter('text_size'))
+
+        create_box.add_widget(create_btn)
+        create_box.add_widget(create_label)
+        grid.add_widget(create_box)
+
     def on_category_button_press(self, instance):
         self.selected_category = instance.category_id
 
@@ -198,3 +225,7 @@ class TransactionScreen(Screen):
 
     def update_period_label(self):
         self.ids.period_label_id.text = self.selected_date
+
+    def create_category(self, instance):
+        self.show_popup('Create Category', 'Category creation is not yet implemented.')
+        # Implement your category creation logic here
