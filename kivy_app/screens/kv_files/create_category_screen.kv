@@ -28,7 +28,7 @@
             Button:
                 id: income_button
                 text: 'Income'
-                # font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 color: 0, 0, 0, 1
                 size_hint: None, None
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
@@ -39,7 +39,7 @@
             Button:
                 id: expense_button
                 text: 'Expense'
-                # font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                 color: 0, 0, 0, 1
                 size_hint: None, None
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
@@ -75,26 +75,11 @@
                 on_text: root.category_name = self.text
 
         Label:
-            text: "Select Icon:"
-            font_size: sp(18)
-            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
-            color: (0, 0, 0, 1)
-            size_hint_y: None
-            height: dp(50)
-
-        GridLayout:
-            id: icon_grid
-            cols: 5
-            size_hint_y: None
-            height: dp(200)
-            spacing: dp(10)
-            size_hint_x: None
-            pos_hint: {'center_x': 0.17}
-
-        Label:
             text: "Selected Icon:"
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
             size_hint_y: None
             height: dp(50)
+            color: (0, 0, 0, 1)
 
         BoxLayout:
             id: selected_icon_display
@@ -107,6 +92,44 @@
                 Rectangle:
                     size: self.size
                     pos: self.pos
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            height: dp(50)
+            spacing: dp(30)
+            pos_hint: {'center_x': 0.35, 'center_y': 0.5}
+
+            Button:
+                id: icon_button
+                text: 'Icon'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size: dp(100), dp(32)
+                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_down.png'
+
+            Button:
+                id: color_button
+                text: 'Color'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size: dp(100), dp(32)
+                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_down.png'
+
+        GridLayout:
+            id: icon_grid
+            cols: 5
+            size_hint_y: None
+            height: dp(200)
+            spacing: dp(10)
+            size_hint_x: None
+            pos_hint: {'center_x': 0.17}
 
         Label:
             text: "Select Color:"
