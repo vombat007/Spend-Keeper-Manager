@@ -1,10 +1,12 @@
 import os
 from kivy.metrics import dp
+from kivy.uix.popup import Popup
 from kivy.uix.screenmanager import Screen
 from kivy.uix.button import Button
 from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.popup import Popup
+from kivy.uix.scrollview import ScrollView
+from kivy.uix.gridlayout import GridLayout
 from kivy.properties import StringProperty, ListProperty
 from kivy.graphics import Color, RoundedRectangle
 
@@ -23,17 +25,40 @@ class CreateCategoryScreen(Screen):
         icon_grid.clear_widgets()
         icon_path = 'kivy_app/assets/icon/all/'
 
-        for icon_file in os.listdir(icon_path):
-            if icon_file.endswith('.png'):
-                btn = Button(
-                    size_hint=(None, None),
-                    size=(64, 64),
-                    background_normal=os.path.join(icon_path, icon_file),
-                    background_down=os.path.join(icon_path, icon_file)
+        for folder_name in os.listdir(icon_path):
+            folder_path = os.path.join(icon_path, folder_name)
+            if os.path.isdir(folder_path):
+                # Create a centered label for the folder name
+                folder_label = Label(
+                    text=folder_name,
+                    size_hint_y=None,
+                    height=dp(50),
+                    font_size=dp(24),
+                    halign='center',
+                    valign='middle',
+                    color=(0, 0, 0, 1)
                 )
-                btn.bind(on_press=self.select_icon)
-                btn.icon_path = os.path.join(icon_path, icon_file)
-                icon_grid.add_widget(btn)
+                folder_label.bind(size=folder_label.setter('text_size'))
+                icon_grid.add_widget(folder_label)
+
+                # Add a layout to hold the icons
+                icons_layout = GridLayout(cols=5, spacing=dp(10), size_hint_y=None)
+                icons_layout.bind(minimum_height=icons_layout.setter('height'))
+
+                # Add icons from the folder
+                for icon_file in os.listdir(folder_path):
+                    if icon_file.endswith('.png'):
+                        btn = Button(
+                            size_hint=(None, None),
+                            size=(dp(64), dp(64)),  # Increase the icon size
+                            background_normal=os.path.join(folder_path, icon_file),
+                            background_down=os.path.join(folder_path, icon_file)
+                        )
+                        btn.bind(on_press=self.select_icon)
+                        btn.icon_path = os.path.join(folder_path, icon_file)
+                        icons_layout.add_widget(btn)
+
+                icon_grid.add_widget(icons_layout)
 
     def select_icon(self, instance):
         self.selected_icon = instance.icon_path

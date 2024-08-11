@@ -124,20 +124,15 @@
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
                 on_press: root.on_color_button_press(self)
 
-        GridLayout:
-            id: icon_grid
-            cols: 5
-            size_hint_y: None
-            height: dp(200)
-            opacity: 1
-            spacing: dp(10)
-            size_hint_x: None
-            pos_hint: {'center_x': 0.17}
-
-        Label:
-            text: "Select Color:"
-            size_hint_y: None
-            height: dp(50)
+        ScrollView:
+            GridLayout:
+                id: icon_grid
+                cols: 1  # Ensure each folder's content is in a separate row
+                spacing: dp(20)
+                padding: dp(10)
+                size_hint_y: None
+                height: self.minimum_height
+                size_hint_x: 1
 
         ColorPicker:
             id: color_picker
