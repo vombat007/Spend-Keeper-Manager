@@ -1,14 +1,10 @@
 import os
+from kivy.metrics import dp
 from kivy.uix.screenmanager import Screen
-from kivy.uix.gridlayout import GridLayout
 from kivy.uix.button import Button
 from kivy.uix.label import Label
-from kivy.uix.textinput import TextInput
-from kivy.uix.colorpicker import ColorPicker
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.popup import Popup
-from kivy.uix.image import Image
-from kivy.app import App
 from kivy.properties import StringProperty, ListProperty
 from kivy.graphics import Color, RoundedRectangle
 
@@ -20,6 +16,7 @@ class CreateCategoryScreen(Screen):
 
     def on_pre_enter(self, *args):
         self.display_icons()
+        self.toggle_display('icon')  # Default to showing icons
 
     def display_icons(self):
         icon_grid = self.ids.icon_grid
@@ -46,12 +43,10 @@ class CreateCategoryScreen(Screen):
         if self.selected_icon:
             self.ids.selected_icon_display.canvas.before.clear()
             with self.ids.selected_icon_display.canvas.before:
-                # Draw the color-changing square first
                 Color(*self.selected_color)
                 RoundedRectangle(pos=self.ids.selected_icon_display.pos,
                                  size=self.ids.selected_icon_display.size,
                                  radius=[20, 20, 20, 20])
-                # Draw the selected icon on top of the color-changing square
                 Color(1, 1, 1, 1)
                 RoundedRectangle(source=self.selected_icon,
                                  pos=self.ids.selected_icon_display.pos,
@@ -79,5 +74,32 @@ class CreateCategoryScreen(Screen):
         btn.bind(on_release=popup.dismiss)
         popup.open()
 
-    def go_back(self, instance):
-        self.manager.current = 'transaction'
+    def toggle_display(self, display_type):
+        """Toggle between icon grid and color picker display."""
+        if display_type == 'icon':
+            self.ids.icon_grid.height = dp(200)
+            self.ids.icon_grid.opacity = 1
+            self.ids.icon_grid.disabled = False
+
+            self.ids.color_picker.height = 0
+            self.ids.color_picker.opacity = 0
+            self.ids.color_picker.disabled = True
+
+        elif display_type == 'color':
+            self.ids.icon_grid.height = 0
+            self.ids.icon_grid.opacity = 0
+            self.ids.icon_grid.disabled = True
+
+            self.ids.color_picker.height = dp(200)
+            self.ids.color_picker.opacity = 1
+            self.ids.color_picker.disabled = False
+
+    def on_icon_button_press(self, instance):
+        self.toggle_display('icon')
+        self.ids.icon_button.background_normal = 'kivy_app/assets/img/Rectangle_down.png'
+        self.ids.color_button.background_normal = 'kivy_app/assets/img/Rectangle_normal.png'
+
+    def on_color_button_press(self, instance):
+        self.toggle_display('color')
+        self.ids.icon_button.background_normal = 'kivy_app/assets/img/Rectangle_normal.png'
+        self.ids.color_button.background_normal = 'kivy_app/assets/img/Rectangle_down.png'

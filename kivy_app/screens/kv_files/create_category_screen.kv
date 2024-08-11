@@ -108,8 +108,9 @@
                 size_hint: None, None
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
                 size: dp(100), dp(32)
-                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_normal: 'kivy_app/assets/img/Rectangle_down.png'
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.on_icon_button_press(self)
 
             Button:
                 id: color_button
@@ -121,12 +122,14 @@
                 size: dp(100), dp(32)
                 background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.on_color_button_press(self)
 
         GridLayout:
             id: icon_grid
             cols: 5
             size_hint_y: None
             height: dp(200)
+            opacity: 1
             spacing: dp(10)
             size_hint_x: None
             pos_hint: {'center_x': 0.17}
@@ -138,8 +141,9 @@
 
         ColorPicker:
             id: color_picker
+            height: 0
+            opacity: 0
             on_color: root.select_color(self, self.color)
-
 
         Button:
             text: "Create Category"

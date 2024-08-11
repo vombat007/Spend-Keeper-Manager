@@ -3,6 +3,7 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.core.window import Window
 from kivy.uix.screenmanager import ScreenManager
+from kivy_app.config import WINDOWS_SIZE
 from kivy_app.screens.py_files.home_screen import HomeScreen
 from kivy_app.screens.py_files.sidebar_menu import SidebarMenu
 from kivy_app.screens.py_files.start_screen import StartScreen
@@ -22,7 +23,7 @@ class FinancialApp(App):
         self.title = 'Financial App'
 
         # Simulate the viewport size for development
-        Window.size = (412, 915)  # Example size, change as needed
+        Window.size = WINDOWS_SIZE
 
         # Load the KV files
         Builder.load_file('kivy_app/widget/date_picker_app.kv')

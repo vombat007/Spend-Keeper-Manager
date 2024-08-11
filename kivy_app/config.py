@@ -1,12 +1,15 @@
 import os
+from kivy.core.window import Window
 
 # Set the environment to 'development' or 'production'
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 
 if ENVIRONMENT == 'production':
-    BASE_URL = 'https://fc38-2003-c1-b74b-c800-e986-f224-836d-316a.ngrok-free.app/api'
+    BASE_URL = 'https://8ee2-2003-c1-b723-4e00-6c91-fe00-45ad-c85a.ngrok-free.app/api'
+    WINDOWS_SIZE = (0, 0)
 else:
     BASE_URL = 'http://127.0.0.1:8000/api'
+    WINDOWS_SIZE = (412, 915)  # Example size, change as needed
 
 ENDPOINTS = {
     'login': f'{BASE_URL}/login/',
