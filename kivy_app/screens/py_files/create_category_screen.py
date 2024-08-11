@@ -20,6 +20,9 @@ class CreateCategoryScreen(Screen):
         self.display_icons()
         self.toggle_display('icon')  # Default to showing icons
 
+    def go_back(self, instance):
+        self.manager.current = 'transaction'
+
     def display_icons(self):
         icon_grid = self.ids.icon_grid
         icon_grid.clear_widgets()
@@ -31,6 +34,7 @@ class CreateCategoryScreen(Screen):
                 # Create a centered label for the folder name
                 folder_label = Label(
                     text=folder_name,
+                    font_name='kivy_app/assets/fonts/IrishGrover-Regular.ttf',
                     size_hint_y=None,
                     height=dp(50),
                     font_size=dp(24),
