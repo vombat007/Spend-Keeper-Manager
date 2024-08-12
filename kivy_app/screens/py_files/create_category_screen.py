@@ -105,20 +105,24 @@ class CreateCategoryScreen(Screen):
     def toggle_display(self, display_type):
         """Toggle between icon grid and color picker display."""
         if display_type == 'icon':
-            self.ids.icon_grid.height = dp(200)
+            self.ids.icon_grid.height = self.ids.icon_grid.minimum_height
+            self.ids.icon_grid.size_hint_y = None
             self.ids.icon_grid.opacity = 1
             self.ids.icon_grid.disabled = False
 
             self.ids.color_picker.height = 0
+            self.ids.color_picker.size_hint_y = None
             self.ids.color_picker.opacity = 0
             self.ids.color_picker.disabled = True
 
         elif display_type == 'color':
             self.ids.icon_grid.height = 0
+            self.ids.icon_grid.size_hint_y = None
             self.ids.icon_grid.opacity = 0
             self.ids.icon_grid.disabled = True
 
             self.ids.color_picker.height = dp(200)
+            self.ids.color_picker.size_hint_y = None
             self.ids.color_picker.opacity = 1
             self.ids.color_picker.disabled = False
 
