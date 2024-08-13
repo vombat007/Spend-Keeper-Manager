@@ -140,7 +140,10 @@ class TransactionScreen(Screen):
             self.show_popup('Error', 'Please select a valid category.')
             return
 
-        headers = {'Authorization': f'Bearer {self.token}', 'Content-Type': 'application/json'}
+        headers = {
+            'Authorization': f'Bearer {self.token}',
+            'Content-Type': 'application/json'
+        }
         data = {
             'amount': self.ids.amount_input.text,
             'description': self.ids.description_input.text,

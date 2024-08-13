@@ -1,4 +1,6 @@
 import os
+import requests
+from kivy.clock import Clock
 from kivy.metrics import dp
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
@@ -10,6 +12,8 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.properties import StringProperty, ListProperty
 from kivy.graphics import Color, Ellipse, RoundedRectangle
+from kivy_app.config import ENDPOINTS
+from kivy_app.utils import TokenManager
 
 
 class ColorCircleButton(ButtonBehavior, Widget):
@@ -231,10 +235,7 @@ class CreateCategoryScreen(Screen):
 
     def capture_widget_to_image(self, widget, save_dir):
         """Capture the widget canvas to an image file."""
-        # Use Kivy's export_as_image method directly
         image = widget.export_as_image()
-
-        # Save the image file
         image.save(os.path.join(save_dir, f"{self.category_name}.png"))
 
     def create_category(self):
@@ -256,13 +257,38 @@ class CreateCategoryScreen(Screen):
             os.makedirs(save_dir)
 
         # Schedule the capture slightly after rendering
-        from kivy.clock import Clock
         Clock.schedule_once(lambda dt:
                             self.capture_widget_to_image(
                                 self.ids.selected_icon_display, save_dir))
 
-        # Confirm success to the user
-        self.show_popup('Success', f'Category {self.category_name} created successfully and saved!')
+        # Send the POST request to create the category
+        self.post_category_to_db()
+
+    def post_category_to_db(self):
+        """Send a POST request to the backend to create the category."""
+        url = f"{ENDPOINTS['categories']}"
+        token = TokenManager.load_token()
+
+        headers = {
+            'Authorization': f'Bearer {token}',
+            'Content-Type': 'application/json'
+        }
+
+        data = {
+            'name': self.category_name,
+            'type': self.selected_type,
+            'icon': f"{self.category_name}.png",  # Ensure this is being sent correctly
+            'description': 'NONE'  # Add any other fields as needed
+        }
+        print(data)
+        response = requests.post(url, json=data, headers=headers)
+
+        if response.status_code == 201:
+            self.show_popup('Success', 'Category created successfully.')
+        else:
+            # Print the response content for debugging
+            print(response.content)  # Add this line to see the error details
+            self.show_popup('Error', 'Failed to create category.')
 
     def show_popup(self, title, message):
         box = BoxLayout(orientation='vertical')
