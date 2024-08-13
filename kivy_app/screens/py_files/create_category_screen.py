@@ -243,22 +243,24 @@ class CreateCategoryScreen(Screen):
             self.show_popup('Error', 'Please provide all the details.')
             return
 
-        if self.ids.income_button.state == 'down':
+        # Check the selected_type instead of button state
+        if self.selected_type == 'Income':
             save_dir = 'kivy_app/assets/icon/income/'
-        elif self.ids.expense_button.state == 'down':
+        elif self.selected_type == 'Expense':
             save_dir = 'kivy_app/assets/icon/expense/'
         else:
             self.show_popup('Error', 'Please select a type (Income or Expense).')
             return
 
+        # Create the directory if it doesn't exist
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
         # Schedule the capture slightly after rendering
-        Clock.schedule_once(lambda dt:
-                            self.capture_widget_to_image(
-                                self.ids.selected_icon_display, save_dir))
+        from kivy.clock import Clock
+        Clock.schedule_once(lambda dt: self.capture_widget_to_image(self.ids.selected_icon_display, save_dir))
 
+        # Confirm success to the user
         self.show_popup('Success', f'Category {self.category_name} created successfully and saved!')
 
     def show_popup(self, title, message):
