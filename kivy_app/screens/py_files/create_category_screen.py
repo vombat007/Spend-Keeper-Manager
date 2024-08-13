@@ -7,7 +7,25 @@ from kivy.uix.label import Label
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.gridlayout import GridLayout
 from kivy.properties import StringProperty, ListProperty
-from kivy.graphics import Color, RoundedRectangle
+from kivy.graphics import Color, Ellipse, RoundedRectangle
+from kivy.uix.behaviors import ButtonBehavior
+from kivy.uix.widget import Widget
+
+
+class ColorCircleButton(ButtonBehavior, Widget):
+    def __init__(self, color, **kwargs):
+        super(ColorCircleButton, self).__init__(**kwargs)
+        self.color = color
+        self.size_hint = (None, None)
+        self.size = (dp(25), dp(25))
+        with self.canvas:
+            Color(*self.color)
+            self.ellipse = Ellipse(pos=self.pos, size=self.size)
+        self.bind(pos=self.update_ellipse, size=self.update_ellipse)
+
+    def update_ellipse(self, *args):
+        self.ellipse.pos = self.pos
+        self.ellipse.size = self.size
 
 
 class CreateCategoryScreen(Screen):
@@ -176,13 +194,7 @@ class CreateCategoryScreen(Screen):
         ]
 
         for color in color_choices:
-            btn = Button(
-                size_hint=(None, None),
-                size=(dp(24), dp(24)),
-                background_normal='',
-                background_down='',
-                background_color=color
-            )
+            btn = ColorCircleButton(color=color)
             btn.bind(on_press=lambda instance, color=color: self.select_color(instance, color))
             color_grid.add_widget(btn)
 
