@@ -10,6 +10,7 @@ from kivy.properties import StringProperty, ListProperty
 from kivy.graphics import Color, Ellipse, RoundedRectangle
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.uix.widget import Widget
+from kivy.clock import Clock
 
 
 class ColorCircleButton(ButtonBehavior, Widget):
@@ -229,12 +230,36 @@ class CreateCategoryScreen(Screen):
         self.selected_color = color
         self.update_selected_icon()
 
+    def capture_widget_to_image(self, widget, save_dir):
+        """Capture the widget canvas to an image file."""
+        # Use Kivy's export_as_image method directly
+        image = widget.export_as_image()
+
+        # Save the image file
+        image.save(os.path.join(save_dir, f"{self.category_name}.png"))
+
     def create_category(self):
         if not self.category_name or not self.selected_icon:
             self.show_popup('Error', 'Please provide all the details.')
             return
 
-        self.show_popup('Success', f'Category {self.category_name} created successfully!')
+        if self.ids.income_button.state == 'down':
+            save_dir = 'kivy_app/assets/icon/income/'
+        elif self.ids.expense_button.state == 'down':
+            save_dir = 'kivy_app/assets/icon/expense/'
+        else:
+            self.show_popup('Error', 'Please select a type (Income or Expense).')
+            return
+
+        if not os.path.exists(save_dir):
+            os.makedirs(save_dir)
+
+        # Schedule the capture slightly after rendering
+        Clock.schedule_once(lambda dt:
+                            self.capture_widget_to_image(
+                                self.ids.selected_icon_display, save_dir))
+
+        self.show_popup('Success', f'Category {self.category_name} created successfully and saved!')
 
     def show_popup(self, title, message):
         box = BoxLayout(orientation='vertical')
