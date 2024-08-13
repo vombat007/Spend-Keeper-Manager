@@ -257,7 +257,9 @@ class CreateCategoryScreen(Screen):
 
         # Schedule the capture slightly after rendering
         from kivy.clock import Clock
-        Clock.schedule_once(lambda dt: self.capture_widget_to_image(self.ids.selected_icon_display, save_dir))
+        Clock.schedule_once(lambda dt:
+                            self.capture_widget_to_image(
+                                self.ids.selected_icon_display, save_dir))
 
         # Confirm success to the user
         self.show_popup('Success', f'Category {self.category_name} created successfully and saved!')
