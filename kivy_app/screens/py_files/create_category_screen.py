@@ -278,9 +278,8 @@ class CreateCategoryScreen(Screen):
             'name': self.category_name,
             'type': self.selected_type,
             'icon': f"{self.category_name}.png",  # Ensure this is being sent correctly
-            'description': 'NONE'  # Add any other fields as needed
         }
-        print(data)
+
         response = requests.post(url, json=data, headers=headers)
 
         if response.status_code == 201:
