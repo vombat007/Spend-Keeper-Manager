@@ -227,4 +227,6 @@ class TransactionScreen(Screen):
         self.ids.period_label_id.text = self.selected_date
 
     def create_category(self, instance):
+        # Store the selected transaction type
+        self.manager.get_screen('create_category').set_initial_type(self.selected_type)
         self.manager.current = 'create_category'

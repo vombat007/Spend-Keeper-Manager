@@ -35,6 +35,7 @@
                 size: dp(120), dp(32)
                 background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.on_income_button_press()
 
             Button:
                 id: expense_button
@@ -46,6 +47,7 @@
                 size: dp(120), dp(32)
                 background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
                 background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.on_expense_button_press()
 
         BoxLayout:
             orientation: 'vertical'

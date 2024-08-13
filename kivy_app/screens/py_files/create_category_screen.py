@@ -37,6 +37,33 @@ class CreateCategoryScreen(Screen):
         self.display_icons()
         self.display_color_options()
         self.toggle_display('icon')  # Default to showing icons
+        self.update_type_buttons()  # Update the buttons based on the selected type
+
+    def set_initial_type(self, trans_type):
+        self.selected_type = trans_type.capitalize()
+
+    def update_type_buttons(self):
+        """Update the button states based on the selected type."""
+        if self.selected_type == 'Income':
+            self.ids.income_button.state = 'down'
+            self.ids.expense_button.state = 'normal'
+            self.ids.income_button.background_normal = self.ids.income_button.background_down
+            self.ids.expense_button.background_normal = 'kivy_app/assets/img/Rectangle_normal.png'
+        else:
+            self.ids.income_button.state = 'normal'
+            self.ids.expense_button.state = 'down'
+            self.ids.expense_button.background_normal = self.ids.expense_button.background_down
+            self.ids.income_button.background_normal = 'kivy_app/assets/img/Rectangle_normal.png'
+
+    def on_income_button_press(self):
+        """Handle the press of the Income button."""
+        self.selected_type = 'Income'
+        self.update_type_buttons()
+
+    def on_expense_button_press(self):
+        """Handle the press of the Expense button."""
+        self.selected_type = 'Expense'
+        self.update_type_buttons()
 
     def go_back(self, instance):
         self.manager.current = 'transaction'
