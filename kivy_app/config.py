@@ -1,5 +1,4 @@
 import os
-from kivy.core.window import Window
 
 # Set the environment to 'development' or 'production'
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
@@ -21,5 +20,9 @@ ENDPOINTS = {
     'categories': f'{BASE_URL}/categories/',
     'transactions': f'{BASE_URL}/transactions/',
     'logout': f'{BASE_URL}/logout/',
+
+    # Url for cloudinary cloud folder
+    'icon_url': 'https://res.cloudinary.com/dg4tzo4pz/image/upload/v1723731105/spend_keeper/',
+
     # Add other endpoints as needed
 }

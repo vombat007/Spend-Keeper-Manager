@@ -2,13 +2,13 @@ import os
 import json
 import logging
 import requests
-from PIL import Image, ImageOps
 from kivy.uix.popup import Popup
 from kivy.uix.label import Label
 from kivy.uix.button import Button
-from kivy.uix.boxlayout import BoxLayout
+from kivy.graphics import Color, Line
 from kivy_app.config import ENDPOINTS
 from datetime import datetime, timedelta
+from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
 from kivy_app.widget.date_picker_app import DatePicker
 from kivy.properties import StringProperty, NumericProperty, ObjectProperty
@@ -50,25 +50,55 @@ class TransactionScreen(Screen):
         grid = self.ids.category_grid
         grid.clear_widgets()
 
-        filtered_categories = [cat for cat in categories if cat['type'].lower() == self.selected_type.lower()]
+        filtered_categories = [
+            {
+                'id': cat['id'],
+                'name': cat['name'],
+                'type': cat['type'],
+                'icon': '/'.join(cat['icon'].split('/')[-1:])  # Extract only the last one parts
+            }
+            for cat in categories
+            if cat['type'].lower() == self.selected_type.lower()
+        ]
 
         for cat in filtered_categories:
             box = BoxLayout(orientation='vertical', size_hint=(None, None), size=(70, 90))
 
-            icon_path = f"kivy_app/assets/icon/{cat['type'].lower()}/{cat['icon']}"  # Construct the icon path
+            # Construct the icon URL using Cloudinary's structure
+            icon_url = (f"https://res.cloudinary.com/dg4tzo4pz/image/upload/v1723731105/spend_keeper/"
+                        f"{cat['type'].lower()}/{cat['icon']}.png")
 
-            # Create the image with a yellow border
-            yellow_border_path = self.add_yellow_border(icon_path)
+            # Download the image
+            icon_path = self.download_image(icon_url)
 
+            # Create the button with the downloaded image
             btn = Button(
                 text='',
                 size_hint=(None, None),
                 size=(70, 70),
-                background_normal=icon_path,  # Set the button icon
-                background_down=yellow_border_path  # Set the button icon with yellow border
+                background_normal=icon_path,
+                background_down=icon_path
             )
             btn.bind(on_press=self.on_category_button_press)
             btn.category_id = cat['id']
+
+            # Add canvas instructions for the yellow and black borders
+            with btn.canvas.after:
+                # Yellow outer border
+                Color(1, 1, 0, 1)  # Yellow color
+                self.outer_border = Line(
+                    width=4,
+                    rounded_rectangle=(btn.x, btn.y, btn.width, btn.height, 20)
+                )
+
+                # Black inner border
+                Color(0, 0, 0, 1)  # Black color
+                self.inner_border = Line(
+                    width=1,
+                    rounded_rectangle=(btn.x + 5, btn.y + 5, btn.width - 10, btn.height - 10, 15)
+                )
+
+            btn.bind(pos=self.update_border, size=self.update_border)
 
             label = Label(
                 text=cat['name'],
@@ -91,8 +121,7 @@ class TransactionScreen(Screen):
         create_btn = Button(
             size_hint=(None, None),
             size=(70, 70),
-            background_normal='kivy_app/assets/icon/create_icon.png',
-            # Set the appropriate path for the create button icon
+            background_normal='kivy_app/assets/icon/create_icon.png',  # Path for the create button icon
             background_down='kivy_app/assets/icon/create_icon.png'
         )
         create_btn.bind(on_press=self.create_category)
@@ -113,17 +142,60 @@ class TransactionScreen(Screen):
         create_box.add_widget(create_label)
         grid.add_widget(create_box)
 
+    def update_border(self, instance, value):
+        # Update the yellow outer border
+        self.outer_border.rounded_rectangle = (
+            instance.x, instance.y, instance.width, instance.height, 20
+        )
+
+        # Update the black inner border
+        self.inner_border.rounded_rectangle = (
+            instance.x + 5, instance.y + 5, instance.width - 10, instance.height - 10, 15
+        )
+
     def on_category_button_press(self, instance):
         self.selected_category = instance.category_id
 
-        # Reset background of other buttons
+        # Reset background and borders of other buttons
         for button in self.ids.category_grid.children:
             if isinstance(button, BoxLayout):
                 btn = button.children[1]  # Accessing the button inside the BoxLayout
-                btn.background_normal = btn.background_down.replace('_selected', '')
+                # Clear the canvas for non-selected buttons
+                btn.canvas.after.clear()
 
-        # Set the selected button background
-        instance.background_normal = instance.background_down
+        # Set the selected button background and show the yellow and black borders
+        with instance.canvas.after:
+            # Yellow outer border
+            Color(1, 1, 0, 1)  # Yellow color
+            Line(
+                width=4,
+                rounded_rectangle=(instance.x, instance.y, instance.width, instance.height, 20)
+            )
+
+            # Black inner border
+            Color(0, 0, 0, 1)  # Black color
+            Line(
+                width=1,
+                rounded_rectangle=(instance.x + 5, instance.y + 5, instance.width - 10, instance.height - 10, 15)
+            )
+
+    def download_image(self, url):
+        # Ensure the directory exists
+        local_dir = os.path.join('kivy_app', 'assets', 'downloaded_icons')
+        os.makedirs(local_dir, exist_ok=True)
+
+        # Create a local file path
+        filename = url.split('/')[-1]
+        local_path = os.path.join(local_dir, filename)
+
+        # Download and save the image if it doesn't already exist
+        if not os.path.exists(local_path):
+            response = requests.get(url)
+            if response.status_code == 200:
+                with open(local_path, 'wb') as f:
+                    f.write(response.content)
+
+        return local_path
 
     def go_back(self, instance):
         self.manager.current = 'home'
@@ -182,18 +254,6 @@ class TransactionScreen(Screen):
             self.ids.expense_button.background_normal = self.ids.expense_button.background_down
             self.ids.income_button.background_normal = 'kivy_app/assets/img/Rectangle_normal.png'
         self.load_categories()
-
-    def add_yellow_border(self, image_path):
-        base_path, filename = os.path.split(image_path)
-        name, ext = os.path.splitext(filename)
-        bordered_image_path = os.path.join(base_path, f"{name}_selected{ext}")
-
-        if not os.path.exists(bordered_image_path):
-            with Image.open(image_path) as img:
-                border = ImageOps.expand(img, border=5, fill='yellow')
-                border.save(bordered_image_path)
-
-        return bordered_image_path
 
     def open_date_picker(self):
         date_picker = DatePicker()
