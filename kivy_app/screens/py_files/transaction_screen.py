@@ -82,22 +82,7 @@ class TransactionScreen(Screen):
             btn.bind(on_press=self.on_category_button_press)
             btn.category_id = cat['id']
 
-            # Add canvas instructions for the yellow and black borders
-            with btn.canvas.after:
-                # Yellow outer border
-                Color(1, 1, 0, 1)  # Yellow color
-                self.outer_border = Line(
-                    width=4,
-                    rounded_rectangle=(btn.x, btn.y, btn.width, btn.height, 20)
-                )
-
-                # Black inner border
-                Color(0, 0, 0, 1)  # Black color
-                self.inner_border = Line(
-                    width=1,
-                    rounded_rectangle=(btn.x + 5, btn.y + 5, btn.width - 10, btn.height - 10, 15)
-                )
-
+            # Bind to update the border when the button size or position changes
             btn.bind(pos=self.update_border, size=self.update_border)
 
             label = Label(
@@ -143,15 +128,14 @@ class TransactionScreen(Screen):
         grid.add_widget(create_box)
 
     def update_border(self, instance, value):
-        # Update the yellow outer border
-        self.outer_border.rounded_rectangle = (
-            instance.x, instance.y, instance.width, instance.height, 20
-        )
-
-        # Update the black inner border
-        self.inner_border.rounded_rectangle = (
-            instance.x + 5, instance.y + 5, instance.width - 10, instance.height - 10, 15
-        )
+        # If borders exist, update their position and size
+        if hasattr(instance, 'outer_border') and hasattr(instance, 'inner_border'):
+            instance.outer_border.rounded_rectangle = (
+                instance.x, instance.y, instance.width, instance.height, 20
+            )
+            instance.inner_border.rounded_rectangle = (
+                instance.x + 5, instance.y + 5, instance.width - 10, instance.height - 10, 15
+            )
 
     def on_category_button_press(self, instance):
         self.selected_category = instance.category_id
@@ -162,19 +146,24 @@ class TransactionScreen(Screen):
                 btn = button.children[1]  # Accessing the button inside the BoxLayout
                 # Clear the canvas for non-selected buttons
                 btn.canvas.after.clear()
+                # Remove border attributes to avoid updating non-existing borders
+                if hasattr(btn, 'outer_border'):
+                    del btn.outer_border
+                if hasattr(btn, 'inner_border'):
+                    del btn.inner_border
 
         # Set the selected button background and show the yellow and black borders
         with instance.canvas.after:
             # Yellow outer border
             Color(1, 1, 0, 1)  # Yellow color
-            Line(
+            instance.outer_border = Line(
                 width=4,
                 rounded_rectangle=(instance.x, instance.y, instance.width, instance.height, 20)
             )
 
             # Black inner border
             Color(0, 0, 0, 1)  # Black color
-            Line(
+            instance.inner_border = Line(
                 width=1,
                 rounded_rectangle=(instance.x + 5, instance.y + 5, instance.width - 10, instance.height - 10, 15)
             )
