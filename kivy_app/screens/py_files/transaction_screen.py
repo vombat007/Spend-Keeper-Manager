@@ -218,7 +218,7 @@ class TransactionScreen(Screen):
         }
         data = {
             'amount': self.ids.amount_input.text,
-            'description': self.ids.description_input.text,
+            'note': self.ids.description_input.text,
             'account': self.account_id,
             'category': self.selected_category,
             'datetime': self.selected_date  # Ensure the selected date is included in the data
