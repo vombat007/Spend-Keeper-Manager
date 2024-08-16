@@ -65,8 +65,7 @@ class TransactionScreen(Screen):
             box = BoxLayout(orientation='vertical', size_hint=(None, None), size=(70, 90))
 
             # Construct the icon URL using Cloudinary's structure
-            icon_url = (f"https://res.cloudinary.com/dg4tzo4pz/image/upload/v1723731105/spend_keeper/"
-                        f"{cat['type'].lower()}/{cat['icon']}.png")
+            icon_url = (ENDPOINTS['icon_url'] + f"{cat['type'].lower()}/{cat['icon']}.png")
 
             # Download the image
             icon_path = self.download_image(icon_url)
