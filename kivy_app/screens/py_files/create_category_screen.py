@@ -13,7 +13,7 @@ from kivy.uix.behaviors import ButtonBehavior
 from kivy.properties import StringProperty, ListProperty
 from kivy.graphics import Color, Ellipse, RoundedRectangle
 from kivy_app.config import ENDPOINTS
-from kivy_app.utils import TokenManager
+from kivy_app.utils import TokenManager, download_all_icons_from_cloudinary
 
 
 class ColorCircleButton(ButtonBehavior, Widget):
@@ -38,6 +38,9 @@ class CreateCategoryScreen(Screen):
     category_name = StringProperty('')
 
     def on_pre_enter(self, *args):
+        # Ensure icons are downloaded/updated
+        download_all_icons_from_cloudinary('kivy_app/assets/icon/all/')
+
         self.display_icons()
         self.display_color_options()
         self.toggle_display('icon')  # Default to showing icons

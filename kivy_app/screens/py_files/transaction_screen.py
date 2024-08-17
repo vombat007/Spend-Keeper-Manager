@@ -169,7 +169,7 @@ class TransactionScreen(Screen):
 
     def download_image(self, url):
         # Ensure the directory exists
-        local_dir = os.path.join('kivy_app', 'assets', 'downloaded_icons')
+        local_dir = os.path.join('kivy_app', 'assets', 'icon')
         os.makedirs(local_dir, exist_ok=True)
 
         # Create a local file path
