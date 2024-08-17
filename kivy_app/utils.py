@@ -3,16 +3,8 @@ import json
 import requests
 from kivy_app.config import ENDPOINTS
 from PIL import Image
-import cloudinary
-import cloudinary.api
-import cloudinary.uploader
 from datetime import datetime
-
-cloudinary.config(
-    cloud_name='dg4tzo4pz',
-    api_key='273745232785925',
-    api_secret='y6yndM6eBAVrLxSgXcl_ozdicXQ'
-)
+import cloudinary.api
 
 
 class TokenManager:
@@ -65,7 +57,7 @@ def extract_frames(gif_path, output_folder):
 
 def download_image(url):
     # Ensure the directory exists
-    local_dir = os.path.join('kivy_app', 'assets', 'icon')
+    local_dir = os.path.join('kivy_app', 'assets', 'icon', 'default_icons')
     os.makedirs(local_dir, exist_ok=True)
 
     # Create a local file path
@@ -90,17 +82,13 @@ def download_all_icons_from_cloudinary(local_base_dir):
     resources = cloudinary.api.resources(type='upload', prefix='spend_keeper/all_category_icon/', max_results=500)
 
     for resource in resources.get('resources', []):
-        # Extract the secure URL and original filename
         secure_url = resource['secure_url']
-        original_filename = secure_url.split('/')[-1]  # Extract the filename from the URL
+        # Ensure the file is saved with a .png extension
+        local_file_path = os.path.join(local_base_dir,
+                                       resource['public_id'].replace('spend_keeper/all_category_icon/', '') + '.png')
 
-        # Determine the local directory and file path
-        relative_path = resource['public_id'].replace('spend_keeper/all_category_icon/',
-                                                      '')  # Remove the Cloudinary base prefix
-        local_dir = os.path.join(local_base_dir, os.path.dirname(relative_path))
-        os.makedirs(local_dir, exist_ok=True)  # Ensure the directory exists
-
-        local_file_path = os.path.join(local_dir, original_filename)  # Use the original filename
+        # Ensure the directory exists
+        os.makedirs(os.path.dirname(local_file_path), exist_ok=True)
 
         # Convert the Cloudinary `created_at` timestamp to a Unix timestamp
         cloudinary_created_at = datetime.strptime(resource['created_at'],
@@ -112,4 +100,4 @@ def download_all_icons_from_cloudinary(local_base_dir):
             if response.status_code == 200:
                 with open(local_file_path, 'wb') as file:
                     file.write(response.content)
-            print(f"Downloaded {local_file_path}")
+                print(f"Downloaded {local_file_path}")

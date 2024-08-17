@@ -1,4 +1,5 @@
 import os
+import cloudinary
 
 # Set the environment to 'development' or 'production'
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
@@ -26,3 +27,10 @@ ENDPOINTS = {
 
     # Add other endpoints as needed
 }
+
+
+cloudinary.config(
+    cloud_name='dg4tzo4pz',
+    api_key='273745232785925',
+    api_secret='y6yndM6eBAVrLxSgXcl_ozdicXQ'
+)
