@@ -1,4 +1,3 @@
-import os
 import json
 import logging
 import requests
@@ -10,6 +9,7 @@ from kivy_app.config import ENDPOINTS
 from datetime import datetime, timedelta
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
+from kivy_app.utils import download_image
 from kivy_app.widget.date_picker_app import DatePicker
 from kivy.properties import StringProperty, NumericProperty, ObjectProperty
 
@@ -68,7 +68,7 @@ class TransactionScreen(Screen):
             icon_url = (ENDPOINTS['icon_url'] + f"{cat['type'].lower()}/{cat['icon']}.png")
 
             # Download the image
-            icon_path = self.download_image(icon_url)
+            icon_path = download_image(icon_url)
 
             # Create the button with the downloaded image
             btn = Button(
@@ -166,24 +166,6 @@ class TransactionScreen(Screen):
                 width=1,
                 rounded_rectangle=(instance.x + 5, instance.y + 5, instance.width - 10, instance.height - 10, 15)
             )
-
-    def download_image(self, url):
-        # Ensure the directory exists
-        local_dir = os.path.join('kivy_app', 'assets', 'icon')
-        os.makedirs(local_dir, exist_ok=True)
-
-        # Create a local file path
-        filename = url.split('/')[-1]
-        local_path = os.path.join(local_dir, filename)
-
-        # Download and save the image if it doesn't already exist
-        if not os.path.exists(local_path):
-            response = requests.get(url)
-            if response.status_code == 200:
-                with open(local_path, 'wb') as f:
-                    f.write(response.content)
-
-        return local_path
 
     def go_back(self, instance):
         self.manager.current = 'home'

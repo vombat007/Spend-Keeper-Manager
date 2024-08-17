@@ -63,6 +63,25 @@ def extract_frames(gif_path, output_folder):
             img.save(os.path.join(output_folder, f"frame_{i}.png"))
 
 
+def download_image(url):
+    # Ensure the directory exists
+    local_dir = os.path.join('kivy_app', 'assets', 'icon')
+    os.makedirs(local_dir, exist_ok=True)
+
+    # Create a local file path
+    filename = url.split('/')[-1]
+    local_path = os.path.join(local_dir, filename)
+
+    # Download and save the image if it doesn't already exist
+    if not os.path.exists(local_path):
+        response = requests.get(url)
+        if response.status_code == 200:
+            with open(local_path, 'wb') as f:
+                f.write(response.content)
+
+    return local_path
+
+
 def download_all_icons_from_cloudinary(local_base_dir):
     # Create base directory if it doesn't exist
     os.makedirs(local_base_dir, exist_ok=True)
