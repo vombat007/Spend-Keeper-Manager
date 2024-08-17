@@ -1,9 +1,11 @@
 import os
 import requests
+import cloudinary.uploader
 from kivy.clock import Clock
 from kivy.metrics import dp
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
+from urllib.parse import urlparse
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
@@ -14,7 +16,6 @@ from kivy.properties import StringProperty, ListProperty
 from kivy.graphics import Color, Ellipse, RoundedRectangle
 from kivy_app.config import ENDPOINTS
 from kivy_app.utils import TokenManager, download_all_icons_from_cloudinary
-import cloudinary.uploader
 
 
 class ColorCircleButton(ButtonBehavior, Widget):
@@ -271,7 +272,6 @@ class CreateCategoryScreen(Screen):
         if upload_result:
             # Extract the secure URL
             icon_url = upload_result['secure_url']
-            print(icon_url)
 
             # Save the icon with the correct name locally
             correct_local_path = os.path.join(save_dir, os.path.basename(icon_url))
@@ -292,10 +292,18 @@ class CreateCategoryScreen(Screen):
             'Content-Type': 'application/json'
         }
 
+        # Extract the path part after 'image/upload/' in the icon URL
+        parsed_url = urlparse(icon_url)
+        path_parts = parsed_url.path.split('/')
+
+        # Find the index of 'spend_keeper' and join the rest of the path
+        spend_keeper_index = path_parts.index('spend_keeper')
+        icon_path = '/'.join(path_parts[spend_keeper_index:])
+
         data = {
             'name': self.category_name,
             'type': self.selected_type,
-            'icon': icon_url,  # Use the correct Cloudinary URL for the icon
+            'icon': icon_path,  # Use the correct Cloudinary URL for the icon
         }
 
         response = requests.post(url, json=data, headers=headers)
