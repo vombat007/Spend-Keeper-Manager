@@ -55,18 +55,39 @@ def extract_frames(gif_path, output_folder):
             img.save(os.path.join(output_folder, f"frame_{i}.png"))
 
 
-def download_image(url):
+def download_image(icon_name, category_type, is_custom=False):
+    """
+    Downloads the image from either default or custom location.
+
+    Args:
+        icon_name (str): The name of the icon file.
+        category_type (str): The type of the category, e.g., 'expense' or 'income'.
+        is_custom (bool): Flag to indicate if the icon is custom.
+
+    Returns:
+        str: The local path to the downloaded image.
+    """
+    if is_custom:
+        local_dir = os.path.join('kivy_app', 'assets', 'icon', 'custom_category_icons')
+    else:
+        local_dir = os.path.join('kivy_app', 'assets', 'icon', 'default_icons', category_type)
+
     # Ensure the directory exists
-    local_dir = os.path.join('kivy_app', 'assets', 'icon', 'default_icons')
     os.makedirs(local_dir, exist_ok=True)
 
     # Create a local file path
-    filename = url.split('/')[-1]
-    local_path = os.path.join(local_dir, filename)
+    local_path = os.path.join(local_dir, icon_name)
 
     # Download and save the image if it doesn't already exist
     if not os.path.exists(local_path):
-        response = requests.get(url)
+        if is_custom:
+            # Download from Cloudinary if custom icon
+            cloudinary_url = ENDPOINTS['custom_icon'] + f"{icon_name}"
+        else:
+            # Default icon URL
+            cloudinary_url = ENDPOINTS['default_icon'] + f"{category_type}/{icon_name}"
+
+        response = requests.get(cloudinary_url)
         if response.status_code == 200:
             with open(local_path, 'wb') as f:
                 f.write(response.content)

@@ -55,7 +55,8 @@ class TransactionScreen(Screen):
                 'id': cat['id'],
                 'name': cat['name'],
                 'type': cat['type'],
-                'icon': '/'.join(cat['icon'].split('/')[-1:])  # Extract only the last one parts
+                'icon': cat['icon'],  # Keep full icon path for distinguishing between custom and default
+                'is_custom': 'custom_category_icons' in cat['icon']  # Determine if it's a custom icon
             }
             for cat in categories
             if cat['type'].lower() == self.selected_type.lower()
@@ -64,11 +65,9 @@ class TransactionScreen(Screen):
         for cat in filtered_categories:
             box = BoxLayout(orientation='vertical', size_hint=(None, None), size=(70, 90))
 
-            # Construct the icon URL using Cloudinary's structure
-            icon_url = (ENDPOINTS['icon_url'] + f"{cat['type'].lower()}/{cat['icon']}.png")
-
-            # Download the image
-            icon_path = download_image(icon_url)
+            # Download the image based on whether it's custom or default
+            icon_path = download_image(cat['icon'].split('/')[-1],
+                                       cat['type'].lower(), is_custom=cat['is_custom'])
 
             # Create the button with the downloaded image
             btn = Button(
