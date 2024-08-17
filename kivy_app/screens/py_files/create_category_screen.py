@@ -14,6 +14,7 @@ from kivy.properties import StringProperty, ListProperty
 from kivy.graphics import Color, Ellipse, RoundedRectangle
 from kivy_app.config import ENDPOINTS
 from kivy_app.utils import TokenManager, download_all_icons_from_cloudinary
+import cloudinary.uploader
 
 
 class ColorCircleButton(ButtonBehavior, Widget):
@@ -239,35 +240,49 @@ class CreateCategoryScreen(Screen):
     def capture_widget_to_image(self, widget, save_dir):
         """Capture the widget canvas to an image file."""
         image = widget.export_as_image()
-        image.save(os.path.join(save_dir, f"{self.category_name}.png"))
+        file_path = os.path.join(save_dir, f"{self.category_name}.png")
+        image.save(file_path)
+        return file_path
 
     def create_category(self):
         if not self.category_name or not self.selected_icon:
             self.show_popup('Error', 'Please provide all the details.')
             return
 
-        # Check the selected_type instead of button state
-        if self.selected_type == 'Income':
-            save_dir = 'kivy_app/assets/icon/income/'
-        elif self.selected_type == 'Expense':
-            save_dir = 'kivy_app/assets/icon/expense/'
-        else:
-            self.show_popup('Error', 'Please select a type (Income or Expense).')
-            return
+        # Directory where custom icons are saved locally
+        save_dir = 'kivy_app/assets/icon/custom_category_icons/'
 
         # Create the directory if it doesn't exist
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
 
-        # Schedule the capture slightly after rendering
+        # Schedule the capture and upload slightly after rendering
         Clock.schedule_once(lambda dt:
-                            self.capture_widget_to_image(
+                            self.capture_and_upload_icon(
                                 self.ids.selected_icon_display, save_dir))
 
-        # Send the POST request to create the category
-        self.post_category_to_db()
+    def capture_and_upload_icon(self, widget, save_dir):
+        # Capture the widget to an image
+        local_file_path = self.capture_widget_to_image(widget, save_dir)
 
-    def post_category_to_db(self):
+        # Upload the image to Cloudinary
+        upload_result = cloudinary.uploader.upload(local_file_path, folder='spend_keeper/custom_category_icons/')
+
+        if upload_result:
+            # Extract the secure URL
+            icon_url = upload_result['secure_url']
+            print(icon_url)
+
+            # Save the icon with the correct name locally
+            correct_local_path = os.path.join(save_dir, os.path.basename(icon_url))
+            os.rename(local_file_path, correct_local_path)
+
+            # Post the category to the database using the Cloudinary URL
+            self.post_category_to_db(icon_url)
+        else:
+            self.show_popup('Error', 'Failed to upload icon to Cloudinary.')
+
+    def post_category_to_db(self, icon_url):
         """Send a POST request to the backend to create the category."""
         url = f"{ENDPOINTS['categories']}"
         token = TokenManager.load_token()
@@ -280,7 +295,7 @@ class CreateCategoryScreen(Screen):
         data = {
             'name': self.category_name,
             'type': self.selected_type,
-            'icon': f"{self.category_name}.png",  # Ensure this is being sent correctly
+            'icon': icon_url,  # Use the correct Cloudinary URL for the icon
         }
 
         response = requests.post(url, json=data, headers=headers)
@@ -289,7 +304,7 @@ class CreateCategoryScreen(Screen):
             self.show_popup('Success', 'Category created successfully.')
         else:
             # Print the response content for debugging
-            print(response.content)  # Add this line to see the error details
+            print(response.content)
             self.show_popup('Error', 'Failed to create category.')
 
     def show_popup(self, title, message):
