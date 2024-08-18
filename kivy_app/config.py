@@ -23,8 +23,10 @@ ENDPOINTS = {
     'logout': f'{BASE_URL}/logout/',
 
     # Url for cloudinary cloud folder
-    'custom_icon': 'https://res.cloudinary.com/dg4tzo4pz/image/upload/v1723731105/spend_keeper/custom_category_icons/',
-    'default_icon': 'https://res.cloudinary.com/dg4tzo4pz/image/upload/v1723731105/spend_keeper/',
+    'custom_icon':
+        'https://res.cloudinary.com/dg4tzo4pz/image/upload/v1723731105/spend_keeper/custom_category_icons/',
+    'default_icon':
+        'https://res.cloudinary.com/dg4tzo4pz/image/upload/v1723731105/spend_keeper/',
 
     # Add other endpoints as needed
 }
