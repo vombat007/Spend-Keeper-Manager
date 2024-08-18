@@ -20,6 +20,19 @@ The app provides insightful analytics and customizable reports to visualize spen
 From managing recurring expenses to planning for long-term financial objectives, Spend Keeper Manager serves as a reliable companion for individuals seeking to achieve greater fiscal responsibility and control over their finances.
 
 
+---
+
+## Features
+
+- **Expense Tracking:** Monitor your daily expenditures easily.
+- **Budget Management:** Set and manage personalized budget goals.
+- **Analytics:** Gain insights into your spending habits with detailed analytics.
+- **Customizable Reports:** Create reports to visualize and manage your finances.
+- **Recurring Expenses:** Keep track of regular expenses effortlessly.
+- **Long-term Planning:** Plan and achieve your long-term financial objectives.
+- **Cloudinary Integration:** Store and manage expense-related images securely in the cloud.
+
+---
 
 ## Run the Django API app locally :
 ~~~
