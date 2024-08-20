@@ -1,0 +1,26 @@
+<AccountScreen>:
+    BoxLayout:
+        orientation: 'vertical'
+
+        Label:
+            text: "User Accounts"
+            size_hint_y: None
+            height: 50
+            font_size: 20
+
+        ScrollView:
+            RecycleView:
+                id: account_list
+                viewclass: 'Label'
+                RecycleBoxLayout:
+                    orientation: 'vertical'
+                    size_hint_y: None
+                    height: self.minimum_height
+                    default_size: None, dp(48)
+                    default_size_hint: 1, None
+
+        Button:
+            text: "Create New Account"
+            size_hint_y: None
+            height: 50
+            on_release: root.open_create_account_popup()

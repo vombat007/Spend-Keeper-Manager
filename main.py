@@ -14,6 +14,7 @@ from kivy_app.screens.py_files.registration_screen import RegistrationScreen
 from kivy_app.screens.py_files.calculator_screen import CalculatorScreen
 from kivy_app.screens.py_files.create_category_screen import CreateCategoryScreen
 from kivy_app.utils import TokenManager, download_all_icons_from_cloudinary
+from kivy_app.screens.py_files.account_screen import AccountScreen
 
 
 class FinancialApp(App):
@@ -35,6 +36,7 @@ class FinancialApp(App):
         Builder.load_file('kivy_app/screens/kv_files/transaction_screen.kv')
         Builder.load_file('kivy_app/screens/kv_files/calculator_screen.kv')
         Builder.load_file('kivy_app/screens/kv_files/create_category_screen.kv')
+        Builder.load_file('kivy_app/screens/kv_files/account_screen.kv')
 
         # Ensure all icons are available locally before loading screens
         self.ensure_local_icons()
@@ -50,6 +52,7 @@ class FinancialApp(App):
         sm.add_widget(TransactionScreen(name='transaction'))
         sm.add_widget(CalculatorScreen(name='calculator'))
         sm.add_widget(CreateCategoryScreen(name='create_category'))
+        sm.add_widget(AccountScreen(name='account'))
 
         if self.is_user_logged_in():
             sm.current = 'home'

@@ -20,6 +20,12 @@ class SidebarMenu(BoxLayout):
             anim = Animation(x=0, duration=0.3)
         anim.start(self)
 
+    def navigate_to(self, screen_name):
+        """Navigate to the given screen name."""
+        app = App.get_running_app()
+        app.sm.current = screen_name
+        self.toggle_sidebar()
+
     def logout(self):
         def on_success(req, result):
             print(f"Logout successful: {result}")

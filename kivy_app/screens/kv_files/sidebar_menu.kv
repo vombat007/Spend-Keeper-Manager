@@ -14,37 +14,43 @@
         text: 'Home'
         size_hint_y: None
         height: dp(50)
-        on_press: root.toggle_sidebar()
+        on_press: root.navigate_to('home')
 
     Button:
         text: 'Accounts'
         size_hint_y: None
         height: dp(50)
+        on_press: root.navigate_to('account')
 
     Button:
         text: 'Family'
         size_hint_y: None
         height: dp(50)
+        on_press: root.toggle_sidebar()
 
     Button:
         text: 'Charts'
         size_hint_y: None
         height: dp(50)
+        on_press: root.toggle_sidebar()
 
     Button:
         text: 'Notifications'
         size_hint_y: None
         height: dp(50)
+        on_press: root.toggle_sidebar()
 
     Button:
         text: 'Settings'
         size_hint_y: None
         height: dp(50)
+        on_press: root.toggle_sidebar()
 
     Button:
         text: 'Help'
         size_hint_y: None
         height: dp(50)
+        on_press: root.toggle_sidebar()
 
     Button:
         id: logout_button
