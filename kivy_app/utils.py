@@ -4,7 +4,6 @@ import requests
 from kivy_app.config import ENDPOINTS
 from PIL import Image
 from datetime import datetime
-import cloudinary.api
 
 
 class TokenManager:
@@ -96,29 +95,36 @@ def download_image(icon_name, category_type, is_custom=False):
 
 
 def download_all_icons_from_cloudinary(local_base_dir):
-    # Create base directory if it doesn't exist
     os.makedirs(local_base_dir, exist_ok=True)
+    token = TokenManager.load_token()
 
-    # Fetch list of resources in Cloudinary folder
-    resources = cloudinary.api.resources(type='upload', prefix='spend_keeper/all_category_icon/', max_results=500)
+    response = requests.get(ENDPOINTS['cloudinary_resources'],
+                            headers={'Authorization': f'Bearer {token}'})
 
-    for resource in resources.get('resources', []):
-        secure_url = resource['secure_url']
-        # Ensure the file is saved with a .png extension
-        local_file_path = os.path.join(local_base_dir,
-                                       resource['public_id'].replace('spend_keeper/all_category_icon/', '') + '.png')
+    if response.status_code == 200:
+        resources = response.json().get('resources', [])
 
-        # Ensure the directory exists
-        os.makedirs(os.path.dirname(local_file_path), exist_ok=True)
+        if not resources:
+            print("No resources found.")
+            return
 
-        # Convert the Cloudinary `created_at` timestamp to a Unix timestamp
-        cloudinary_created_at = datetime.strptime(resource['created_at'],
-                                                  "%Y-%m-%dT%H:%M:%S%z").timestamp()
+        for resource in resources:
+            secure_url = resource['secure_url']
+            cloudinary_path = resource['public_id'].replace('spend_keeper/all_category_icon/', '')
+            local_file_path = os.path.join(local_base_dir, cloudinary_path + '.png')
 
-        # Download and save the file if it doesn't exist or is outdated
-        if not os.path.exists(local_file_path) or os.path.getmtime(local_file_path) < cloudinary_created_at:
-            response = requests.get(secure_url)
-            if response.status_code == 200:
-                with open(local_file_path, 'wb') as file:
-                    file.write(response.content)
-                print(f"Downloaded {local_file_path}")
+            os.makedirs(os.path.dirname(local_file_path), exist_ok=True)
+
+            cloudinary_created_at = datetime.strptime(resource['created_at'],
+                                                      "%Y-%m-%dT%H:%M:%S%z").timestamp()
+
+            if not os.path.exists(local_file_path) or os.path.getmtime(local_file_path) < cloudinary_created_at:
+                file_response = requests.get(secure_url)
+                if file_response.status_code == 200:
+                    with open(local_file_path, 'wb') as file:
+                        file.write(file_response.content)
+                    print(f"Downloaded {local_file_path}")
+                else:
+                    print(f"Failed to download {local_file_path}")
+    else:
+        print(f"Failed to fetch resources from Django API: {response.status_code} - {response.text}")

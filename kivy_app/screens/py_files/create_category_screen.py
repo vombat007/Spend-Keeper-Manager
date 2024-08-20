@@ -1,21 +1,19 @@
 import os
 import requests
-import cloudinary.uploader
 from kivy.clock import Clock
 from kivy.metrics import dp
 from kivy.uix.label import Label
 from kivy.uix.popup import Popup
-from urllib.parse import urlparse
 from kivy.uix.button import Button
 from kivy.uix.widget import Widget
+from kivy_app.config import ENDPOINTS
+from kivy_app.utils import TokenManager
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.properties import StringProperty, ListProperty
 from kivy.graphics import Color, Ellipse, RoundedRectangle
-from kivy_app.config import ENDPOINTS
-from kivy_app.utils import TokenManager
 
 
 class ColorCircleButton(ButtonBehavior, Widget):
@@ -264,12 +262,18 @@ class CreateCategoryScreen(Screen):
         # Capture the widget to an image
         local_file_path = self.capture_widget_to_image(widget, save_dir)
 
-        # Upload the image to Cloudinary
-        upload_result = cloudinary.uploader.upload(local_file_path, folder='spend_keeper/custom_category_icons/')
+        # Open the captured image file
+        with open(local_file_path, 'rb') as f:
+            files = {'file': f}
+            token = TokenManager.load_token()
+            headers = {'Authorization': f'Bearer {token}'}
 
-        if upload_result:
-            # Extract the secure URL
-            icon_url = upload_result['secure_url']
+            # Upload the image to Django API, which will handle Cloudinary upload
+            response = requests.post(ENDPOINTS['upload_icon'], files=files, headers=headers)
+
+        if response.status_code == 201:
+            # Extract the secure URL returned by the Django API
+            icon_url = response.json().get('secure_url')
 
             # Save the icon with the correct name locally
             correct_local_path = os.path.join(save_dir, os.path.basename(icon_url))
@@ -278,11 +282,11 @@ class CreateCategoryScreen(Screen):
             # Post the category to the database using the Cloudinary URL
             self.post_category_to_db(icon_url)
         else:
-            self.show_popup('Error', 'Failed to upload icon to Cloudinary.')
+            self.show_popup('Error', 'Failed to upload icon to the server.')
 
     def post_category_to_db(self, icon_url):
         """Send a POST request to the backend to create the category."""
-        url = f"{ENDPOINTS['categories']}"
+        url = ENDPOINTS['categories']
         token = TokenManager.load_token()
 
         headers = {
@@ -290,18 +294,10 @@ class CreateCategoryScreen(Screen):
             'Content-Type': 'application/json'
         }
 
-        # Extract the path part after 'image/upload/' in the icon URL
-        parsed_url = urlparse(icon_url)
-        path_parts = parsed_url.path.split('/')
-
-        # Find the index of 'spend_keeper' and join the rest of the path
-        spend_keeper_index = path_parts.index('spend_keeper')
-        icon_path = '/'.join(path_parts[spend_keeper_index:])
-
         data = {
             'name': self.category_name,
             'type': self.selected_type,
-            'icon': icon_path,  # Use the correct Cloudinary URL for the icon
+            'icon': icon_url,  # This is the full URL returned by Cloudinary
         }
 
         response = requests.post(url, json=data, headers=headers)
@@ -309,8 +305,6 @@ class CreateCategoryScreen(Screen):
         if response.status_code == 201:
             self.show_popup('Success', 'Category created successfully.')
         else:
-            # Print the response content for debugging
-            print(response.content)
             self.show_popup('Error', 'Failed to create category.')
 
     def show_popup(self, title, message):
