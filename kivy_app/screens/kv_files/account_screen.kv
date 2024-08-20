@@ -22,16 +22,20 @@
 
     BoxLayout:
         orientation: 'vertical'
+        padding: [dp(20), dp(50), dp(20), dp(10)]  # Adjust padding to move scroll menu down
 
         Label:
-            text: "User Accounts"
+            text: "Your Accounts"
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
             size_hint_y: None
-            height: 50
-            font_size: 20
+            height: dp(60)  # Increase height for more padding around the label
+            font_size: dp(26)  # Increase font size for better visibility
             color: 0, 0, 0, 1  # Set text color to black
+            halign: 'center'  # Center the text
+            valign: 'middle'
 
         ScrollView:
+            size_hint_y: 1
             RecycleView:
                 id: account_list
                 viewclass: 'Label'
@@ -41,6 +45,7 @@
                     height: self.minimum_height
                     default_size: None, dp(48)
                     default_size_hint: 1, None
+                    spacing: dp(10)  # Add some spacing between items
 
     BoxLayout:
         orientation: 'horizontal'
@@ -54,7 +59,7 @@
             text: "Create Account"
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
             color: 0, 0, 0, 1
-            font_size: '24'
+            font_size: dp(24)
             size_hint_y: None
             size: dp(255), dp(50)
             background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
