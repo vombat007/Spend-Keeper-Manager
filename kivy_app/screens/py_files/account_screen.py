@@ -1,14 +1,12 @@
-from kivy.uix.label import Label
-from kivy.uix.screenmanager import Screen
-from kivy.uix.popup import Popup
-from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.button import Button
-from kivy.network.urlrequest import UrlRequest
 import json
-
+from kivy.uix.popup import Popup
+from kivy.uix.button import Button
 from kivy_app.config import ENDPOINTS
 from kivy_app.utils import TokenManager
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.textinput import TextInput
+from kivy.uix.screenmanager import Screen
+from kivy.network.urlrequest import UrlRequest
 
 
 class AccountScreen(Screen):
@@ -26,12 +24,13 @@ class AccountScreen(Screen):
         )
 
     def display_accounts(self, request, result):
-
         data = []
         for account in result:
             account_name = account['name']
             account_balance = account['total_balance']
-            data.append({'text': f"{account_name}: ${account_balance}"})
+            data.append(
+                {'text': f"{account_name}: ${account_balance}",
+                 'color': (0, 0, 0, 1)})
 
         # Update the RecycleView data
         self.ids.account_list.data = data
@@ -42,6 +41,9 @@ class AccountScreen(Screen):
     def open_create_account_popup(self):
         popup = CreateAccountPopup(self)
         popup.open()
+
+    def go_back(self, instance):
+        self.manager.current = 'home'
 
 
 class CreateAccountPopup(Popup):
