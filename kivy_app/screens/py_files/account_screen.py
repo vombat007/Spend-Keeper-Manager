@@ -1,4 +1,6 @@
 import json
+
+from kivy.properties import StringProperty, ListProperty
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
 from kivy_app.config import ENDPOINTS
@@ -9,7 +11,13 @@ from kivy.uix.screenmanager import Screen
 from kivy.network.urlrequest import UrlRequest
 
 
+class AccountItem(BoxLayout):
+    text = StringProperty("")
+    color = ListProperty([0, 0, 0, 1])
+
+
 class AccountScreen(Screen):
+
     def on_enter(self, *args):
         self.fetch_account_data()
 

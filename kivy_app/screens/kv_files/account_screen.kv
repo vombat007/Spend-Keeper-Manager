@@ -25,7 +25,7 @@
         padding: [dp(20), dp(50), dp(20), dp(10)]  # Adjust padding to move scroll menu down
 
         Label:
-            text: "Your Accounts"
+            text: "Your Accounts:"
             font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
             size_hint_y: None
             height: dp(60)  # Increase height for more padding around the label
@@ -38,12 +38,12 @@
             size_hint_y: 1
             RecycleView:
                 id: account_list
-                viewclass: 'Label'
+                viewclass: 'AccountItem'  # Using the custom viewclass
                 RecycleBoxLayout:
                     orientation: 'vertical'
                     size_hint_y: None
                     height: self.minimum_height
-                    default_size: None, dp(48)
+                    default_size: None, dp(60)  # Adjust size to fit the rectangle
                     default_size_hint: 1, None
                     spacing: dp(10)  # Add some spacing between items
 
@@ -65,3 +65,25 @@
             background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
             background_down: 'kivy_app/assets/img/Rectangle_down.png'
             on_release: root.open_create_account_popup()
+
+<AccountItem>:
+    orientation: 'vertical'
+    size_hint_y: None
+    height: dp(60)  # Adjust height to fit the rectangle
+    padding: dp(10)
+
+    canvas.before:
+        Rectangle:
+            source: 'kivy_app/assets/img/Group 14.png'
+            size: self.size
+            pos: self.pos
+
+    Label:
+        text: root.text
+        font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+        color: root.color
+        font_size: dp(20)
+        halign: 'center'
+        valign: 'middle'
+        size_hint_y: None
+        height: self.texture_size[1] + dp(10)
