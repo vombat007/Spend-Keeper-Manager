@@ -256,7 +256,15 @@
                         font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                         font_size: '24sp'
                         color: 0, 0, 0, 1
-                        padding: [0, dp(30), 0, 0]  # Add padding to move text down
+                        padding: [0, dp(60), 0, 0]  # Add padding to move text down
+
+                    FloatLayout:
+                        Button:
+                            size_hint: None, None
+                            size: dp(48), dp(48)
+                            background_normal: 'kivy_app/assets/img/Three_circles_button_normal.png'
+                            background_down: 'kivy_app/assets/img/Three_circles_button_down.png'
+                            pos_hint:  {'center_x': 0.1, 'y': 0.4}
 
                     BoxLayout:
                         orientation: 'horizontal'
@@ -304,7 +312,15 @@
                         font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
                         font_size: '24sp'
                         color: 0, 0, 0, 1
-                        padding: [0, dp(30), 0, 0]  # Add padding to move text down
+                        padding: [0, dp(60), 0, 0]  # Add padding to move text down
+
+                    FloatLayout:
+                        Button:
+                            size_hint: None, None
+                            size: dp(48), dp(48)
+                            background_normal: 'kivy_app/assets/img/Three_circles_button_normal.png'
+                            background_down: 'kivy_app/assets/img/Three_circles_button_down.png'
+                            pos_hint:  {'center_x': 0.1, 'y': 0.4}
 
                     BoxLayout:
                         orientation: 'horizontal'
