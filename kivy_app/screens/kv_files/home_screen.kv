@@ -222,7 +222,7 @@
                 size_hint: None, None
                 size: dp(350), dp(250)
                 padding: [dp(10), dp(10), dp(10), 0]
-                spacing: dp(10)
+                spacing: dp(20)
                 pos_hint: {'center_x': 0.5, 'y': 0.1}  # Adjusted indent from the bottom
 
                 BoxLayout:
@@ -236,19 +236,19 @@
                         RoundedRectangle:
                             size: self.size
                             pos: self.pos
-                            radius: [dp(20),]
+                            radius: [dp(30),]
 
                         Color:
                             rgba: 0, 0, 0, 1
                         Line:
                             width: dp(3)
-                            rounded_rectangle: (*self.pos, *self.size, dp(20))
+                            rounded_rectangle: (*self.pos, *self.size, dp(30))
                         # Yellow inner outline
                         Color:
                             rgba: 1, 1, 0, 1
                         Line:
                             width: dp(4)
-                            rounded_rectangle: (self.x + dp(5), self.y + dp(5), self.width - dp(10), self.height - dp(10), dp(20))
+                            rounded_rectangle: (self.x + dp(5), self.y + dp(5), self.width - dp(10), self.height - dp(10), dp(30))
 
                     Label:
                         id: income_label_id
@@ -284,19 +284,19 @@
                         RoundedRectangle:
                             size: self.size
                             pos: self.pos
-                            radius: [dp(20),]
+                            radius: [dp(30),]
 
                         Color:
                             rgba: 0, 0, 0, 1
                         Line:
                             width: dp(3)
-                            rounded_rectangle: (*self.pos, *self.size, dp(20))
+                            rounded_rectangle: (*self.pos, *self.size, dp(30))
                         # Yellow inner outline
                         Color:
                             rgba: 0.788, 0.788, 0.788, 1
                         Line:
                             width: dp(4)
-                            rounded_rectangle: (self.x + dp(5), self.y + dp(5), self.width - dp(10), self.height - dp(10), dp(20))
+                            rounded_rectangle: (self.x + dp(5), self.y + dp(5), self.width - dp(10), self.height - dp(10), dp(30))
 
                     Label:
                         id: expense_label_id
