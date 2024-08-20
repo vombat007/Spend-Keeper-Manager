@@ -1,0 +1,352 @@
+#:import CircularChart kivy_app.widget.custom_chart.CircularChart
+
+<CustomButton@Button>:
+    background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+    background_down: 'kivy_app/assets/img/Rectangle_down.png'
+    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+    color: 0, 0, 0, 1
+
+<HomeScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    sidebar: sidebar_menu_id
+    chart: chart_id
+    income_label: income_label_id
+    expense_label: expense_label_id
+    period_label: period_label_id
+    FloatLayout:
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: 1, None
+            height: self.height
+            pos_hint: {'y': 0.15}  # Small indent from the bottom, adjust as needed
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: 1, None
+                height: dp(50)
+                pos_hint: {'center_x': 0.6, 'center_y': 0.5}  # Move slightly to the right
+                spacing: dp(40)
+
+                Button:
+                    background_normal: 'kivy_app/assets/img/Big_arrow_left_normal.png'
+                    background_down: 'kivy_app/assets/img/Big_arrow_left_down.png'
+                    size_hint: None, None
+                    size: dp(29), dp(60)
+                    pos_hint: {'center_x': 0.5, 'center_y': 2}
+                    on_release: root.switch_account(-1)
+
+                CircularChart:
+                    id: chart_id
+                    size_hint: None, None
+                    size: dp(200), dp(200)
+
+                Button:
+                    background_normal: 'kivy_app/assets/img/Big_arrow_right_normal.png'
+                    background_down: 'kivy_app/assets/img/Big_arrow_right_down.png'
+                    size_hint: None, None
+                    size: dp(29), dp(60)
+                    pos_hint: {'center_x': 0.5, 'center_y': 2}
+                    on_release: root.switch_account(1)
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: dp(300), dp(50)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.7}
+                spacing: dp(140)
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: None, None
+                    size: dp(90), dp(32)
+                    spacing: dp(5)
+
+                    FloatLayout:
+                        size_hint: None, None
+                        size: dp(32), dp(32)
+                        canvas.before:
+                            Color:
+                                rgba: 1, 1, 0, 1  # Yellow color
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                            Color:
+                                rgba: 0, 0, 0, 1  # Black color for outline
+                            Line:
+                                width: 1
+                                ellipse: (self.x, self.y, self.width, self.height)
+
+                    Label:
+                        text: 'Left'
+                        font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                        size_hint: None, None
+                        size: dp(50), dp(32)
+                        valign: 'middle'
+                        halign: 'left'
+                        color: 0, 0, 0, 1
+                        text_size: self.size
+
+                BoxLayout:
+                    orientation: 'horizontal'
+                    size_hint: None, None
+                    size: dp(90), dp(32)
+                    spacing: dp(5)
+
+                    FloatLayout:
+                        size_hint: None, None
+                        size: dp(32), dp(32)
+                        canvas.before:
+                            Color:
+                                rgba: 0.788, 0.788, 0.788, 1  # Gray color
+                            Ellipse:
+                                size: self.size
+                                pos: self.pos
+                            Color:
+                                rgba: 0, 0, 0, 1  # Black color for outline
+                            Line:
+                                width: 1
+                                ellipse: (self.x, self.y, self.width, self.height)
+
+                    Label:
+                        text: 'Spend'
+                        font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                        size_hint: None, None
+                        size: dp(50), dp(32)
+                        valign: 'middle'
+                        halign: 'left'
+                        color: 0, 0, 0, 1
+                        text_size: self.size
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: dp(385), dp(50)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                spacing: dp(10)
+
+                CustomButton:
+                    id: day_button
+                    text: 'Day'
+                    size_hint: None, None
+                    size: dp(70), dp(35)
+                    on_release:
+                        root.set_period('day')
+                        self.state = 'down'
+
+                CustomButton:
+                    id: week_button
+                    text: 'Week'
+                    size_hint: None, None
+                    size: dp(70), dp(35)
+                    on_release:
+                        root.set_period('week')
+                        self.state = 'down'
+
+                CustomButton:
+                    id: month_button
+                    text: 'Month'
+                    size_hint: None, None
+                    size: dp(70), dp(35)
+                    on_release:
+                        root.set_period('month')
+                        self.state = 'down'
+
+                CustomButton:
+                    id: year_button
+                    text: 'Year'
+                    size_hint: None, None
+                    size: dp(70), dp(35)
+                    on_release:
+                        root.set_period('year')
+                        self.state = 'down'
+
+                CustomButton:
+                    id: period_button
+                    text: 'Period'
+                    size_hint: None, None
+                    size: dp(70), dp(35)
+                    on_release:
+                        root.set_period('period')
+                        self.state = 'down'
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: dp(340), dp(50)
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                spacing: dp(10)
+
+                Button:
+                    id: left_arrow_button
+                    size_hint: None, None
+                    size: dp(45), dp(32)
+                    background_normal: 'kivy_app/assets/img/Button_arrow_left_normal.png'
+                    background_down: 'kivy_app/assets/img/Button_arrow_left_down.png'
+                    on_release:
+                        root.change_period(-1)
+                        root.update_button_visibility()
+
+                Button:
+                    id: period_label_id
+                    text: ''
+                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                    background_down: 'kivy_app/assets/img/Rectangle_normal.png'
+                    size_hint: None, None
+                    size: dp(220), dp(32)
+                    valign: 'middle'
+                    halign: 'center'
+                    color: 0, 0, 0, 1
+                    text_size: self.size
+
+                Button:
+                    id: right_arrow_button
+                    background_normal: 'kivy_app/assets/img/Button_arrow_right_normal.png'
+                    background_down: 'kivy_app/assets/img/Button_arrow_right_down.png'
+                    background_disabled_normal: ''
+                    size_hint: None, None
+                    size: dp(45), dp(32)
+                    disabled_color: 1, 1, 1, 0  # Fully transparent
+                    on_release:
+                        root.change_period(1)
+                        root.update_button_visibility()
+
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint: None, None
+                size: dp(350), dp(250)
+                padding: [dp(10), dp(10), dp(10), 0]
+                spacing: dp(20)
+                pos_hint: {'center_x': 0.5, 'y': 0.1}  # Adjusted indent from the bottom
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint: None, None
+                    size: dp(330), dp(110)
+                    padding: [dp(10)]
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [dp(30),]
+
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            width: dp(3)
+                            rounded_rectangle: (*self.pos, *self.size, dp(30))
+                        # Yellow inner outline
+                        Color:
+                            rgba: 1, 1, 0, 1
+                        Line:
+                            width: dp(4)
+                            rounded_rectangle: (self.x + dp(5), self.y + dp(5), self.width - dp(10), self.height - dp(10), dp(30))
+
+                    Label:
+                        id: income_label_id
+                        text: "Income"
+                        font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                        font_size: '24sp'
+                        color: 0, 0, 0, 1
+                        padding: [0, dp(60), 0, 0]  # Add padding to move text down
+
+                    FloatLayout:
+                        Button:
+                            size_hint: None, None
+                            size: dp(48), dp(48)
+                            background_normal: 'kivy_app/assets/img/Three_circles_button_normal.png'
+                            background_down: 'kivy_app/assets/img/Three_circles_button_down.png'
+                            pos_hint:  {'center_x': 0.1, 'y': 0.4}
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint: None, None
+                        size: dp(32), dp(32)
+                        spacing: dp(5)
+                        pos_hint: {'center_x': 0.85, 'y': 1.30}
+
+                        Button:
+                            size_hint: None, None
+                            size: dp(54), dp(54)
+                            background_normal: 'kivy_app/assets/img/Circle_with_cross_yellow_normal.png'
+                            background_down: 'kivy_app/assets/img/Circle_with_cross_yellow_down.png'
+                            pos_hint:  {'center_x': 0.85, 'y': 0.6}
+                            on_press: root.go_transaction('income')
+
+                BoxLayout:
+                    orientation: 'vertical'
+                    size_hint: None, None
+                    size: dp(330), dp(110)
+                    padding: [dp(10)]
+                    canvas.before:
+                        Color:
+                            rgba: 1, 1, 1, 1
+                        RoundedRectangle:
+                            size: self.size
+                            pos: self.pos
+                            radius: [dp(30),]
+
+                        Color:
+                            rgba: 0, 0, 0, 1
+                        Line:
+                            width: dp(3)
+                            rounded_rectangle: (*self.pos, *self.size, dp(30))
+                        # Yellow inner outline
+                        Color:
+                            rgba: 0.788, 0.788, 0.788, 1
+                        Line:
+                            width: dp(4)
+                            rounded_rectangle: (self.x + dp(5), self.y + dp(5), self.width - dp(10), self.height - dp(10), dp(30))
+
+                    Label:
+                        id: expense_label_id
+                        text: "Expense"
+                        font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                        font_size: '24sp'
+                        color: 0, 0, 0, 1
+                        padding: [0, dp(60), 0, 0]  # Add padding to move text down
+
+                    FloatLayout:
+                        Button:
+                            size_hint: None, None
+                            size: dp(48), dp(48)
+                            background_normal: 'kivy_app/assets/img/Three_circles_button_normal.png'
+                            background_down: 'kivy_app/assets/img/Three_circles_button_down.png'
+                            pos_hint:  {'center_x': 0.1, 'y': 0.4}
+
+                    BoxLayout:
+                        orientation: 'horizontal'
+                        size_hint: None, None
+                        size: dp(32), dp(32)
+                        spacing: dp(5)
+                        pos_hint:  {'center_x': 0.85, 'y': 1.30}
+
+                        Button:
+                            size_hint: None, None
+                            size: dp(54), dp(54)
+                            background_normal: 'kivy_app/assets/img/Circle_with_cross_grey_normal.png'
+                            background_down: 'kivy_app/assets/img/Circle_with_cross_grey_down.png'
+                            pos_hint:  {'center_x': 0.85, 'y': 0.6}
+                            on_press: root.go_transaction('expense')
+
+        FloatLayout:
+            SidebarMenu:
+                id: sidebar_menu_id
+                size_hint: None, 1
+                width: dp(300)
+                x: -self.width
+
+            CustomSidebarButton:
+                id: sidebar_toggle_button
+                size_hint: None, None
+                size: dp(45), dp(45)
+                pos_hint: {'x': 0.01, 'y': 0.93}
+                on_release: root.toggle_sidebar()

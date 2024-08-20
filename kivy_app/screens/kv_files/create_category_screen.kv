@@ -1,0 +1,160 @@
+<CreateCategoryScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(30)
+
+            Button:
+                size_hint: None, None
+                size: dp(45), dp(45)
+                background_normal: 'kivy_app/assets/img/return_button_normal.png'
+                background_down: 'kivy_app/assets/img/return_button_down.png'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                on_press: root.go_back(self)
+
+            Button:
+                id: income_button
+                text: 'Income'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size: dp(120), dp(32)
+                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.on_income_button_press()
+
+            Button:
+                id: expense_button
+                text: 'Expense'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size: dp(120), dp(32)
+                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.on_expense_button_press()
+
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint: None, None
+            size: dp(200), dp(50)
+            spacing: dp(10)
+            pos_hint: {'center_x': 0.5}
+
+            Label:
+                text: "Name:"
+                font_size: sp(18)
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                size_hint_x: None
+                width: dp(100)
+                color: (0, 0, 0, 1)
+
+            TextInput:
+                id: name_input
+                hint_text: "Category Name"
+                font_size: sp(18)
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                multiline: False
+                size_hint: None, None
+                size: dp(200), dp(40)
+                background_normal: 'kivy_app/assets/img/Rectangle.png'
+                background_active: 'kivy_app/assets/img/Rectangle.png'
+                on_text: root.category_name = self.text
+
+        Label:
+            text: "Selected Icon:"
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            size_hint_y: None
+            height: dp(50)
+            color: (0, 0, 0, 1)
+
+        BoxLayout:
+            id: selected_icon_display
+            size_hint: None, None
+            size: dp(70), dp(70)
+            pos_hint: {'center_x': 0.5}
+            canvas.before:
+                Color:
+                    rgba: root.selected_color
+                Rectangle:
+                    size: self.size
+                    pos: self.pos
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            height: dp(50)
+            spacing: dp(30)
+            pos_hint: {'center_x': 0.35, 'center_y': 0.5}
+
+            Button:
+                id: icon_button
+                text: 'Icon'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size: dp(100), dp(32)
+                background_normal: 'kivy_app/assets/img/Rectangle_down.png'
+                background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.on_icon_button_press(self)
+
+            Button:
+                id: color_button
+                text: 'Color'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size: dp(100), dp(32)
+                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.on_color_button_press(self)
+
+        ScrollView:
+            GridLayout:
+                id: icon_grid
+                cols: 1  # Ensure each folder's content is in a separate row
+                spacing: dp(20)
+                padding: dp(10)
+                size_hint_y: None
+                height: self.minimum_height
+                size_hint_x: 1
+
+        GridLayout:
+            id: color_grid
+            cols: 7
+            spacing: dp(25)
+            padding: dp(10)
+            size_hint_y: None
+            height: 0
+            opacity: 0
+            disabled: True
+
+        Button:
+            text: "Create Category"
+            font_size: sp(20)
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            color: (0, 0, 0, 1)
+            size_hint_y: None
+            size_hint: None, None
+            size: dp(200), dp(40)
+            background_normal: 'kivy_app/assets/img/Rectangle_down.png'
+            background_down: 'kivy_app/assets/img/Rectangle_normal.png'
+            pos_hint: {'center_x': 0.5}
+            on_press: root.create_category()

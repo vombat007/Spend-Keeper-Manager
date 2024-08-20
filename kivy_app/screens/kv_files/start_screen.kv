@@ -1,0 +1,70 @@
+<StartScreen>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [dp(30), dp(50)]
+        spacing: dp(15)
+        size_hint: 0.9, 0.6
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        Image:
+            source: 'kivy_app/assets/img/frames/frame_3.png'
+            size_hint: 0.6, 0.6
+            pos_hint: {'center_x': 0.5}
+
+        Label:
+            text: 'Ready to tame\nYour finances?'
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            font_size: sp(30)
+            size_hint_y: None
+            height: self.texture_size[1]
+            color: 0, 0, 0, 1
+            bold: True
+            halign: 'center'
+            valign: 'middle'
+            text_size: self.width, None
+
+        Button:
+            size_hint: 0.5, None
+            size: dp(300), dp(35)
+            text: 'Login'
+            color: 0, 0, 0, 1
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            font_size: sp(24)
+            background_normal: 'kivy_app/assets/img/Rectangle_down.png'
+            background_down: 'kivy_app/assets/img/Rectangle_normal.png'
+            on_press: root.manager.current = 'login'
+            pos_hint: {'center_x': 0.5}
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: 0.9, None
+        height: dp(30)
+        spacing: dp(20)
+        padding: [dp(30), dp(10)]
+        pos_hint: {'center_x': 0.5}
+
+        Label:
+            text: "Don't have an account?"
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            font_size: sp(16)
+            size_hint_y: None
+            height: self.texture_size[1]
+            color: 0, 0, 0, 1
+
+        Button:
+            text: 'Sign up now'
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            font_size: sp(16)
+            size_hint: None, None
+            size: dp(90), dp(18)
+            color: 0, 0, 1, 1
+            background_normal: ''
+            background_color: 1, 1, 1, 1
+            on_press: root.sign_up(self)

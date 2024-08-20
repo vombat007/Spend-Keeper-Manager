@@ -1,0 +1,216 @@
+<TransactionScreen>:
+    selected_type: 'Expense'
+    on_pre_enter: root.load_categories()
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            size: self.size
+            pos: self.pos
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: [dp(20), dp(20), dp(20), dp(20)]
+        spacing: dp(5)
+        pos_hint: {'center_x': 0.47, 'center_y': 0.85}
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(30)
+
+            Button:
+                size_hint: None, None
+                size: dp(45), dp(45)
+                background_normal: 'kivy_app/assets/img/return_button_normal.png'
+                background_down: 'kivy_app/assets/img/return_button_down.png'
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                on_press: root.go_back(self)
+
+
+            Button:
+                id: income_button
+                text: 'Income'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size: dp(120), dp(32)
+                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.set_type('Income')
+
+            Button:
+                id: expense_button
+                text: 'Expense'
+                font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                color: 0, 0, 0, 1
+                size_hint: None, None
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+                size: dp(120), dp(32)
+                background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+                background_down: 'kivy_app/assets/img/Rectangle_down.png'
+                on_press: root.set_type('Expense')
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
+            size_hint: None, None
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint: None, None
+                size: dp(340), dp(50)
+                pos_hint: {'center_x': 0.5}
+                spacing: dp(10)
+
+                Label:
+                    text: 'Account:'
+                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.texture_size
+
+                Label:
+                    text: root.account_name  # Bind to account_name property
+                    font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+                    color: 0, 0, 0, 1
+                    size_hint: None, None
+                    size: self.texture_size
+
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: None, None
+            size: dp(188), dp(55)
+            spacing: dp(10)
+            pos_hint: {'center_x': 0.5}
+
+            TextInput:
+                id: amount_input
+                hint_text: "Amount"
+                input_filter: 'float'
+                background_normal: 'kivy_app/assets/img/Rectangle_Dash.png.'
+                background_active: 'kivy_app/assets/img/Rectangle_Dash.png.'
+                multiline: False
+                size_hint_y: None
+                height: dp(45)
+                padding_y: [dp(10), dp(10)]
+                padding_x: [dp(10), dp(10)]
+                font_size: sp(20)
+
+            Button:
+                size_hint: None, None
+                size: dp(45), dp(45)
+                background_normal: 'kivy_app/assets/img/Button_calculator.png'
+                background_down: 'kivy_app/assets/img/Button_calculator_down.png'
+                on_press: root.go_calculator(self)
+
+        Label:
+            text: "Categories"
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            color: 0, 0, 0, 1
+            size_hint: None, None
+            pos_hint: {'center_x': 0.5}
+            font_size: sp(20)
+
+        GridLayout:
+            id: category_grid
+            cols: 4
+            size_hint: None, None
+            size: dp(320), dp(280)
+            spacing: dp(10)
+            pos_hint: {'center_x': 0.55}
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: dp(340), dp(50)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.2}
+        spacing: dp(10)
+
+        Button:
+            id: left_arrow_button
+            size_hint: None, None
+            size: dp(45), dp(32)
+            background_normal: 'kivy_app/assets/img/Button_arrow_left_normal.png'
+            background_down: 'kivy_app/assets/img/Button_arrow_left_down.png'
+            on_release:
+                root.change_period(-1)
+                root.update_button_visibility()
+
+        Button:
+            id: period_label_id
+            text: root.selected_date
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            background_normal: 'kivy_app/assets/img/Rectangle_normal.png'
+            background_down: 'kivy_app/assets/img/Rectangle_normal.png'
+            size_hint: None, None
+            size: dp(220), dp(32)
+            valign: 'middle'
+            halign: 'center'
+            color: 0, 0, 0, 1
+            text_size: self.size
+
+        Button:
+            id: right_arrow_button
+            background_normal: 'kivy_app/assets/img/Button_arrow_right_normal.png'
+            background_down: 'kivy_app/assets/img/Button_arrow_right_down.png'
+            background_disabled_normal: ''
+            size_hint: None, None
+            size: dp(45), dp(32)
+            disabled_color: 1, 1, 1, 0  # Fully transparent
+            on_release:
+                root.change_period(1)
+                root.update_button_visibility()
+
+    BoxLayout:
+        orientation: 'vertical'
+        size_hint: None, None
+        spacing: dp(10)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.12}
+
+        Label:
+            text: "Notes:"
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            color: 0, 0, 0, 1
+            font_size: sp(24)
+            halign: 'center'
+            valign: 'middle'
+            size_hint: None, None
+            size: self.texture_size
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+
+        TextInput:
+            id: description_input
+            hint_text: "Description"
+            multiline: False
+            size_hint: None, None
+            size: dp(310), dp(45)
+            background_normal: 'kivy_app/assets/img/Big_rectangle_Dash.png'
+            background_active: 'kivy_app/assets/img/Big_rectangle_Dash.png'
+            font_size: sp(18)
+            pos_hint: {'center_x': 0.5, 'center_y': 0.3}
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint: None, None
+        size: dp(300), dp(30)
+        spacing: dp(40)
+        padding: [dp(30), dp(10)]
+        pos_hint: {'center_x': 0.64}
+
+        Button:
+            text: "Add"
+            font_size: sp(24)
+            font_name: 'kivy_app/assets/fonts/IrishGrover-Regular.ttf'
+            color: 0, 0, 0, 1
+            size_hint: None, None
+            pos_hint: {'center_x': 0.5}
+            size: dp(120), dp(32)
+            background_normal: 'kivy_app/assets/img/Rectangle_down.png'
+            background_down: 'kivy_app/assets/img/Rectangle_normal.png'
+            on_press: root.create_transaction()
