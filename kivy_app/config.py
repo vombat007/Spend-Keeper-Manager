@@ -15,6 +15,7 @@ ENDPOINTS = {
     'registration': f'{BASE_URL}/registration/',
     'verify_token': f'{BASE_URL}/login/verify/',
     'refresh_token': f'{BASE_URL}/login/refresh/',
+    'currencies': f'{BASE_URL}/currencies/',
     'accounts': f'{BASE_URL}/accounts/',
     'account_summary': f'{BASE_URL}/account/{{account_id}}/summary/',
     'categories': f'{BASE_URL}/categories/',
