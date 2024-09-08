@@ -119,12 +119,13 @@ class HomeScreen(Screen):
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             data = response.json()
-
+            # Pass the currency_symbol to update the chart, income, and expense labels
             self.chart.update_chart(data['total_balance'], data['percent_spent'], data['account_name'],
                                     data['currency_symbol'])
-            self.update_income_expense(data['income'], data['expense'])
+            self.update_income_expense(data['income'], data['expense'],
+                                       data['currency_symbol'])
         else:
-            print("Failed to fetch account summary")
+            print(f"Failed to fetch account summary: {response.status_code} - {response.text}")
 
     def get_period_dates(self):
         if self.selected_period == 'day':
@@ -142,9 +143,10 @@ class HomeScreen(Screen):
             end_date = self.current_date.replace(month=12, day=31).strftime('%Y-%m-%d')
         return start_date, end_date
 
-    def update_income_expense(self, income, expense):
-        self.income_label.text = f'Income \n  ${income}'
-        self.expense_label.text = f'Expense \n   ${expense}'
+    def update_income_expense(self, income, expense, currency_symbol):
+        """Update the income and expense labels with the correct currency symbol"""
+        self.income_label.text = f'Income \n {currency_symbol}{income}'
+        self.expense_label.text = f'Expense \n {currency_symbol}{expense}'
 
     def toggle_sidebar(self):
         button = self.ids.sidebar_toggle_button
