@@ -31,6 +31,7 @@ class CircularChart(Widget):
     total_balance = NumericProperty(0)
     percent_spent = NumericProperty(0)
     account_name = StringProperty('')
+    currency_symbol = StringProperty('$')  # Default to dollar sign
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -69,8 +70,8 @@ class CircularChart(Widget):
             # Draw the account name in the center
             self.draw_text(self.account_name, self.center_x, self.center_y + 60)
             # Draw the total balance in the center
-            self.draw_text(f'Balance $ {self.total_balance}', self.center_x, self.center_y - 10)
-
+            # Use the dynamic currency symbol when drawing the total balance
+            self.draw_text(f'Balance {self.currency_symbol} {self.total_balance}', self.center_x, self.center_y - 10)
             self.draw_text(f'Spend {self.percent_spent}%', self.center_x, self.center_y - 50)
 
     def draw_text(self, text, x, y):
@@ -82,8 +83,9 @@ class CircularChart(Widget):
         Color(0, 0, 0, 1)
         Rectangle(texture=text_texture, pos=text_pos, size=text_texture.size)
 
-    def update_chart(self, total_balance, percent_spent, account_name):
+    def update_chart(self, total_balance, percent_spent, account_name, currency_symbol):
         self.total_balance = total_balance
         self.percent_spent = percent_spent
         self.account_name = account_name
+        self.currency_symbol = currency_symbol
         self.update_canvas()

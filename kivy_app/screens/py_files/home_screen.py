@@ -119,7 +119,9 @@ class HomeScreen(Screen):
         response = requests.get(url, headers=headers)
         if response.status_code == 200:
             data = response.json()
-            self.chart.update_chart(data['total_balance'], data['percent_spent'], data['account_name'])
+
+            self.chart.update_chart(data['total_balance'], data['percent_spent'], data['account_name'],
+                                    data['currency_symbol'])
             self.update_income_expense(data['income'], data['expense'])
         else:
             print("Failed to fetch account summary")
