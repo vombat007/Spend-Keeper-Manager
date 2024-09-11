@@ -2,6 +2,7 @@ import json
 from kivy.metrics import dp
 from kivy.uix.popup import Popup
 from kivy.uix.button import Button
+from kivy.uix.widget import Widget
 from kivy_app.config import ENDPOINTS
 from kivy.uix.dropdown import DropDown
 from kivy_app.utils import TokenManager
@@ -83,23 +84,49 @@ class CreateAccountPopup(Popup):
 
         layout = BoxLayout(orientation='vertical', padding=dp(20))
 
-        # Account name input (font color set to black)
-        self.name_input = TextInput(hint_text="Account Name", foreground_color=(0, 0, 0, 1))  # Text color set to black
+        # Custom input field with image background
+        self.name_input = TextInput(
+            hint_text="Account Name",
+            foreground_color=(0, 0, 0, 1),  # Text color set to black
+            background_normal='kivy_app/assets/img/Rectangle_Dash.png',
+            background_active='kivy_app/assets/img/Rectangle_Dash.png',
+            padding=[dp(25), dp(10)],  # Padding inside the text input to adjust text position
+            cursor_color=(0, 0, 0, 1),  # Set the cursor color to black
+            border=[0, 0, 0, 0],  # Remove border to prevent image stretching
+        )
         layout.add_widget(self.name_input)
 
-        # Currency dropdown (font color set to black)
+        # Add space between the input field and "Choose Currency" button
+        layout.add_widget(Widget(size_hint_y=None, height=dp(10)))  # 20dp space between the input and button
+
+        # Currency dropdown (custom image button)
         self.selected_currency = None
         self.currency_dropdown = DropDown()
-        self.currency_button = Button(text="Select Currency", size_hint_y=None, height=40,
-                                      color=(0, 0, 0, 1))  # Text color set to black
+
+        # Custom button with image for selecting currency
+        self.currency_button = Button(
+            text="Choose currency",
+            size_hint_y=None,
+            height=40,
+            color=[0, 0, 0, 1],
+            background_normal='kivy_app/assets/img/Rectangle_normal.png',  # Normal image
+            background_down='kivy_app/assets/img/Rectangle_down.png',  # Pressed image
+        )
         self.currency_button.bind(on_release=self.currency_dropdown.open)
         layout.add_widget(self.currency_button)
 
-        # Fetch and populate the dropdown with available currencies
-        self.fetch_currencies()
+        # Add space between the two buttons
+        layout.add_widget(Widget(size_hint_y=None, height=dp(5)))  # 20dp space between the buttons
 
-        # Submit button (font color set to black)
-        submit_btn = Button(text="Create", size_hint_y=None, height=40, color=(0, 0, 0, 1))  # Text color set to black
+        # Submit button (custom image button)
+        submit_btn = Button(
+            text="Create",
+            size_hint_y=None,
+            height=40,
+            color=[0, 0, 0, 1],
+            background_normal='kivy_app/assets/img/Rectangle_normal.png',  # Normal image
+            background_down='kivy_app/assets/img/Rectangle_down.png',  # Pressed image
+        )
         submit_btn.bind(on_release=self.create_account)
         layout.add_widget(submit_btn)
 
@@ -128,8 +155,12 @@ class CreateAccountPopup(Popup):
     def populate_currencies(self, request, result):
         # Populate the dropdown with currency options
         for currency in result:
-            btn = Button(text=f"{currency['name']} ({currency['symbol']})", size_hint_y=None, height=40,
-                         color=(0, 0, 0, 1))  # Text color set to black
+            btn = Button(text=f"{currency['name']} ({currency['symbol']})",
+                         size_hint_y=None,
+                         height=40,
+                         color=(0, 0, 0, 1)
+                         )
+
             btn.bind(on_release=lambda btn, currency=currency: self.select_currency(currency))
             self.currency_dropdown.add_widget(btn)
 
