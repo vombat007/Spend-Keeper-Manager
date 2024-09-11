@@ -64,24 +64,30 @@ class CreateAccountPopup(Popup):
         self.title = "Create New Account"
         self.title_color = (0, 0, 0, 1)
         self.size_hint = (0.8, 0.3)
-        self.background_color = (0, 0, 0, 0)  # Transparent background
 
-        # Create the rounded white background rectangle
+        # Disable default background image and set background color to transparent
+        self.background = ''  # Disable default background image
+        self.background_color = (0, 0, 0, 0)  # Transparent to ensure we draw our own background
+
+        # Create a white rounded rectangle for the background with radius 20 for all corners
         with self.canvas.before:
             Color(1, 1, 1, 1)  # Set background color to white
             self.rect = RoundedRectangle(
-                radius=[(20, 20), (20, 20), (20, 20), (20, 20)],
-                size=self.size,
-                pos=self.pos
+                radius=[20, 20, 20, 20],  # Set corner radius to 20 for all corners
+                size=self.size,  # Bind the size of the rectangle to the popup's size
+                pos=self.pos  # Bind the position of the rectangle to the popup's position
             )
 
-        # Bind the size and position of the rectangle to the popup
+        # Bind the size and position of the rectangle to the popup to ensure it's updated dynamically
         self.bind(size=self.update_rect, pos=self.update_rect)
 
         # Add a black border using Line after the background is drawn
         with self.canvas.after:
             Color(0, 0, 0, 1)  # Set border color to black
-            self.border_line = Line(rounded_rectangle=[self.x, self.y, self.width, self.height, 20], width=2)
+            self.border_line = Line(
+                rounded_rectangle=[self.x, self.y, self.width, self.height, 20],
+                width=2  # Width of the black border
+            )
 
         layout = BoxLayout(orientation='vertical', padding=dp(20))
 
@@ -98,7 +104,7 @@ class CreateAccountPopup(Popup):
         layout.add_widget(self.name_input)
 
         # Add space between the input field and "Choose Currency" button
-        layout.add_widget(Widget(size_hint_y=None, height=dp(10)))  # 20dp space between the input and button
+        layout.add_widget(Widget(size_hint_y=None, height=dp(20)))  # 20dp space between the input and button
 
         # Currency dropdown (custom image button)
         self.selected_currency = None
@@ -139,11 +145,13 @@ class CreateAccountPopup(Popup):
 
     def update_rect(self, *args):
         # Update the size and position of the rounded rectangle background
-        self.rect.pos = self.pos
-        self.rect.size = self.size
+        self.rect.pos = self.pos  # Update position of the background rectangle
+        self.rect.size = self.size  # Update size of the background rectangle
 
-        # Update the black border position and size
+        # Update the black border position and size with a corner radius of 20
         self.border_line.rounded_rectangle = [self.x, self.y, self.width, self.height, 20]
+
+
 
     def open_currency_dropdown(self, instance):
         """Open the currency dropdown when the button is clicked"""
