@@ -62,6 +62,7 @@ class CreateAccountPopup(Popup):
         super(CreateAccountPopup, self).__init__(**kwargs)
         self.parent_screen = parent_screen
         self.title = "Create New Account"
+        self.title_color = (0, 0, 0, 1)
         self.size_hint = (0.8, 0.3)
         self.background_color = (0, 0, 0, 0)  # Transparent background
 
@@ -112,7 +113,7 @@ class CreateAccountPopup(Popup):
             background_normal='kivy_app/assets/img/Rectangle_normal.png',  # Normal image
             background_down='kivy_app/assets/img/Rectangle_down.png',  # Pressed image
         )
-        self.currency_button.bind(on_release=self.currency_dropdown.open)
+        self.currency_button.bind(on_release=self.open_currency_dropdown)
         layout.add_widget(self.currency_button)
 
         # Add space between the two buttons
@@ -124,14 +125,17 @@ class CreateAccountPopup(Popup):
             size_hint_y=None,
             height=40,
             color=[0, 0, 0, 1],
-            background_normal='kivy_app/assets/img/Rectangle_normal.png',  # Normal image
-            background_down='kivy_app/assets/img/Rectangle_down.png',  # Pressed image
+            background_normal='kivy_app/assets/img/Rectangle_normal.png',
+            background_down='kivy_app/assets/img/Rectangle_down.png',
         )
         submit_btn.bind(on_release=self.create_account)
         layout.add_widget(submit_btn)
 
         # Set the content of the popup to the layout
         self.content = layout
+
+        # Fetch currencies after initializing layout
+        self.fetch_currencies()
 
     def update_rect(self, *args):
         # Update the size and position of the rounded rectangle background
@@ -141,8 +145,15 @@ class CreateAccountPopup(Popup):
         # Update the black border position and size
         self.border_line.rounded_rectangle = [self.x, self.y, self.width, self.height, 20]
 
+    def open_currency_dropdown(self, instance):
+        """Open the currency dropdown when the button is clicked"""
+        if not self.currency_dropdown.children:
+            print("Dropdown is empty!")
+        else:
+            self.currency_dropdown.open(instance)
+
     def fetch_currencies(self):
-        # Fetch available currencies (logic unchanged)
+        """Fetch available currencies from the API"""
         token = TokenManager.load_token()
         headers = {'Authorization': f'Bearer {token}'}
         UrlRequest(
@@ -153,25 +164,27 @@ class CreateAccountPopup(Popup):
         )
 
     def populate_currencies(self, request, result):
-        # Populate the dropdown with currency options
+        """Populate the currency dropdown with options"""
+        self.currency_dropdown.clear_widgets()  # Clear any previous widgets
         for currency in result:
-            btn = Button(text=f"{currency['name']} ({currency['symbol']})",
-                         size_hint_y=None,
-                         height=40,
-                         color=(0, 0, 0, 1)
-                         )
-
+            # Create a button for each currency and add it to the dropdown
+            btn = Button(
+                text=f"{currency['name']} ({currency['symbol']})",
+                size_hint_y=None,
+                height=40,
+                color=(0, 0, 0, 1)
+            )
             btn.bind(on_release=lambda btn, currency=currency: self.select_currency(currency))
             self.currency_dropdown.add_widget(btn)
 
     def select_currency(self, currency):
-        # Set the selected currency and close the dropdown
+        """Handle the selection of a currency"""
         self.currency_button.text = f"{currency['name']} ({currency['symbol']})"
         self.selected_currency = currency
         self.currency_dropdown.dismiss()
 
     def create_account(self, *args):
-        # Create account logic (unchanged)
+        """Create a new account with the selected currency"""
         account_name = self.name_input.text.strip()
         if not account_name or not self.selected_currency:
             print("Account name or currency not selected")
@@ -194,9 +207,10 @@ class CreateAccountPopup(Popup):
         )
 
     def on_success(self, request, result):
-        # Close the popup and refresh account data on success
+        """Close the popup and refresh account data on success"""
         self.dismiss()
         self.parent_screen.fetch_account_data()
 
     def on_error(self, request, error):
-        print(f"Failed to create account: {error}")
+        """Handle error fetching currencies"""
+        print(f"Failed to fetch currencies: {error}")
