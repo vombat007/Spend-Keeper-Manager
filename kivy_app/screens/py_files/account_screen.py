@@ -62,34 +62,33 @@ class CreateAccountPopup(Popup):
         super(CreateAccountPopup, self).__init__(**kwargs)
         self.parent_screen = parent_screen
         self.title = "Create New Account"
-        self.title_color = (0, 0, 0, 1)
         self.size_hint = (0.8, 0.3)
 
         # Initialize the dropdown
         self.currency_dropdown = DropDown()
 
-        # Set the popup's background color to white
+        # Disable default background image and set the background color to transparent
         self.background = ''  # Disable the default background image
-        self.background_color = (1, 1, 1, 1)
+        self.background_color = (0, 0, 0, 0)  # Fully transparent to ensure custom drawing
 
         # Create a white rounded rectangle for the background
         with self.canvas.before:
-            Color(1, 1, 1, 1)  # Set background color to white
+            Color(1, 1, 1, 1)  # Set the background color to white (R,G,B,A)
             self.rect = RoundedRectangle(
-                radius=[20, 20, 20, 20],  # Set corner radius to 20
+                radius=[20, 20, 20, 20],  # Set corner radius for all corners
                 size=self.size,  # Bind size to popup size
                 pos=self.pos  # Bind position to popup position
             )
 
-        # Bind size and position updates
+        # Bind the size and position updates of the rectangle to the popup's size and position
         self.bind(size=self.update_rect, pos=self.update_rect)
 
-        # Add black border after the background
+        # Add a black border around the popup after the background is drawn
         with self.canvas.after:
-            Color(0, 0, 0, 1)  # Black border color
+            Color(0, 0, 0, 1)  # Set border color to black
             self.border_line = Line(
                 rounded_rectangle=[self.x, self.y, self.width, self.height, 20],
-                width=2  # Black border width
+                width=2  # Width of the black border
             )
 
         layout = BoxLayout(orientation='vertical', padding=dp(20))
@@ -106,7 +105,7 @@ class CreateAccountPopup(Popup):
         )
         layout.add_widget(self.name_input)
 
-        layout.add_widget(Widget(size_hint_y=None, height=dp(20)))  # Space
+        layout.add_widget(Widget(size_hint_y=None, height=dp(20)))  # Add space
 
         # Currency button
         self.currency_button = Button(
@@ -115,12 +114,12 @@ class CreateAccountPopup(Popup):
             height=40,
             color=[0, 0, 0, 1],
             background_normal='kivy_app/assets/img/Rectangle_normal.png',
-            background_down='kivy_app/assets/img/Rectangle_down.png'
+            background_down='kivy_app/assets/img/Rectangle_down.png',
         )
         self.currency_button.bind(on_release=self.open_currency_dropdown)
         layout.add_widget(self.currency_button)
 
-        layout.add_widget(Widget(size_hint_y=None, height=dp(5)))  # Space
+        layout.add_widget(Widget(size_hint_y=None, height=dp(5)))  # Add space
 
         # Submit button
         submit_btn = Button(
@@ -129,7 +128,7 @@ class CreateAccountPopup(Popup):
             height=40,
             color=[0, 0, 0, 1],
             background_normal='kivy_app/assets/img/Rectangle_normal.png',
-            background_down='kivy_app/assets/img/Rectangle_down.png'
+            background_down='kivy_app/assets/img/Rectangle_down.png',
         )
         submit_btn.bind(on_release=self.create_account)
         layout.add_widget(submit_btn)
@@ -137,8 +136,14 @@ class CreateAccountPopup(Popup):
         # Set the content of the popup to the layout
         self.content = layout
 
-        # Fetch currencies after initializing the layout
+        # Fetch currencies after initializing layout
         self.fetch_currencies()
+
+    def update_rect(self, *args):
+        """Update the size and position of the rounded rectangle background and border."""
+        self.rect.pos = self.pos
+        self.rect.size = self.size
+        self.border_line.rounded_rectangle = [self.x, self.y, self.width, self.height, 20]
 
     def open_currency_dropdown(self, instance):
         """Open the currency dropdown when the button is clicked."""
@@ -146,12 +151,6 @@ class CreateAccountPopup(Popup):
             print("Dropdown is empty!")
         else:
             self.currency_dropdown.open(instance)
-
-    def update_rect(self, *args):
-        """Update the size and position of the rounded rectangle background and border."""
-        self.rect.pos = self.pos
-        self.rect.size = self.size
-        self.border_line.rounded_rectangle = [self.x, self.y, self.width, self.height, 20]
 
     def populate_currencies(self, request, result):
         """Populate the currency dropdown with options."""
