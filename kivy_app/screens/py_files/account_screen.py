@@ -62,35 +62,38 @@ class CreateAccountPopup(Popup):
         super(CreateAccountPopup, self).__init__(**kwargs)
         self.parent_screen = parent_screen
         self.title = "Create New Account"
+        self.title_color = (0, 0, 0, 1)
         self.size_hint = (0.8, 0.3)
 
-        # Initialize the dropdown
+        # Ensure the dropdown is initialized
         self.currency_dropdown = DropDown()
 
-        # Disable default background image and set the background color to transparent
-        self.background = ''  # Disable the default background image
-        self.background_color = (0, 0, 0, 0)  # Fully transparent to ensure custom drawing
+        # Disable the default background image and set it to transparent for custom drawing
+        self.background = 'kivy_app/assets/img/Rounded_square.png'  # Disable the default background
+        self.background_color = (1, 1, 1, 1)  # Fully transparent to allow custom background
 
-        # Create a white rounded rectangle for the background
+        # Use canvas to draw the rounded background and the black border
         with self.canvas.before:
-            Color(1, 1, 1, 1)  # Set the background color to white (R,G,B,A)
+            # White background with rounded corners
+            Color(1, 1, 1, 1)  # White background color (R, G, B, A)
             self.rect = RoundedRectangle(
-                radius=[20, 20, 20, 20],  # Set corner radius for all corners
-                size=self.size,  # Bind size to popup size
-                pos=self.pos  # Bind position to popup position
+                radius=[20, 20, 20, 20],  # Rounded corners
+                size=self.size,
+                pos=self.pos
             )
 
-        # Bind the size and position updates of the rectangle to the popup's size and position
+        # Bind the size and position updates of the background to the popup's size and position
         self.bind(size=self.update_rect, pos=self.update_rect)
 
-        # Add a black border around the popup after the background is drawn
+        # Draw a black rounded border around the popup
         with self.canvas.after:
-            Color(0, 0, 0, 1)  # Set border color to black
+            Color(0, 0, 0, 1)  # Black color for the border
             self.border_line = Line(
-                rounded_rectangle=[self.x, self.y, self.width, self.height, 20],
-                width=2  # Width of the black border
+                rounded_rectangle=[self.x, self.y, self.width, self.height, 20],  # Same rounded corners
+                width=2  # Border width
             )
 
+        # Create the layout for the popup content
         layout = BoxLayout(orientation='vertical', padding=dp(20))
 
         # Account name input
@@ -145,25 +148,33 @@ class CreateAccountPopup(Popup):
         self.rect.size = self.size
         self.border_line.rounded_rectangle = [self.x, self.y, self.width, self.height, 20]
 
+    def populate_currencies(self, request, result):
+        """Populate the currency dropdown with options."""
+        # Ensure currency_dropdown is initialized
+        if not hasattr(self, 'currency_dropdown') or self.currency_dropdown is None:
+            self.currency_dropdown = DropDown()
+
+        # Clear any previous widgets
+        self.currency_dropdown.clear_widgets()
+
+        for currency in result:
+            btn = Button(
+                text=f"{currency['name']} ({currency['symbol']})",
+                size_hint_y=None,
+                height=40,
+                color=(0, 0, 0, 1),
+                background_normal='',
+                background_color=(1, 1, 1, 1)
+            )
+            btn.bind(on_release=lambda btn, currency=currency: self.select_currency(currency))
+            self.currency_dropdown.add_widget(btn)
+
     def open_currency_dropdown(self, instance):
         """Open the currency dropdown when the button is clicked."""
         if not self.currency_dropdown.children:
             print("Dropdown is empty!")
         else:
             self.currency_dropdown.open(instance)
-
-    def populate_currencies(self, request, result):
-        """Populate the currency dropdown with options."""
-        self.currency_dropdown.clear_widgets()  # Clear any previous widgets
-        for currency in result:
-            btn = Button(
-                text=f"{currency['name']} ({currency['symbol']})",
-                size_hint_y=None,
-                height=40,
-                color=(0, 0, 0, 1)
-            )
-            btn.bind(on_release=lambda btn, currency=currency: self.select_currency(currency))
-            self.currency_dropdown.add_widget(btn)
 
     def fetch_currencies(self):
         """Fetch available currencies from the API"""
