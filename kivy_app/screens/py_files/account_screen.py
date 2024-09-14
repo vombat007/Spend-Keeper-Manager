@@ -157,17 +157,56 @@ class CreateAccountPopup(Popup):
         # Clear any previous widgets
         self.currency_dropdown.clear_widgets()
 
+        # Create a BoxLayout to hold the buttons with spacing
+        button_layout = BoxLayout(orientation='vertical', spacing=5, size_hint_y=None)
+
+        # Adjust the height dynamically based on the number of buttons
+        button_layout.height = len(result) * (40 + 5)  # Button height + spacing
+
         for currency in result:
             btn = Button(
                 text=f"{currency['name']} ({currency['symbol']})",
                 size_hint_y=None,
                 height=40,
                 color=(0, 0, 0, 1),
-                background_normal='',
-                background_color=(1, 1, 1, 1)
+                background_normal='',  # Disable the default background
+                background_color=(0, 0, 0, 0)  # Transparent to allow custom canvas drawing
             )
+
+            # Use canvas to draw the rounded rectangle and border for each button
+            with btn.canvas.before:
+                Color(1, 1, 1, 1)  # White background
+                btn.rect = RoundedRectangle(
+                    size=btn.size,
+                    pos=btn.pos,
+                    radius=[dp(20), dp(20), dp(20), dp(20)]  # Rounded corners
+                )
+
+            with btn.canvas.after:
+                Color(0, 0, 0, 1)  # Black color for the border
+                btn.border_line = Line(
+                    rounded_rectangle=[btn.x, btn.y, btn.width, btn.height, 20],  # Border with rounded corners
+                    width=1.5  # Border width
+                )
+
+            # Bind size and position updates
+            btn.bind(size=self.update_button_canvas, pos=self.update_button_canvas)
+
+            # Bind button to select currency
             btn.bind(on_release=lambda btn, currency=currency: self.select_currency(currency))
-            self.currency_dropdown.add_widget(btn)
+
+            # Add the button to the layout
+            button_layout.add_widget(btn)
+
+        # Add the button layout to the dropdown
+        self.currency_dropdown.add_widget(button_layout)
+
+    @staticmethod
+    def update_button_canvas(instance, *args):
+        """Update the size and position of the rounded rectangle background and border."""
+        instance.rect.pos = instance.pos
+        instance.rect.size = instance.size
+        instance.border_line.rounded_rectangle = [instance.x, instance.y, instance.width, instance.height, 20]
 
     def open_currency_dropdown(self, instance):
         """Open the currency dropdown when the button is clicked."""
